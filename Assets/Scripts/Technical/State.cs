@@ -22,8 +22,8 @@ public class State : MonoBehaviour
         End
     }
 
-    public delegate void OnGlobalStateChangedHandle(GlobalState prevGlobalState, GlobalState newGlobalState);
-    public static event OnGlobalStateChangedHandle OnGlobalStateChanged;
+    public delegate void GlobalStateChangedDelegate(GlobalState prevGlobalState, GlobalState newGlobalState);
+    public static event GlobalStateChangedDelegate OnGlobalStateChanged;
 
     private static GlobalState globalState;
 
@@ -32,7 +32,7 @@ public class State : MonoBehaviour
         get { return globalState; }
     }
 
-    public static void ChangeState (GlobalState newState)
+    public static void SetState (GlobalState newState)
     {
         GlobalState prevState = globalState;
         globalState = newState;
