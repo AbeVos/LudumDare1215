@@ -27,7 +27,8 @@ public class InputManager : MonoBehaviour
     #region Public functions
     #endregion
 
-    #region Built in functions
+    #region Built-in functions
+
     #endregion
 
     #region Setup
@@ -40,9 +41,14 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
-        mousePosition = Input.mousePosition;
-        mousePosition.z = dragonToCameraDistance;
-        transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
-        lastWorldPosition = transform.position;
+        // move the dragon in screen space
+        if (Input.GetMouseButton(0))
+        {
+            mousePosition = Input.mousePosition;
+            mousePosition.z = dragonToCameraDistance;
+            transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
+            lastWorldPosition = transform.position;
+        }
+
     }
 }
