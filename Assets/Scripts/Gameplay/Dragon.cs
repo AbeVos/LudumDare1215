@@ -10,11 +10,42 @@ public class Dragon : MonoBehaviour, GameActor
 
     /// <summary>Static reference to self.</summary>
     private static Dragon self;
+    private static int _health, _charge, _heat, _exp;
 
+    #region Properties
     public static Dragon dragon
     {
         get { return self; }
     }
+    public static int Health
+    {
+        get { return _health; }
+        set { _health = value; }
+    }
+    public static int Epx
+    {
+        get { return _exp; }
+        set { _exp = value; }
+    }
+    public static int Charge
+    {
+        get { return _charge; }
+        private set
+        {
+            if (value <= 100 && value <= 0) { _charge = value; }
+        }
+
+    }
+    public static int Heat
+    {
+        get { return _health; }
+        private set
+        {
+            if (value <= 100 && value <= 0) { _health = value; }
+        }
+
+    }
+    #endregion
 
     void OnEnable()
     {
@@ -54,18 +85,22 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void InputManager_OnPrimaryButtonDown()
     {
+        Debug.Log("Prime Down");
     }
 
     private void InputManager_OnPrimaryButtonUp()
     {
+        Debug.Log("Prime UP");
     }
 
     private void InputManager_OnSecondaryButtonDown()
     {
+        Debug.Log("Second DOWN");
     }
 
     private void InputManager_OnSecondaryButtonUp()
     {
+        Debug.Log("Second UP");
     }
 
     public void Hit(int damage)
