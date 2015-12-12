@@ -8,6 +8,14 @@ public class Dragon : MonoBehaviour
 
     private Vector3 lastWorldPosition;
 
+    /// <summary>Static reference to self.</summary>
+    private static Dragon self;
+
+    public static Dragon dragon
+    {
+        get { return self; }
+    }
+
     void OnEnable()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
@@ -27,7 +35,7 @@ public class Dragon : MonoBehaviour
     {
         if (State.Current == State.GlobalState.Game)
         {
-            // move the dragon in screen space
+            //  Move the dragon in screen space
             transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(InputManager.MousePosition), Time.deltaTime * responseSpeed);
             lastWorldPosition = transform.position;
         }

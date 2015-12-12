@@ -7,6 +7,6 @@ public class Drone : Enemy
     {
         base.Update();
 
-        Debug.Log("Updated Drone");
+        //Debug.Log("Updated Drone");
     }
 }
