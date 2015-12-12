@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Drone : Enemy
 {
+    [Space]
     [SerializeField]
     int explosionDamage = 5;
 
@@ -19,15 +20,19 @@ public class Drone : Enemy
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
+        //Debug.Log(collider);
+
         if (currentState != EnemyState.Death)
         {
-            if (collision.gameObject.layer == 8)
+            if (collider.gameObject.layer == 8)
             {
                 Dragon.dragon.Hit(explosionDamage);
 
                 SetState(EnemyState.Death);
+
+                //Debug.Break();
             }
             else
             {
