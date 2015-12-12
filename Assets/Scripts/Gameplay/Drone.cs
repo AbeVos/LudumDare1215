@@ -21,13 +21,16 @@ public class Drone : Enemy
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision");
-
-        if (collision.gameObject.layer == 8)
+        if (currentState != EnemyState.Death)
         {
-            Dragon.dragon.Hit(explosionDamage);
+            Debug.Log("Collision");
 
-            SetState(EnemyState.Death);
+            if (collision.gameObject.layer == 8)
+            {
+                Dragon.dragon.Hit(explosionDamage);
+
+                SetState(EnemyState.Death);
+            }
         }
     }
 }

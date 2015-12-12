@@ -99,7 +99,11 @@ public abstract class Enemy : MonoBehaviour, GameActor
         else if (newState == EnemyState.Death)
         {
             Debug.Log(name + " was killed.");
-            transform.DOScale(1.2f, 0.35f).OnComplete( () => Destroy(gameObject) );
+            transform.DOScale(1.2f, 0.35f).OnComplete( () =>
+            {
+                CameraBehaviour.ScreenShake(1f, 1f);
+                Destroy(gameObject);
+            } );
         }
     }
 }
