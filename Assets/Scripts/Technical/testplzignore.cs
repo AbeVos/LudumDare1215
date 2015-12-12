@@ -3,16 +3,18 @@ using System.Collections;
 
 public class testplzignore : MonoBehaviour
 {
-
-    // Use this for initialization
     void Start()
     {
-
+       // Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.localPosition = new Vector3(0, 0.3f * Mathf.Sin(Time.realtimeSinceStartup * 2.5f), 0);
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        transform.localPosition = new Vector3(transform.localPosition.x, 0.3f * Mathf.Sin(Time.realtimeSinceStartup * 2.5f), transform.localPosition.z);
     }
 }
