@@ -22,8 +22,8 @@ public class State : MonoBehaviour
         End
     }
 
-    public delegate void OnGameStateChangedHandle(GlobalState prevGlobalState, GlobalState newGlobalState);
-    public static event OnGameStateChangedHandle OnGameStateChanged;
+    public delegate void OnGlobalStateChangedHandle(GlobalState prevGlobalState, GlobalState newGlobalState);
+    public static event OnGlobalStateChangedHandle OnGlobalStateChanged;
 
     private static GlobalState globalState;
 
@@ -39,6 +39,6 @@ public class State : MonoBehaviour
 
         Debug.Log("Changed Global State from " + prevState.ToString() + " to " + newState.ToString());
 
-        if (OnGameStateChanged != null) OnGameStateChanged(prevState, newState);
+        if (OnGlobalStateChanged != null) OnGlobalStateChanged(prevState, newState);
     }
 }
