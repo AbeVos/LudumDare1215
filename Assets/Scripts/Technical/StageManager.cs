@@ -25,11 +25,10 @@ public class StageManager : MonoBehaviour
     void Awake ()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
-    }
 
-    void Start ()
-    {
-        SpawnBuilding();
+        Debug.Log("Awake Stage");
+
+        buildings = new List<GameObject>();
     }
 
     void Update ()
@@ -48,6 +47,14 @@ public class StageManager : MonoBehaviour
 
             timer += Time.deltaTime;
         }
+
+        foreach (GameObject building in buildings)
+        {
+            if (building.transform.position.x < -15)
+            {
+                Destroy(building);
+            }
+        }
     }
 
     #endregion
@@ -57,10 +64,13 @@ public class StageManager : MonoBehaviour
     //////////////////////////
 
     #region Delegate Functions
-
+        
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
-
+        if (newGlobalState == State.GlobalState.Game)
+        {
+            SpawnBuilding();
+        }
     }
 
     #endregion
@@ -74,5 +84,7 @@ public class StageManager : MonoBehaviour
         GameObject building = Instantiate(buildingPrefab, new Vector3(20, Random.Range(-5, -15), 0), Quaternion.identity) as GameObject;
 
         building.transform.parent = transform;
+
+        buildings.Add(building);
     }
 }

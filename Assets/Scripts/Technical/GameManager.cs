@@ -9,26 +9,29 @@ public class GameManager : MonoBehaviour
 
     void Awake ()
     {
-        State.OnGlobalStateChanged += State_OnGameStateChanged;
+        State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+    }
 
+    void Start ()
+    {
         //  Start the game.
-        State.ChangeState(State.GlobalState.Start);
+        State.SetState(State.GlobalState.Start);
     }
 
     //////////////////////////
     //  Delegate Functions  //
     //////////////////////////
 
-    private void State_OnGameStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
         if (newGlobalState == State.GlobalState.Start)
         {
             Debug.Log("Started the game.");
-            State.ChangeState(State.GlobalState.Initialize);
+            State.SetState(State.GlobalState.Initialize);
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
-            State.ChangeState(State.GlobalState.Game);
+            State.SetState(State.GlobalState.Game);
         }
     }
 }
