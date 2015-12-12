@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Dragon : MonoBehaviour
+public class Dragon : MonoBehaviour, GameActor
 {
     [SerializeField, Range(4, 10)]
     private float responseSpeed = 5f;
@@ -24,6 +24,8 @@ public class Dragon : MonoBehaviour
         InputManager.OnPrimaryButtonUp += InputManager_OnPrimaryButtonUp;
         InputManager.OnSecondaryButtonDown += InputManager_OnSecondaryButtonDown;
         InputManager.OnSecondaryButtonUp += InputManager_OnSecondaryButtonUp;
+
+        self = this;
     }
 
     void Start()
@@ -63,6 +65,10 @@ public class Dragon : MonoBehaviour
     }
 
     private void InputManager_OnSecondaryButtonUp()
+    {
+    }
+
+    public void Hit(int damage)
     {
     }
 }
