@@ -17,6 +17,6 @@ public class MoveBG : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        mat.mainTextureOffset = new Vector2(counter -= Time.deltaTime*speed, 0);
+        mat.mainTextureOffset = new Vector2(counter += Time.deltaTime*speed, 0);
 	}
 }
