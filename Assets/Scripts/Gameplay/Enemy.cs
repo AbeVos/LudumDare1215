@@ -30,10 +30,13 @@ public abstract class Enemy : MonoBehaviour, GameActor
     //  Built-in Functions  //
     //////////////////////////
 
-    void Awake ()
+    void OnEnable ()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+    }
 
+    void Start ()
+    {
         SetState(EnemyState.Spawn);
     }
 
@@ -50,11 +53,16 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
     }
 
+    void OnDisable ()
+    {
+        State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
+    }
+
     //////////////////////////
     //  Delegate Functions  //
     //////////////////////////
 
-    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    protected virtual void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
     }
 
@@ -76,7 +84,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
     //  Private Functions  //
     /////////////////////////
 
-    protected void SetState (EnemyState newState)
+    protected virtual void SetState (EnemyState newState)
     {
         stateTimer = 0;
 
@@ -101,7 +109,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
             Debug.Log(name + " was killed.");
             transform.DOScale(1.2f, 0.35f).OnComplete( () =>
             {
-                CameraBehaviour.ScreenShake(1f, 1f);
+                CameraBehaviour.ScreenShake(0.5f, 0.5f);
                 Destroy(gameObject);
             } );
         }

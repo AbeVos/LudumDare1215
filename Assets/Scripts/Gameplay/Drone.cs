@@ -23,14 +23,26 @@ public class Drone : Enemy
     {
         if (currentState != EnemyState.Death)
         {
-            Debug.Log("Collision");
-
             if (collision.gameObject.layer == 8)
             {
                 Dragon.dragon.Hit(explosionDamage);
 
                 SetState(EnemyState.Death);
             }
+            else
+            {
+                SetState(EnemyState.Death);
+            }
+        }
+    }
+
+    protected override void SetState(EnemyState newState)
+    {
+        base.SetState(newState);
+
+        if (newState == EnemyState.Attack)
+        {
+            transform.parent = null;
         }
     }
 }
