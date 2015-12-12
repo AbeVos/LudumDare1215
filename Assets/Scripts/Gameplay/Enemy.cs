@@ -17,6 +17,11 @@ public abstract class Enemy : MonoBehaviour
         Death
     }
 
+    [SerializeField]
+    private int healthPoints = 10;
+    [SerializeField]
+    private float detectionDistance = 10f;
+
     private State currentState;
 
     void Awake ()
@@ -24,7 +29,7 @@ public abstract class Enemy : MonoBehaviour
         SetState(State.Spawn);
     }
 
-    void Update ()
+    protected virtual void Update ()
     {
 
     }
@@ -37,5 +42,21 @@ public abstract class Enemy : MonoBehaviour
     {
         State prevState = currentState;
         currentState = newState;
+
+        if (newState == State.Death)
+        {
+            Debug.Log(name + " was killed.");
+            Destroy(gameObject);
+        }
+    }
+
+    private void Hit (int damage)
+    {
+        healthPoints -= damage;
+
+        if (healthPoints <= 0)
+        {
+            SetState(State.Death);
+        }
     }
 }

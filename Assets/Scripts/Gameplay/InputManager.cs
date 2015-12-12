@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
-using DG.Tweening;
 using System.Collections;
 
 public class InputManager : MonoBehaviour
 {
     #region Variables
-    public float dragonToCameraDistance = 15;
-    [Range(4, 10)]
-    public float responseSpeed = 5f;
 
-    private Vector3 mousePosition, lastWorldPosition;
+    //private Vector3 mousePosition, lastWorldPosition;
     #endregion
 
     #region Delegates
@@ -24,6 +20,15 @@ public class InputManager : MonoBehaviour
     public static event SecondaryButtonDown OnSecondaryButtonUp;
     #endregion
 
+    public static Vector3 MousePosition
+    {
+        get {
+            Vector3 mousePosition = Input.mousePosition;
+            mousePosition.z = -Camera.main.transform.position.z;
+            return mousePosition;
+        }
+    }
+
     #region Public functions
 
     #endregion
@@ -35,17 +40,17 @@ public class InputManager : MonoBehaviour
     #region Setup
     void Start()
     {
-        mousePosition = Vector3.zero;
-        lastWorldPosition = transform.position;
+    //    mousePosition = Vector3.zero;
+    //    lastWorldPosition = transform.position;
     }
     #endregion
 
     void Update()
     {
         // move the dragon in screen space
-        mousePosition = Input.mousePosition;
-        mousePosition.z = dragonToCameraDistance;
-        transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
-        lastWorldPosition = transform.position;
+        //mousePosition = Input.mousePosition;
+        //mousePosition.z = dragonToCameraDistance;
+        //transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
+        //lastWorldPosition = transform.position;
     }
 }
