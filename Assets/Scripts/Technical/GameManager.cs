@@ -3,16 +3,35 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    //////////////////////////
+    //  Built-in Functions  //
+    //////////////////////////
+
     void Awake ()
     {
-        State.OnGameStateChanged += State_OnGameStateChanged;
-
-        //  Start the game.
-        State.ChangeState(State.GlobalState.Start);
+        State.OnGlobalStateChanged += State_OnGlobalStateChanged;
     }
 
-    private void State_OnGameStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    void Start ()
     {
-        Debug.Log("Started the game.");
+        //  Start the game.
+        State.SetState(State.GlobalState.Start);
+    }
+
+    //////////////////////////
+    //  Delegate Functions  //
+    //////////////////////////
+
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    {
+        if (newGlobalState == State.GlobalState.Start)
+        {
+            Debug.Log("Started the game.");
+            State.SetState(State.GlobalState.Initialize);
+        }
+        else if (newGlobalState == State.GlobalState.Initialize)
+        {
+            State.SetState(State.GlobalState.Game);
+        }
     }
 }
