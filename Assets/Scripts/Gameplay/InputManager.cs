@@ -6,7 +6,7 @@ public class InputManager : MonoBehaviour
 {
     #region Variables
     public float dragonToCameraDistance = 15;
-    [Range(4,10)]
+    [Range(4, 10)]
     public float responseSpeed = 5f;
 
     private Vector3 mousePosition, lastWorldPosition;
@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
     #endregion
 
     #region Public functions
+
     #endregion
 
     #region Built-in functions
@@ -42,13 +43,9 @@ public class InputManager : MonoBehaviour
     void Update()
     {
         // move the dragon in screen space
-        if (Input.GetMouseButton(0))
-        {
-            mousePosition = Input.mousePosition;
-            mousePosition.z = dragonToCameraDistance;
-            transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
-            lastWorldPosition = transform.position;
-        }
-
+        mousePosition = Input.mousePosition;
+        mousePosition.z = dragonToCameraDistance;
+        transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
+        lastWorldPosition = transform.position;
     }
 }
