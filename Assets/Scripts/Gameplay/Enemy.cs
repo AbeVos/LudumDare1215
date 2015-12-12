@@ -18,6 +18,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         Death
     }
 
+    [Header("General Enemy Settings")]
     [SerializeField]
     private int healthPoints = 10;
     [SerializeField]
@@ -35,7 +36,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
     }
 
-    void Start ()
+    protected virtual void Start ()
     {
         SetState(EnemyState.Spawn);
     }
