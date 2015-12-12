@@ -2,9 +2,9 @@
 using System.Collections;
 using DG.Tweening;
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, GameActor
 {
-    private enum EnemyState
+    protected enum EnemyState
     {
         /// <summary>Initial state.</summary>
         Spawn,
@@ -23,8 +23,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField]
     private float detectionDistance = 10f;
 
-    private EnemyState currentState;
-    private float stateTimer = 0f;
+    protected EnemyState currentState;
+    protected float stateTimer = 0f;
 
     //////////////////////////
     //  Built-in Functions  //
@@ -50,10 +50,6 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D (Collision2D collision)
-    {
-    }
-
     //////////////////////////
     //  Delegate Functions  //
     //////////////////////////
@@ -62,37 +58,48 @@ public abstract class Enemy : MonoBehaviour
     {
     }
 
-    /////////////////////////
-    //  Private Functions  //
-    /////////////////////////
+    ////////////////////////
+    //  Public Functions  //
+    ////////////////////////
 
-    private void SetState (EnemyState newState)
-    {
-        stateTimer = 0;
-
-        EnemyState prevState = currentState;
-        currentState = newState;
-
-
-        if (newState == EnemyState.Alarmed)
-        {
-            Debug.Log("Wablief");
-            transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
-        }
-        else if (newState == EnemyState.Death)
-        {
-            Debug.Log(name + " was killed.");
-            Destroy(gameObject);
-        }
-    }
-
-    private void Hit (int damage)
+    public void Hit(int damage)
     {
         healthPoints -= damage;
 
         if (healthPoints <= 0)
         {
             SetState(EnemyState.Death);
+        }
+    }
+
+    /////////////////////////
+    //  Private Functions  //
+    /////////////////////////
+
+    protected void SetState (EnemyState newState)
+    {
+        stateTimer = 0;
+
+        EnemyState prevState = currentState;
+        currentState = newState;
+
+        if (newState == EnemyState.Spawn)
+        {
+            SetState(EnemyState.Idle);
+        }
+        else if (newState == EnemyState.Alarmed)
+        {
+            Debug.Log("Wablief");
+            transform.DOScale(1.1f, 0.1f).OnComplete( () =>
+            {
+                transform.DOScale(1f, 0.1f);
+                SetState(EnemyState.Attack);
+            } );
+        }
+        else if (newState == EnemyState.Death)
+        {
+            Debug.Log(name + " was killed.");
+            transform.DOScale(1.2f, 0.35f).OnComplete( () => Destroy(gameObject) );
         }
     }
 }

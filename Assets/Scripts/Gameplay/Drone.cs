@@ -3,10 +3,31 @@ using System.Collections;
 
 public class Drone : Enemy
 {
+    [SerializeField]
+    int explosionDamage = 5;
+
     protected override void Update ()
     {
         base.Update();
 
-        //Debug.Log("Updated Drone");
+        if (State.Current == State.GlobalState.Game)
+        {
+            if (currentState == EnemyState.Attack)
+            {
+                transform.position = Vector3.Lerp(transform.position, Dragon.dragon.transform.position, Time.deltaTime);
+            }
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Collision");
+
+        if (collision.gameObject.layer == 8)
+        {
+            Dragon.dragon.Hit(explosionDamage);
+
+            SetState(EnemyState.Death);
+        }
     }
 }
