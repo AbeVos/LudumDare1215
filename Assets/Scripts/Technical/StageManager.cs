@@ -7,6 +7,10 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private GameObject buildingPrefab;
 
+    [Header("Enemy Prefabs")]
+    [SerializeField]
+    private GameObject dronePrefab;
+
     [SerializeField]
     private float levelSpeed = 0.1f;
     [SerializeField]
@@ -39,6 +43,7 @@ public class StageManager : MonoBehaviour
             if (timer >= buildingSpawnInterval)
             {
                 SpawnBuilding();
+                Invoke("SpawnDrone", buildingSpawnInterval / 2);
 
                 timer = 0;
             }
@@ -86,5 +91,12 @@ public class StageManager : MonoBehaviour
         building.transform.parent = transform;
 
         buildings.Add(building);
+    }
+
+    private void SpawnDrone ()
+    {
+        GameObject drone = Instantiate(dronePrefab, new Vector3(20, Random.Range(0f, 16f), 0), Quaternion.identity) as GameObject;
+
+        drone.transform.parent = transform;
     }
 }
