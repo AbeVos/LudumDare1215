@@ -26,8 +26,6 @@ public class StageManager : MonoBehaviour
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
 
-        Debug.Log("Awake Stage");
-
         buildings = new List<GameObject>();
     }
 
@@ -50,9 +48,11 @@ public class StageManager : MonoBehaviour
 
         foreach (GameObject building in buildings)
         {
-            if (building.transform.position.x < -15)
+            if (building.transform.position.x < -20)
             {
+                buildings.Remove(building);
                 Destroy(building);
+                break;
             }
         }
     }
