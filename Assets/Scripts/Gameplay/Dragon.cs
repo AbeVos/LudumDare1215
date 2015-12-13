@@ -163,7 +163,7 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void FirePrimary()
     {
-        Debug.Log("Primary");
+        
     }
 
     private void FireSecondary()
