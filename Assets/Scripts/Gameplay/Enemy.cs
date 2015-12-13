@@ -54,6 +54,14 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
     }
 
+    protected virtual void OnTriggerEnter2D (Collider2D collider)
+    {
+        if (collider.gameObject.layer == 13)
+        {
+            Hit(1);
+        }
+    }
+
     void OnDisable ()
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;

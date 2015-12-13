@@ -20,9 +20,9 @@ public class Drone : Enemy
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collider)
+    override protected void OnTriggerEnter2D(Collider2D collider)
     {
-        //Debug.Log(collider);
+        base.OnTriggerEnter2D(collider);
 
         if (currentState != EnemyState.Death)
         {
@@ -34,11 +34,11 @@ public class Drone : Enemy
 
                 //Debug.Break();
             }
-            else
-            {
-                Debug.Log("Ouch");
-                SetState(EnemyState.Death);
-            }
+            //else
+            //{
+            //    Debug.Log("Ouch");
+            //    SetState(EnemyState.Death);
+            //}
         }
     }
 
