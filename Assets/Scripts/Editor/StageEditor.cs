@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
-public class StageEditor : MonoBehaviour {
+[CustomEditor(typeof(StageManager))]
+public class StageEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        StageManager stageTarget = (StageManager) target;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        EditorGUILayout.LabelField("Enemy Prefabs", EditorStyles.boldLabel);
+        stageTarget.dronePrefab = EditorGUILayout.ObjectField("Drone Prefab", stageTarget.dronePrefab, typeof(GameObject), false) as GameObject;
+        stageTarget.turretPrefab = EditorGUILayout.ObjectField("Turret Prefab", stageTarget.turretPrefab, typeof(GameObject), false) as GameObject;
+
+        EditorGUILayout.Space();
+        stageTarget.buildingPrefab = EditorGUILayout.ObjectField("Building Prefab", stageTarget.buildingPrefab, typeof(GameObject), false) as GameObject;
+
+        stageTarget.difficultyCurve = EditorGUILayout.CurveField(stageTarget.difficultyCurve);
+    }
 }

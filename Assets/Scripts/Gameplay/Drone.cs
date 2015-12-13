@@ -42,7 +42,7 @@ public class Drone : Enemy
         {
             if (collider.gameObject.layer == 8)
             {
-                Dragon.dragon.Hit(explosionDamage);
+                Dragon.dragon.Hit(explosionDamage * (int) StageManager.GetDifficulty());
 
                 SetState(EnemyState.Death);
                 
