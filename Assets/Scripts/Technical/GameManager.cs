@@ -34,4 +34,9 @@ public class GameManager : MonoBehaviour
             State.SetState(State.GlobalState.Game);
         }
     }
+
+    public static void PlayerHit (int damage)
+    {
+        Debug.Log("Auw hoor!");
+    }
 }
