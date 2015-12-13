@@ -33,10 +33,20 @@ public class GameManager : MonoBehaviour
         {
             State.SetState(State.GlobalState.Game);
         }
+        else if (newGlobalState == State.GlobalState.Lose)
+        {
+            Debug.Log("Game Lost!");
+        }
     }
 
     public static void PlayerHit (int damage)
     {
         Debug.Log("Auw hoor!");
+        CameraBehaviour.ScreenShake(1f, 1f, false);
+
+        if (Dragon.Health <= 0)
+        {
+            State.SetState(State.GlobalState.Lose);
+        }
     }
 }

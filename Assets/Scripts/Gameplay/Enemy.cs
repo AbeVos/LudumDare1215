@@ -59,6 +59,8 @@ public abstract class Enemy : MonoBehaviour, GameActor
         if (collider.gameObject.layer == 13)
         {
             Hit(1);
+
+            ObjectPool.RemovePlayerBullet(collider.transform);
         }
     }
 
@@ -118,7 +120,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
             //Debug.Log(name + " was killed.");
             transform.DOScale(1.4f, 0.1f).OnComplete( () =>
             {
-                CameraBehaviour.ScreenShake(0.5f, 0.5f, false);
+                CameraBehaviour.ScreenShake(0.3f, 0.8f, false);
                 Destroy(gameObject);
             } );
         }

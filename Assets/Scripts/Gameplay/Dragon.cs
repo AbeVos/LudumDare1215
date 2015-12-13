@@ -85,6 +85,7 @@ public class Dragon : MonoBehaviour, GameActor
     }
     #endregion
 
+    #region Built-in
     void OnEnable()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
@@ -154,24 +155,24 @@ public class Dragon : MonoBehaviour, GameActor
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
     }
+    #endregion
 
-    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
-    {
-    }
+    #region Abe interface
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState){ }
 
     private void SetState(WeaponState newState)
     {
         WeaponState prevState = currentState;
         currentState = newState;
-        Debug.Log(newState);
     }
-
 
     public void Hit(int damage)
     {
         Health -= damage;
     }
+#endregion
 
+    #region Attacks
     private void FirePrimary()
     {
         if (!coroutineRunning)
@@ -205,7 +206,7 @@ public class Dragon : MonoBehaviour, GameActor
         yield return new WaitForSeconds(speed);
         burstRunning = false;
     }
-
+    #endregion
 
     #region Buttons
 
