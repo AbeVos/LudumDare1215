@@ -47,11 +47,27 @@ public class ObjectPool : MonoBehaviour
         foreach (Bullet bullet in playerBulletsInUse)
         {
             bullet.transform.position += bullet.transform.right * bullet.speed;
+
+            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
+            {
+                toRemove.Add(bullet);
+                //RemoveEnemyBullet(bullet);
+            }
+        }
+
+        if (toRemove.Count > 0)
+        {
+            foreach (Bullet bullet in toRemove)
+            {
+                RemovePlayerBullet(bullet);
+            }
+
+            toRemove.Clear();
         }
 
         foreach (Bullet bullet in enemyBulletsInUse)
         {
-            bullet.transform.position += bullet.transform.right * bullet.speed;
+            //bullet.transform.position += bullet.transform.right * bullet.speed;
 
             if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
             {
@@ -117,6 +133,14 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    private static void RemovePlayerBullet(Bullet bullet)
+    {
+        bullet.transform.gameObject.SetActive(false);
+
+        playerBulletsInUse.Remove(bullet);
+        playerBulletsAvailable.Add(bullet);
+    }
+
     public static GameObject CreateEnemyBullet(Vector3 position, Quaternion rotation, float speed)
     {
         //  Check whether there are no bullets available.
@@ -130,6 +154,8 @@ public class ObjectPool : MonoBehaviour
 
             enemyBulletsInUse.Add(bullet);
 
+            bulletObject.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * speed);
+
             return bulletObject;
         }
         else
@@ -142,6 +168,8 @@ public class ObjectPool : MonoBehaviour
             bullet.transform.position = position;
             bullet.transform.rotation = rotation;
             bullet.transform.gameObject.SetActive(true);
+
+            bullet.transform.GetComponent<Rigidbody2D>().AddForce(bullet.transform.right * speed);
 
             return bullet.transform.gameObject;
         }

@@ -62,6 +62,20 @@ public class StageManager : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D (Collision2D collision)
+    {
+        Debug.Log("Collision " + collision.gameObject.name);
+
+        if (collision.gameObject.layer == 12)
+        {
+            ObjectPool.RemoveEnemyBullet(collision.transform);
+        }
+        else if (collision.gameObject.layer == 13)
+        {
+            ObjectPool.RemovePlayerBullet(collision.transform);
+        }
+    }
+
     #endregion
 
     //////////////////////////

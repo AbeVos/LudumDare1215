@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 public class Turret : Enemy
 {
@@ -50,9 +51,13 @@ public class Turret : Enemy
             //GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation) as GameObject;
             //bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.forward * 100f, ForceMode2D.Force);
 
-            ObjectPool.CreateEnemyBullet(bulletSpawn.position, bulletSpawn.rotation, 0.2f);
+            cannon.transform.DOScale(1.1f, 0.2f);
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
+
+            cannon.transform.DOScale(1f, 0);
+
+            ObjectPool.CreateEnemyBullet(bulletSpawn.position, bulletSpawn.rotation, 400f);
         }
 
         firing = false;
