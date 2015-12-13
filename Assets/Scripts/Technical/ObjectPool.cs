@@ -56,6 +56,7 @@ public class ObjectPool : MonoBehaviour
         xpPickupsAvailable = new List<Pickup>();
 
         bulletsToRemove = new List<Bullet>();
+        pickupsToRemove = new List<Pickup>();
 
         cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
     }
@@ -252,8 +253,9 @@ public class ObjectPool : MonoBehaviour
         if (xpPickupsAvailable.Count == 0)
         {
             GameObject pickupObject = Instantiate(staticPlayerBulletPrefab, position, Quaternion.identity) as GameObject;
-            Pickup pickup;
+            pickupObject.transform.parent = StageManager.Stage.transform;
 
+            Pickup pickup;
             pickup.transform = pickupObject.transform;
             pickup.value = value;
 

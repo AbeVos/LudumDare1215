@@ -55,7 +55,7 @@ public class StageManager : MonoBehaviour
 
     void Update ()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             Debug.Log(GetDifficulty());
         }
@@ -70,7 +70,7 @@ public class StageManager : MonoBehaviour
 
             if (timer >= buildingSpawnInterval)
             {
-                SpawnBuilding((Random.Range(0f, 1f) > 0.5f) ? true : false);
+                SpawnBuilding((Random.Range(0f, 1f) < GetDifficulty() / 5f) ? true : false);
                 Invoke("SpawnDrone", buildingSpawnInterval / 2);
 
                 timer = 0;
@@ -99,7 +99,7 @@ public class StageManager : MonoBehaviour
         {
             ObjectPool.RemoveEnemyBullet(collision.transform);
         }
-        else if (collision.gameObject.layer == 13)
+        else if (collision.gameObject.layer == 13 || collision.gameObject.GetComponent<PlayerBomb>() == null)
         {
             ObjectPool.RemovePlayerBullet(collision.transform);
         }
