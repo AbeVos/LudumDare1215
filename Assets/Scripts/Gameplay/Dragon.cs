@@ -14,6 +14,7 @@ public class Dragon : MonoBehaviour, GameActor
         /// <summary>Charge is empty, attack is active </summary>
         SecondaryFired
     }
+
     #region Variables
     [SerializeField, Range(4, 10)]
     private float responseSpeed = 7.5f;
@@ -25,8 +26,12 @@ public class Dragon : MonoBehaviour, GameActor
     private float heatUpSpeed = 10;
     [SerializeField, Range(1, 30)]
     private float coolDownSpeed = 10;
+    [SerializeField, Range(0.05f, 1f)]
+    private float FireRatePrimary = 0.2f;
+    [SerializeField, Range(0.05f, 1f)]
+    private float BulletSpeed = 0.2f;
 
-
+    private bool coroutineRunning = false;
     /// <summary>Heat is at 100%, primary can only start again at 0% heat</summary>
     private static bool primaryOverheat;
     private WeaponState currentState;
@@ -163,12 +168,42 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void FirePrimary()
     {
-        
+        if (!coroutineRunning)
+        {
+            StartCoroutine(primaryCoroutine());
+        }
+}
+
+IEnumerator primaryCoroutine()
+    {
+        coroutineRunning = true;
+        ObjectPool.CreatePlayerBullet(
+            transform.position, Quaternion.identity, BulletSpeed)
+            .transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+
+        CameraBehaviour.ScreenShake(FireRatePrimary/2f, Random.Range(0.3f, 0.45f), true);
+        yield return new WaitForSeconds(FireRatePrimary);
+        coroutineRunning = false;
+    }
+
+    IEnumerator secondaryCoroutine(float time)
+    {
+        Debug.Log("Time " + time);
+        ObjectPool.CreatePlayerBullet(
+            transform.position, Quaternion.identity, BulletSpeed)
+            .transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+        yield return new WaitForSeconds(1f);
+        if (time > 0)
+        {
+            time--;
+            StartCoroutine(secondaryCoroutine(time));
+        }
+
     }
 
     private void FireSecondary()
     {
-        Debug.Log("Secondary");
+        StartCoroutine(secondaryCoroutine(3));
     }
 
     #region Buttons
