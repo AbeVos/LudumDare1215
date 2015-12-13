@@ -163,7 +163,7 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void FirePrimary()
     {
-        Debug.Log("Primary");
+        
     }
 
     private void FireSecondary()
@@ -172,6 +172,7 @@ public class Dragon : MonoBehaviour, GameActor
     }
 
     #region Buttons
+
     private void InputManager_OnPrimaryButtonDown()
     {
         if (!primaryOverheat && currentState == WeaponState.Idle)
@@ -187,6 +188,9 @@ public class Dragon : MonoBehaviour, GameActor
             SetState(WeaponState.Idle);
         }
     }
+
+
+    // secondary
 
     private void InputManager_OnSecondaryButtonDown()
     {
