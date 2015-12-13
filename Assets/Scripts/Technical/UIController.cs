@@ -9,6 +9,11 @@ public class UIController : MonoBehaviour
     private float lastCharge;
     private bool lastChargeLerping = false;
 
+    void OnEnable ()
+    {
+        State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+    }
+
     void Start()
     {
         Epx = transform.GetChild(1).GetComponent<Slider>();
@@ -51,6 +56,19 @@ public class UIController : MonoBehaviour
         }
 
         lastCharge = Dragon.Charge;
+    }
+    
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    {
+        if (newGlobalState == State.GlobalState.Pause)
+        {
+            Debug.Log("Upgade Screen");
+        }
+
+        if (prevGlobalState == State.GlobalState.Pause)
+        {
+            Debug.Log("Resume Game");
+        }
     }
 
     IEnumerator LastChargeLerp(int speed, float startValue)

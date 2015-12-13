@@ -5,8 +5,6 @@ using DG.Tweening;
 public class Turret : Enemy
 {
     [Space]
-    [SerializeField]
-    private GameObject bulletPrefab;
     [SerializeField, Range(1, 10)]
     private int shotsPerRound = 3;
 
@@ -14,7 +12,7 @@ public class Turret : Enemy
     private Transform bulletSpawn;
 
     private bool firing = false;
-    private float firingTimer = 0f;
+    private float firingTimer = 1f;
 
     override protected void Start ()
     {
@@ -31,9 +29,9 @@ public class Turret : Enemy
         if (currentState == EnemyState.Attack)
         {
             Vector3 directionVector = Dragon.dragon.transform.position - transform.position;
-            cannon.transform.rotation = Quaternion.Slerp(cannon.transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(directionVector.y, directionVector.x)), 0.1f);
+            cannon.transform.rotation = Quaternion.Slerp(cannon.transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(directionVector.y, directionVector.x)), 0.2f);
 
-            if (!firing && firingTimer >= 1f)
+            if (!firing && firingTimer >= 0.5f)
             {
                 StartCoroutine(FiringCoroutine());
             }
@@ -57,7 +55,16 @@ public class Turret : Enemy
 
             cannon.transform.DOScale(1f, 0);
 
-            ObjectPool.CreateEnemyBullet(bulletSpawn.position, bulletSpawn.rotation, 400f);
+            GameObject bullet = ObjectPool.CreateEnemyBullet(bulletSpawn.position, bulletSpawn.rotation, 400f);
+
+            if (bulletSpawn.right.x <= 0)
+            {
+                bullet.transform.parent = StageManager.Stage.transform;
+            }
+            else
+            {
+                bullet.transform.parent = null;
+            }
         }
 
         firing = false;
