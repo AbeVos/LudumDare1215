@@ -60,10 +60,8 @@ public class UIController : MonoBehaviour
             startValue -= Time.deltaTime * speed;
             chargeFill.color = Color.Lerp(Color.white, Color.blue, startValue/100f);
             Charge.value = Mathf.Lerp(0,100, startValue/100f);
-            Debug.Log(startValue);
             yield return new WaitForEndOfFrame();
         }
-
 
         lastChargeLerping = false;
     }
