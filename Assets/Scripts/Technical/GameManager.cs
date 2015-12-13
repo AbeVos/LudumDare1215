@@ -49,4 +49,9 @@ public class GameManager : MonoBehaviour
             State.SetState(State.GlobalState.Lose);
         }
     }
+
+    public static void LevelUp ()
+    {
+        State.SetState(State.GlobalState.Pause);
+    }
 }
