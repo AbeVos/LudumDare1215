@@ -20,11 +20,11 @@ public class Dragon : MonoBehaviour, GameActor
     private float responseSpeed = 7.5f;
 
     [Header("Weapon Speeds")]
-    [SerializeField, Range(10, 30)]
+    [SerializeField, Range(10, 40)]
     private float chargeSpeed = 10;
-    [SerializeField, Range(1, 30)]
+    [SerializeField, Range(1, 40)]
     private float heatUpSpeed = 10;
-    [SerializeField, Range(1, 30)]
+    [SerializeField, Range(1, 40)]
     private float coolDownSpeed = 10;
     [SerializeField, Range(0.05f, 1f)]
     private float FireRatePrimary = 0.2f;
@@ -32,10 +32,12 @@ public class Dragon : MonoBehaviour, GameActor
     private float BulletSpeed = 0.2f;
 
     private bool coroutineRunning = false;
+    private bool burstRunning = false;
     /// <summary>Heat is at 100%, primary can only start again at 0% heat</summary>
     private static bool primaryOverheat;
     private WeaponState currentState;
     private Vector3 lastWorldPosition;
+    private AudioSource source;
     #endregion
 
     #region statics
@@ -98,6 +100,7 @@ public class Dragon : MonoBehaviour, GameActor
     void Start()
     {
         lastWorldPosition = transform.position;
+        source = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -105,7 +108,9 @@ public class Dragon : MonoBehaviour, GameActor
         if (State.Current == State.GlobalState.Game)
         {
             //  Move the dragon in screen space
-            transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(InputManager.MousePosition), Time.deltaTime * responseSpeed);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
+            worldPos.z = 0;
+            transform.position = Vector3.Lerp(lastWorldPosition, worldPos, Time.deltaTime * responseSpeed);
             lastWorldPosition = transform.position;
         }
 
@@ -172,38 +177,32 @@ public class Dragon : MonoBehaviour, GameActor
         {
             StartCoroutine(primaryCoroutine());
         }
-}
+    }
 
-IEnumerator primaryCoroutine()
+    IEnumerator primaryCoroutine()
     {
         coroutineRunning = true;
+        source.PlayOneShot(source.clip);
         ObjectPool.CreatePlayerBullet(
             transform.position, Quaternion.identity, BulletSpeed)
             .transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
 
-        CameraBehaviour.ScreenShake(FireRatePrimary/2f, Random.Range(0.3f, 0.45f), true);
+        CameraBehaviour.ScreenShake(FireRatePrimary / 2f, Random.Range(0.3f, 0.45f), true);
         yield return new WaitForSeconds(FireRatePrimary);
         coroutineRunning = false;
     }
 
-    IEnumerator secondaryCoroutine(float time)
+    IEnumerator secondaryCoroutine(float speed, float time)
     {
-        Debug.Log("Time " + time);
-        ObjectPool.CreatePlayerBullet(
-            transform.position, Quaternion.identity, BulletSpeed)
-            .transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
-        yield return new WaitForSeconds(1f);
-        if (time > 0)
-        {
-            time--;
-            StartCoroutine(secondaryCoroutine(time));
-        }
-
+        burstRunning = true;
+        yield return new WaitForSeconds(speed);
+        burstRunning = false;
     }
 
     private void FireSecondary()
     {
-        StartCoroutine(secondaryCoroutine(3));
+        StartCoroutine(secondaryCoroutine(0.05f, 2f));
+        
     }
 
     #region Buttons
