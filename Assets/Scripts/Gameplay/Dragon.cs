@@ -182,7 +182,10 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void InputManager_OnPrimaryButtonUp()
     {
-        SetState(WeaponState.Idle);
+        if (currentState != WeaponState.SecondaryActive)
+        {
+            SetState(WeaponState.Idle);
+        }
     }
 
     private void InputManager_OnSecondaryButtonDown()
