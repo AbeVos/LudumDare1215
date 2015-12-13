@@ -108,7 +108,9 @@ public class Dragon : MonoBehaviour, GameActor
         if (State.Current == State.GlobalState.Game)
         {
             //  Move the dragon in screen space
-            transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(InputManager.MousePosition), Time.deltaTime * responseSpeed);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
+            worldPos.z = 0;
+            transform.position = Vector3.Lerp(lastWorldPosition, worldPos, Time.deltaTime * responseSpeed);
             lastWorldPosition = transform.position;
         }
 
