@@ -28,7 +28,7 @@ public class Dragon : MonoBehaviour, GameActor
 
 
     /// <summary>Heat is at 100%, primary can only start again at 0% heat</summary>
-    private bool primaryOverheat;
+    private static bool primaryOverheat;
     private WeaponState currentState;
     private Vector3 lastWorldPosition;
     #endregion
@@ -71,6 +71,11 @@ public class Dragon : MonoBehaviour, GameActor
             if (value <= 100 && value >= 0) { _heat = value; }
         }
     }
+    public static bool Overheat
+    {
+        get { return primaryOverheat; }
+        private set { primaryOverheat = value; }
+    }
     #endregion
 
     void OnEnable()
@@ -99,23 +104,33 @@ public class Dragon : MonoBehaviour, GameActor
             lastWorldPosition = transform.position;
         }
 
-        
-
         switch (currentState)
         {
             case WeaponState.Idle:
                 Heat -= Time.deltaTime * coolDownSpeed;
+                if (Heat < 5)
+                {
+                    Overheat = false;
+                }
                 Charge = 0;
                 break;
+
             case WeaponState.PrimaryActive:
                 FirePrimary();
                 Heat += Time.deltaTime * heatUpSpeed;
+                if (Heat >= 99)
+                {
+                    SetState(WeaponState.Idle);
+                    Overheat = true;
+                }
                 Charge = 0;
                 break;
+
             case WeaponState.SecondaryFired:
                 Charge = 0;
-                SetState( WeaponState.Idle);
+                SetState(WeaponState.Idle);
                 break;
+
             case WeaponState.SecondaryActive:
                 Heat -= Time.deltaTime * coolDownSpeed;
                 Charge += Time.deltaTime * chargeSpeed;
@@ -174,7 +189,7 @@ public class Dragon : MonoBehaviour, GameActor
     {
         if (Charge <= 0)
         {
-            SetState(WeaponState.SecondaryActive); 
+            SetState(WeaponState.SecondaryActive);
         }
     }
 
@@ -182,7 +197,7 @@ public class Dragon : MonoBehaviour, GameActor
     {
         SetState(WeaponState.Idle);
 
-        if ( Charge > 95f)
+        if (Charge > 95f)
         {
             FireSecondary();
             SetState(WeaponState.SecondaryFired);
