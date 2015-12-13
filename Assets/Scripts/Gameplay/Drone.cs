@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Drone : Enemy
 {
-    [Space]
     [SerializeField]
     int explosionDamage = 5;
 
@@ -31,6 +30,7 @@ public class Drone : Enemy
                 Dragon.dragon.Hit(explosionDamage);
 
                 SetState(EnemyState.Death);
+                
 
                 //Debug.Break();
             }
@@ -51,4 +51,5 @@ public class Drone : Enemy
             transform.parent = null;
         }
     }
+
 }
