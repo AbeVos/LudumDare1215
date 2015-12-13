@@ -22,7 +22,8 @@ public class InputManager : MonoBehaviour
 
     public static Vector3 MousePosition
     {
-        get {
+        get
+        {
             Vector3 mousePosition = Input.mousePosition;
             mousePosition.z = -Camera.main.transform.position.z;
             return mousePosition;
@@ -40,17 +41,27 @@ public class InputManager : MonoBehaviour
     #region Setup
     void Start()
     {
-    //    mousePosition = Vector3.zero;
-    //    lastWorldPosition = transform.position;
     }
     #endregion
 
     void Update()
     {
-        // move the dragon in screen space
-        //mousePosition = Input.mousePosition;
-        //mousePosition.z = dragonToCameraDistance;
-        //transform.position = Vector3.Lerp(lastWorldPosition, Camera.main.ScreenToWorldPoint(mousePosition), Time.deltaTime * responseSpeed);
-        //lastWorldPosition = transform.position;
+        if (Input.GetMouseButtonUp(0) && OnPrimaryButtonUp != null)
+        {
+            OnPrimaryButtonUp();
+        }
+        else if (Input.GetMouseButtonDown(0) && OnPrimaryButtonDown != null)
+        {
+            OnPrimaryButtonDown();
+        }
+
+        if (Input.GetMouseButtonUp(1) && OnSecondaryButtonUp != null)
+        {
+            OnSecondaryButtonUp();
+        }
+        else if (Input.GetMouseButtonDown(1) && OnSecondaryButtonDown != null)
+        {
+            OnSecondaryButtonDown();
+        }
     }
 }

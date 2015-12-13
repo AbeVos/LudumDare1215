@@ -18,6 +18,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         Death
     }
 
+    [Header("General Enemy Settings")]
     [SerializeField]
     private int healthPoints = 10;
     [SerializeField]
@@ -30,10 +31,13 @@ public abstract class Enemy : MonoBehaviour, GameActor
     //  Built-in Functions  //
     //////////////////////////
 
-    void Awake ()
+    void OnEnable ()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+    }
 
+    protected virtual void Start ()
+    {
         SetState(EnemyState.Spawn);
     }
 
@@ -50,11 +54,16 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
     }
 
+    void OnDisable ()
+    {
+        State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
+    }
+
     //////////////////////////
     //  Delegate Functions  //
     //////////////////////////
 
-    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    protected virtual void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
     }
 
@@ -76,7 +85,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
     //  Private Functions  //
     /////////////////////////
 
-    protected void SetState (EnemyState newState)
+    protected virtual void SetState (EnemyState newState)
     {
         stateTimer = 0;
 
@@ -89,7 +98,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
         else if (newState == EnemyState.Alarmed)
         {
-            Debug.Log("Wablief");
+            //Debug.Log("Wablief");
             transform.DOScale(1.1f, 0.1f).OnComplete( () =>
             {
                 transform.DOScale(1f, 0.1f);
@@ -98,8 +107,12 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
         else if (newState == EnemyState.Death)
         {
-            Debug.Log(name + " was killed.");
-            transform.DOScale(1.2f, 0.35f).OnComplete( () => Destroy(gameObject) );
+            //Debug.Log(name + " was killed.");
+            transform.DOScale(1.2f, 0.35f).OnComplete( () =>
+            {
+                CameraBehaviour.ScreenShake(0.5f, 0.5f,false);
+                Destroy(gameObject);
+            } );
         }
     }
 }
