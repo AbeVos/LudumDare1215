@@ -47,10 +47,12 @@ public class Turret : Enemy
 
         for (int i = 0; i < shotsPerRound; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation) as GameObject;
-            bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.forward * 100f, ForceMode2D.Force);
+            //GameObject bullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation) as GameObject;
+            //bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.forward * 100f, ForceMode2D.Force);
 
-            yield return new WaitForSeconds(0.3f);
+            ObjectPool.CreateEnemyBullet(bulletSpawn.position, bulletSpawn.rotation, 0.2f);
+
+            yield return new WaitForSeconds(0.1f);
         }
 
         firing = false;
