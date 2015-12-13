@@ -98,7 +98,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
         else if (newState == EnemyState.Alarmed)
         {
-            Debug.Log("Wablief");
+            //Debug.Log("Wablief");
             transform.DOScale(1.1f, 0.1f).OnComplete( () =>
             {
                 transform.DOScale(1f, 0.1f);

@@ -23,6 +23,10 @@ public class ObjectPool : MonoBehaviour
     private static List<Bullet> enemyBulletsInUse;
     private static List<Bullet> enemyBulletsAvailable;
 
+    private List<Bullet> toRemove;
+
+    private Plane[] cameraPlanes;
+
     void Awake ()
     {
         staticPlayerBulletPrefab = playerBulletPrefab;
@@ -32,18 +36,38 @@ public class ObjectPool : MonoBehaviour
         staticEnemyBulletPrefab = enemyBulletPrefab;
         enemyBulletsInUse = new List<Bullet>();
         enemyBulletsAvailable = new List<Bullet>();
+
+        toRemove = new List<Bullet>();
+
+        cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
     }
 
     void Update()
     {
         foreach (Bullet bullet in playerBulletsInUse)
         {
-            bullet.transform.position += bullet.transform.forward * bullet.speed;
+            bullet.transform.position += bullet.transform.right * bullet.speed;
         }
 
         foreach (Bullet bullet in enemyBulletsInUse)
         {
             bullet.transform.position += bullet.transform.right * bullet.speed;
+
+            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
+            {
+                toRemove.Add(bullet);
+                //RemoveEnemyBullet(bullet);
+            }
+        }
+
+        if (toRemove.Count > 0)
+        {
+            foreach(Bullet bullet in toRemove)
+            {
+                RemoveEnemyBullet(bullet);
+            }
+
+            toRemove.Clear();
         }
     }
 
@@ -137,5 +161,13 @@ public class ObjectPool : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private static void RemoveEnemyBullet(Bullet bullet)
+    {
+        bullet.transform.gameObject.SetActive(false);
+
+        enemyBulletsInUse.Remove(bullet);
+        enemyBulletsAvailable.Add(bullet);
     }
 }
