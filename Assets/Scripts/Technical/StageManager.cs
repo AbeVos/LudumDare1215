@@ -4,13 +4,17 @@ using System.Collections.Generic;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject buildingPrefab;
-
+    [Space]
     [Header("Enemy Prefabs")]
     [SerializeField]
     private GameObject dronePrefab;
+    [SerializeField]
+    private GameObject turretPrefab;
 
+    [Space]
+    [Header("Stage")]
+    [SerializeField]
+    private GameObject buildingPrefab;
     [SerializeField]
     private float levelSpeed = 0.1f;
     [SerializeField]
@@ -42,7 +46,7 @@ public class StageManager : MonoBehaviour
 
             if (timer >= buildingSpawnInterval)
             {
-                SpawnBuilding();
+                SpawnBuilding((Random.Range(0f, 1f) > 0.5f) ? true : false);
                 Invoke("SpawnDrone", buildingSpawnInterval / 2);
 
                 timer = 0;
@@ -88,7 +92,7 @@ public class StageManager : MonoBehaviour
     {
         if (newGlobalState == State.GlobalState.Game)
         {
-            SpawnBuilding();
+            SpawnBuilding(false);
         }
     }
 
@@ -98,18 +102,24 @@ public class StageManager : MonoBehaviour
     //  Private Functions  //
     /////////////////////////
 
-    private void SpawnBuilding ()
+    private void SpawnBuilding (bool spawnTurret)
     {
         GameObject building = Instantiate(buildingPrefab, new Vector3(20, Random.Range(-5, -15), 0), Quaternion.identity) as GameObject;
 
         building.transform.parent = transform;
+
+        if (spawnTurret)
+        {
+            GameObject turret = Instantiate(turretPrefab, building.transform.FindChild("TurretSpawn").position, Quaternion.identity) as GameObject;
+            turret.transform.parent = building.transform;
+        }
 
         buildings.Add(building);
     }
 
     private void SpawnDrone ()
     {
-        GameObject drone = Instantiate(dronePrefab, new Vector3(20, Random.Range(0f, 16f), 0), Quaternion.identity) as GameObject;
+        GameObject drone = Instantiate(dronePrefab, new Vector3(20, Random.Range(4f, 16f), 0), Quaternion.identity) as GameObject;
 
         drone.transform.parent = transform;
     }
