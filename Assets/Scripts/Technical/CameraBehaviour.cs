@@ -19,6 +19,7 @@ public class CameraBehaviour : MonoBehaviour
         }
         else
         {
+            self.transform.DOKill();
             self.transform.DOShakePosition(duration, magnitude);
         }
     }
