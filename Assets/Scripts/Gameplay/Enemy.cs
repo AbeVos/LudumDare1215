@@ -110,7 +110,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
             Debug.Log(name + " was killed.");
             transform.DOScale(1.2f, 0.35f).OnComplete( () =>
             {
-                CameraBehaviour.ScreenShake(0.5f, 0.5f);
+                CameraBehaviour.ScreenShake(0.5f, 0.5f,false);
                 Destroy(gameObject);
             } );
         }
