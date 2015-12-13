@@ -117,16 +117,14 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
         else if (newState == EnemyState.Death)
         {
-            //Debug.Log(name + " was killed.");
-            var source = GetComponent<AudioSource>();
-            if (source != null) { source.Play(); }
+            
+            float playLength = AudioManager.PlayClip("droneDeath", true);
 
-
-            transform.DOScale(1.4f, source.clip.length/4f).OnComplete(() =>
-           {
-               CameraBehaviour.ScreenShake(0.3f, source.clip.length / 1.25f, false);
-               Destroy(gameObject);
-           });
+            transform.DOScale(1.4f, playLength / 4f).OnComplete(() =>
+             {
+                 CameraBehaviour.ScreenShake(0.3f, playLength / 1.25f, false);
+                 Destroy(gameObject);
+             });
         }
     }
 }
