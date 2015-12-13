@@ -19,7 +19,9 @@ public class State : MonoBehaviour
         /// <summary>Game lost.</summary>
         Lose,
         /// <summary>Game Over, move on to new scene.</summary>
-        End
+        End,
+        /// <summary>Paused State for upgrading.</summary>
+        Pause,
     }
 
     public delegate void GlobalStateChangedDelegate(GlobalState prevGlobalState, GlobalState newGlobalState);

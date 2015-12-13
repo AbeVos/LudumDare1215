@@ -3,9 +3,18 @@ using System.Collections;
 
 public class Drone : Enemy
 {
-    [Space]
     [SerializeField]
-    int explosionDamage = 5;
+    private int explosionDamage = 5;
+
+    private Transform body;
+    private float prevX = 0;
+
+    protected override void Start ()
+    {
+        base.Start();
+
+        body = transform.FindChild("body");
+    }
 
     protected override void Update ()
     {
@@ -16,8 +25,13 @@ public class Drone : Enemy
             if (currentState == EnemyState.Attack)
             {
                 transform.position = Vector3.Lerp(transform.position, Dragon.dragon.transform.position, Time.deltaTime);
+
+                //body.transform.eulerAngles = Vector3.Lerp(body.transform.eulerAngles, ((prevX - transform.position.x < 0) ? 25 : 335) * Vector3.forward + 180 * Vector3.up, 0.1f);
+                body.transform.eulerAngles = Vector3.Lerp(body.transform.eulerAngles, new Vector3(0, ((prevX - transform.position.x < 0) ? -1 : 1) * 60 + 180f, 0), 0.1f);
             }
         }
+
+        prevX = transform.position.x;
     }
 
     override protected void OnTriggerEnter2D(Collider2D collider)
@@ -31,6 +45,7 @@ public class Drone : Enemy
                 Dragon.dragon.Hit(explosionDamage);
 
                 SetState(EnemyState.Death);
+                
 
                 //Debug.Break();
             }
@@ -51,4 +66,5 @@ public class Drone : Enemy
             transform.parent = null;
         }
     }
+
 }

@@ -31,17 +31,17 @@ public abstract class Enemy : MonoBehaviour, GameActor
     //  Built-in Functions  //
     //////////////////////////
 
-    void OnEnable ()
+    void OnEnable()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
     }
 
-    protected virtual void Start ()
+    protected virtual void Start()
     {
         SetState(EnemyState.Spawn);
     }
 
-    protected virtual void Update ()
+    protected virtual void Update()
     {
         if (State.Current == State.GlobalState.Game)
         {
@@ -54,7 +54,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
     }
 
-    protected virtual void OnTriggerEnter2D (Collider2D collider)
+    protected virtual void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.layer == 13)
         {
@@ -64,7 +64,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
     }
 
-    void OnDisable ()
+    void OnDisable()
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
     }
@@ -95,7 +95,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
     //  Private Functions  //
     /////////////////////////
 
-    protected virtual void SetState (EnemyState newState)
+    protected virtual void SetState(EnemyState newState)
     {
         stateTimer = 0;
 
@@ -109,20 +109,24 @@ public abstract class Enemy : MonoBehaviour, GameActor
         else if (newState == EnemyState.Alarmed)
         {
             //Debug.Log("Wablief");
-            transform.DOScale(1.1f, 0.1f).OnComplete( () =>
-            {
-                transform.DOScale(1f, 0.1f);
-                SetState(EnemyState.Attack);
-            } );
+            transform.DOScale(1.1f, 0.1f).OnComplete(() =>
+           {
+               transform.DOScale(1f, 0.1f);
+               SetState(EnemyState.Attack);
+           });
         }
         else if (newState == EnemyState.Death)
         {
             //Debug.Log(name + " was killed.");
-            transform.DOScale(1.4f, 0.1f).OnComplete( () =>
-            {
-                CameraBehaviour.ScreenShake(0.3f, 0.8f, false);
-                Destroy(gameObject);
-            } );
+            var source = GetComponent<AudioSource>();
+            if (source != null) { source.Play(); }
+
+
+            transform.DOScale(1.4f, source.clip.length/4f).OnComplete(() =>
+           {
+               CameraBehaviour.ScreenShake(0.3f, source.clip.length / 1.25f, false);
+               Destroy(gameObject);
+           });
         }
     }
 }

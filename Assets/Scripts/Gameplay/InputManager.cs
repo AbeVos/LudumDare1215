@@ -30,9 +30,14 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    public static KeyCode PrimaryButton { get; set; }
+    public static KeyCode SecondaryButton { get; set; }
+    public static bool keysRemaped { get; set; }
+
     #region Public functions
 
     #endregion
+
 
     #region Built-in functions
 

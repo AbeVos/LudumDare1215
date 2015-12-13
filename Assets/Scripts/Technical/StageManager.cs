@@ -20,9 +20,16 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     private float buildingSpawnInterval = 10f;
 
+    private static StageManager self;
+
     private float timer = 0f;
 
     private List<GameObject> buildings;
+
+    public static StageManager Stage
+    {
+        get { return self; }
+    }
 
     //////////////////////////
     //  Built-in Functions  //
@@ -33,6 +40,8 @@ public class StageManager : MonoBehaviour
     void Awake ()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+
+        self = this;
 
         buildings = new List<GameObject>();
     }
