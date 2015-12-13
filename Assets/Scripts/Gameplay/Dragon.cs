@@ -101,6 +101,7 @@ public class Dragon : MonoBehaviour, GameActor
     {
         lastWorldPosition = transform.position;
         source = GetComponent<AudioSource>();
+        Health = 100;
     }
 
     void Update()
@@ -179,6 +180,12 @@ public class Dragon : MonoBehaviour, GameActor
         }
     }
 
+
+    private void FireSecondary()
+    {
+        StartCoroutine(secondaryCoroutine(0.05f, 2f));
+    }
+
     IEnumerator primaryCoroutine()
     {
         coroutineRunning = true;
@@ -199,11 +206,6 @@ public class Dragon : MonoBehaviour, GameActor
         burstRunning = false;
     }
 
-    private void FireSecondary()
-    {
-        StartCoroutine(secondaryCoroutine(0.05f, 2f));
-        
-    }
 
     #region Buttons
 
