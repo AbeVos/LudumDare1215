@@ -36,6 +36,7 @@ public class Drone : Enemy
             }
             else
             {
+                Debug.Log("Ouch");
                 SetState(EnemyState.Death);
             }
         }
