@@ -154,16 +154,16 @@ public class Dragon : MonoBehaviour, GameActor
             {
                 float speed = ((transform.position.x - lastWorldPos.x));
                 lastVelocity = speed;
-                anim.SetFloat("Speed", speed );
+                anim.SetFloat("Speed", speed);
                 //  anim.SetFloat("Speed", Mathf.Lerp(lastVelocity, speed, Time.deltaTime) );
-              //  Debug.LogError(Mathf.Lerp(lastVelocity, speed, Time.deltaTime).ToString("#.0"));
+                //  Debug.LogError(Mathf.Lerp(lastVelocity, speed, Time.deltaTime).ToString("#.0"));
             }
             else
             {
                 anim.SetFloat("Speed", 1f);
             }
 
-            
+
 
             switch (currentState)
             {
@@ -232,7 +232,12 @@ public class Dragon : MonoBehaviour, GameActor
     {
         if (newGlobalState == State.GlobalState.Initialize)
         {
-            transform.DOMove(CameraBehaviour.StartPosition, 1f).OnComplete(() => { transform.position = CameraBehaviour.StartPosition; });
+           transform.DOMove(CameraBehaviour.StartPosition, 1f).OnComplete(() =>
+           {
+               transform.position = CameraBehaviour.StartPosition;
+               AudioManager.PlayClip("dragonLong", true);
+           });
+
         }
         else if (newGlobalState == State.GlobalState.Pause)
         {
@@ -240,6 +245,7 @@ public class Dragon : MonoBehaviour, GameActor
         }
         else if (newGlobalState == State.GlobalState.Lose)
         {
+            AudioManager.PlayClip("dragonShort", true);
             GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         }
     }
