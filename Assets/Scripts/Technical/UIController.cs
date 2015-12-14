@@ -4,11 +4,13 @@ using System.Collections;
 
 public class UIController : MonoBehaviour
 {
+    #region Variables
     private Slider Epx, Heat, Charge;
     private Image heatFill, chargeFill;
     private float lastCharge;
     private bool lastChargeLerping = false;
-
+    #endregion
+    #region Setup
     void OnEnable ()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
@@ -23,11 +25,19 @@ public class UIController : MonoBehaviour
         heatFill = Heat.transform.GetChild(1).GetComponentInChildren<Image>();
         chargeFill = Charge.transform.GetChild(1).GetComponentInChildren<Image>();
     }
-
+    #endregion
     // Update is called once per frame
     void Update()
     {
+        var exp = UpgradeManger.GetExpIntervals();
+
         Epx.value = Dragon.Exp;
+
+        if (Dragon.Exp >= exp[0])
+        {
+            GameManager.LevelUp();
+            transform.GetChild(4).gameObject.SetActive(true);
+        }
 
         Heat.value = Dragon.Heat;
         if (Dragon.Heat > 80 && !Dragon.Overheat)
@@ -42,7 +52,6 @@ public class UIController : MonoBehaviour
         {
             heatFill.color = Color.white;
         }
-
 
         if (lastCharge > 0 && Dragon.Charge == 0)
         {
