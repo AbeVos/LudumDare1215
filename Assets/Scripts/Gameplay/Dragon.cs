@@ -19,6 +19,11 @@ public class Dragon : MonoBehaviour, GameActor
     [SerializeField, Range(4, 10)]
     private float responseSpeed = 7.5f;
 
+    [Space]
+    [SerializeField]
+    private GameObject bombPrefab;
+
+    [Space]
     [Header("Weapon Speeds")]
     [SerializeField, Range(10, 40)]
     private float chargeSpeed = 10;
@@ -38,6 +43,9 @@ public class Dragon : MonoBehaviour, GameActor
     private WeaponState currentState;
     private Vector3 lastWorldPosition;
     private AudioSource source;
+
+    private Transform primaryBarrel;
+    private Transform secondaryBarrel;
     #endregion
 
     #region statics
@@ -108,7 +116,7 @@ public class Dragon : MonoBehaviour, GameActor
         self = this;
     }
 
-    void Start()
+    void Start ()
     {
         lastWorldPosition = transform.position;
         source = GetComponent<AudioSource>();
@@ -116,9 +124,12 @@ public class Dragon : MonoBehaviour, GameActor
 
         PrimaryDamage = 1;
         SecondaryDamage = 5;
+
+        primaryBarrel = transform.Find("PrimaryBarrel");
+        secondaryBarrel = transform.Find("SecondaryBarrel");
     }
 
-    void Update()
+    void Update ()
     {
         if (State.Current == State.GlobalState.Game)
         {
@@ -151,6 +162,7 @@ public class Dragon : MonoBehaviour, GameActor
                     break;
 
                 case WeaponState.SecondaryFired:
+
                     Charge = 0;
                     SetState(WeaponState.Idle);
                     break;
@@ -163,26 +175,37 @@ public class Dragon : MonoBehaviour, GameActor
         }
     }
 
-    void OnDisable()
+    void OnDisable ()
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
     }
     #endregion
 
     #region Abe interface
-    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState){ }
+    private void State_OnGlobalStateChanged (State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    {
+        if (newGlobalState == State.GlobalState.Pause)
+        {
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
 
-    private void SetState(WeaponState newState)
+        if (prevGlobalState == State.GlobalState.Pause)
+        {
+
+        }
+    }
+
+    private void SetState (WeaponState newState)
     {
         WeaponState prevState = currentState;
         currentState = newState;
     }
 
-    public void Hit(int damage)
+    public void Hit (int damage)
     {
         Health -= damage;
     }
-#endregion
+    #endregion
 
     #region Attacks
     private void FirePrimary()
@@ -192,10 +215,10 @@ public class Dragon : MonoBehaviour, GameActor
             StartCoroutine(primaryCoroutine());
         }
     }
-
-
+    
     private void FireSecondary()
     {
+        Instantiate(bombPrefab, secondaryBarrel.position, Quaternion.identity);
         StartCoroutine(secondaryCoroutine(0.05f, 2f));
     }
 

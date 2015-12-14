@@ -143,6 +143,11 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    void OnDisable ()
+    {
+        State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
+    }
+
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
         //  Remove all bullets when the game is paused, because games are hard :(
