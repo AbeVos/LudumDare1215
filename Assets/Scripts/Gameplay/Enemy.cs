@@ -66,9 +66,9 @@ public abstract class Enemy : MonoBehaviour, GameActor
             else
             {
                 Hit(Dragon.SecondaryDamage);
+                //Debug.Log(name + " has " + healthPoints + " healthpoints left.");
             }
-
-
+            
             ObjectPool.RemovePlayerBullet(collider.transform);
         }
     }
