@@ -31,7 +31,7 @@ public class Drone : Enemy
         {
             if (currentState == EnemyState.Attack)
             {
-                transform.position = Vector3.Lerp(transform.position, Dragon.dragon.transform.position, Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, Dragon.dragon.transform.position, Time.deltaTime * 2f);
 
                 //body.transform.eulerAngles = Vector3.Lerp(body.transform.eulerAngles, ((prevX - transform.position.x < 0) ? 25 : 335) * Vector3.forward + 180 * Vector3.up, 0.1f);
                 body.transform.eulerAngles = Vector3.Lerp(body.transform.eulerAngles, new Vector3(0, ((prevX - transform.position.x < 0) ? -1 : 1) * 60 + 180f, 0), 0.1f);

@@ -70,6 +70,8 @@ public class Turret : Enemy
             {
                 bullet.transform.parent = null;
             }
+
+            AudioManager.PlayClip("primaryFire", true);
         }
 
         firing = false;
