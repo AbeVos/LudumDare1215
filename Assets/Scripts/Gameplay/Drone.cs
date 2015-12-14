@@ -9,11 +9,18 @@ public class Drone : Enemy
     private Transform body;
     private float prevX = 0;
 
+    private Transform[] rotors;
+
     protected override void Start ()
     {
         base.Start();
 
         body = transform.FindChild("body");
+        rotors = new Transform[4];
+        for (int i = 0; i < 4; i++)
+        {
+            rotors[i] = transform.GetChild(0).GetChild(0).GetChild(i);
+        }
     }
 
     protected override void Update ()
@@ -29,6 +36,11 @@ public class Drone : Enemy
                 //body.transform.eulerAngles = Vector3.Lerp(body.transform.eulerAngles, ((prevX - transform.position.x < 0) ? 25 : 335) * Vector3.forward + 180 * Vector3.up, 0.1f);
                 body.transform.eulerAngles = Vector3.Lerp(body.transform.eulerAngles, new Vector3(0, ((prevX - transform.position.x < 0) ? -1 : 1) * 60 + 180f, 0), 0.1f);
             }
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            rotors[i].eulerAngles += Vector3.up;
         }
 
         prevX = transform.position.x;

@@ -26,7 +26,7 @@ public class StageManager : MonoBehaviour
     private static StageManager self;
 
     private static AnimationCurve staticDifficultyCurve;
-    private static float difficultyTime = 0f;
+    private static float difficultyTime = 0;
 
     private float timer = 0f;
 
@@ -39,7 +39,7 @@ public class StageManager : MonoBehaviour
     public static float DifficultyTimer
     {
         get { return difficultyTime; }
-        }
+    }
 
     //////////////////////////
     //  Built-in Functions  //
@@ -64,11 +64,15 @@ public class StageManager : MonoBehaviour
         {
             Debug.Log(GetDifficulty());
         }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            //difficultyTime += 10;
+        }
 
         if (State.Current == State.GlobalState.Game)
         {
             levelSpeed = 0.1f * GetDifficulty();
-            buildingSpawnInterval = 5f - GetDifficulty();
+            buildingSpawnInterval = 6f - GetDifficulty();
 
             //  Move level to the left constantly.
             transform.position -= Vector3.right * levelSpeed;
@@ -87,7 +91,7 @@ public class StageManager : MonoBehaviour
 
         foreach (GameObject building in buildings)
         {
-            if (building.transform.position.x < -20)
+            if (building.transform.position.x < -24)
             {
                 buildings.Remove(building);
                 Destroy(building);
@@ -102,10 +106,12 @@ public class StageManager : MonoBehaviour
 
         if (collision.gameObject.layer == 12)
         {
+            AudioManager.PlayClip("impactWall", true);
             ObjectPool.RemoveEnemyBullet(collision.transform);
         }
         else if (collision.gameObject.layer == 13 || collision.gameObject.GetComponent<PlayerBomb>() == null)
         {
+            AudioManager.PlayClip("impactWall", true);
             ObjectPool.RemovePlayerBullet(collision.transform);
         }
     }
@@ -140,7 +146,7 @@ public class StageManager : MonoBehaviour
 
     private void SpawnBuilding (bool spawnTurret)
     {
-        GameObject building = Instantiate(buildingPrefab, new Vector3(20, Random.Range(-5, -15), 0), Quaternion.identity) as GameObject;
+        GameObject building = Instantiate(buildingPrefab, new Vector3(28, Random.Range(-5, -15), 0), Quaternion.identity) as GameObject;
 
         building.transform.parent = transform;
 
