@@ -43,7 +43,7 @@ public class Dragon : MonoBehaviour, GameActor
     #region statics
     /// <summary>Static reference to self.</summary>
     private static Dragon self;
-    private static int _health, _exp = 0;
+    private static int _health, _exp, _primaryDamage, _secondaryDamage = 0;
     private static float _charge, _heat = 0f;
     #endregion
 
@@ -83,6 +83,16 @@ public class Dragon : MonoBehaviour, GameActor
         get { return primaryOverheat; }
         private set { primaryOverheat = value; }
     }
+    public static int PrimaryDamage
+    {
+        get { return _primaryDamage;}
+        set { if (value > 0) { _primaryDamage = value; } }
+    }
+    public static int SecondaryDamage
+    {
+        get { return _secondaryDamage; }
+        set { if (value > 0) { _secondaryDamage = value; } }
+    }
     #endregion
 
     #region Built-in
@@ -103,6 +113,9 @@ public class Dragon : MonoBehaviour, GameActor
         lastWorldPosition = transform.position;
         source = GetComponent<AudioSource>();
         Health = 100;
+
+        PrimaryDamage = 1;
+        SecondaryDamage = 5;
     }
 
     void Update()

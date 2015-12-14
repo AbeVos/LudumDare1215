@@ -58,7 +58,15 @@ public abstract class Enemy : MonoBehaviour, GameActor
     {
         if (collider.gameObject.layer == 13)
         {
-            Hit(1);
+            if (collider.tag == "PrimaryBullet")
+            {
+                Hit(Dragon.PrimaryDamage);
+            }
+            else
+            {
+                Hit(Dragon.SecondaryDamage);
+            }
+
 
             ObjectPool.RemovePlayerBullet(collider.transform);
         }
