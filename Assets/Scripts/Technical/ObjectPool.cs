@@ -10,10 +10,19 @@ public class ObjectPool : MonoBehaviour
         public float speed;
     }
 
+    struct Pickup
+    {
+        public Transform transform;
+        public int value;
+    }
+
     [SerializeField]
     private GameObject playerBulletPrefab;
     [SerializeField]
     private GameObject enemyBulletPrefab;
+
+    [SerializeField]
+    private GameObject xpPickupPrefab;
 
     private static GameObject staticPlayerBulletPrefab;
     private static List<Bullet> playerBulletsInUse;
@@ -23,7 +32,12 @@ public class ObjectPool : MonoBehaviour
     private static List<Bullet> enemyBulletsInUse;
     private static List<Bullet> enemyBulletsAvailable;
 
-    private List<Bullet> toRemove;
+    private static GameObject staticXpPickupPrefab;
+    private static List<Pickup> xpPickupsInUse;
+    private static List<Pickup> xpPickupsAvailable;
+
+    private List<Bullet> bulletsToRemove;
+    private List<Pickup> pickupsToRemove;
 
     private Plane[] cameraPlanes;
 
@@ -37,54 +51,88 @@ public class ObjectPool : MonoBehaviour
         enemyBulletsInUse = new List<Bullet>();
         enemyBulletsAvailable = new List<Bullet>();
 
-        toRemove = new List<Bullet>();
+        staticXpPickupPrefab = xpPickupPrefab;
+        xpPickupsInUse = new List<Pickup>();
+        xpPickupsAvailable = new List<Pickup>();
+
+        bulletsToRemove = new List<Bullet>();
+        pickupsToRemove = new List<Pickup>();
 
         cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
     }
 
     void Update()
     {
+        #region Player Bullets
         foreach (Bullet bullet in playerBulletsInUse)
         {
             bullet.transform.position += bullet.transform.right * bullet.speed;
 
             if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
             {
-                toRemove.Add(bullet);
+                bulletsToRemove.Add(bullet);
                 //RemoveEnemyBullet(bullet);
             }
         }
 
-        if (toRemove.Count > 0)
+        if (bulletsToRemove.Count > 0)
         {
-            foreach (Bullet bullet in toRemove)
+            foreach (Bullet bullet in bulletsToRemove)
             {
                 RemovePlayerBullet(bullet);
             }
 
-            toRemove.Clear();
+            bulletsToRemove.Clear();
         }
+        #endregion
 
+        #region Enemy Bullets
         foreach (Bullet bullet in enemyBulletsInUse)
         {
             //bullet.transform.position += bullet.transform.right * bullet.speed;
 
             if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
             {
-                toRemove.Add(bullet);
+                bulletsToRemove.Add(bullet);
                 //RemoveEnemyBullet(bullet);
             }
         }
 
-        if (toRemove.Count > 0)
+        if (bulletsToRemove.Count > 0)
         {
-            foreach(Bullet bullet in toRemove)
+            foreach(Bullet bullet in bulletsToRemove)
             {
                 RemoveEnemyBullet(bullet);
             }
 
-            toRemove.Clear();
+            bulletsToRemove.Clear();
         }
+        #endregion
+
+        #region XP Pickups
+
+        foreach (Pickup pickup in xpPickupsInUse)
+        {
+            //bullet.transform.position += bullet.transform.right * bullet.speed;
+
+            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, pickup.transform.GetComponent<Collider2D>().bounds))
+            {
+                pickupsToRemove.Add(pickup);
+                //RemoveEnemyBullet(bullet);
+            }
+        }
+
+        if (pickupsToRemove.Count > 0)
+        {
+            foreach (Pickup pickup in pickupsToRemove)
+            {
+                RemoveXpPickup(pickup);
+            }
+
+            pickupsToRemove.Clear();
+        }
+
+        #endregion
     }
 
     public static GameObject CreatePlayerBullet (Vector3 position, Quaternion rotation, float speed)
@@ -197,5 +245,60 @@ public class ObjectPool : MonoBehaviour
 
         enemyBulletsInUse.Remove(bullet);
         enemyBulletsAvailable.Add(bullet);
+    }
+
+    public static GameObject CreateXpPickup (Vector3 position, int value)
+    {
+        //  Check whether there are no bullets available.
+        if (xpPickupsAvailable.Count == 0)
+        {
+            GameObject pickupObject = Instantiate(staticPlayerBulletPrefab, position, Quaternion.identity) as GameObject;
+            pickupObject.transform.parent = StageManager.Stage.transform;
+
+            Pickup pickup;
+            pickup.transform = pickupObject.transform;
+            pickup.value = value;
+
+            xpPickupsInUse.Add(pickup);
+
+            return pickupObject;
+        }
+        else
+        {
+            Pickup pickup = xpPickupsAvailable[0];
+
+            xpPickupsAvailable.Remove(pickup);
+            xpPickupsInUse.Add(pickup);
+
+            pickup.transform.position = position;
+            pickup.transform.rotation = Quaternion.identity;
+            pickup.transform.gameObject.SetActive(true);
+
+            return pickup.transform.gameObject;
+        }
+    }
+
+    public static void RemoveXpPickup (Transform transform)
+    {
+        foreach (Pickup pickup in xpPickupsInUse)
+        {
+            if (pickup.transform.Equals(transform))
+            {
+                pickup.transform.gameObject.SetActive(false);
+
+                xpPickupsInUse.Remove(pickup);
+                xpPickupsAvailable.Add(pickup);
+
+                return;
+            }
+        }
+    }
+
+    private static void RemoveXpPickup (Pickup pickup)
+    {
+        pickup.transform.gameObject.SetActive(false);
+
+        xpPickupsInUse.Remove(pickup);
+        xpPickupsAvailable.Add(pickup);
     }
 }

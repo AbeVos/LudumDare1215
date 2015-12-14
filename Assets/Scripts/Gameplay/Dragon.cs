@@ -127,41 +127,40 @@ public class Dragon : MonoBehaviour, GameActor
             worldPos.z = 0;
             transform.position = Vector3.Lerp(lastWorldPosition, worldPos, Time.deltaTime * responseSpeed);
             lastWorldPosition = transform.position;
-        }
 
-        switch (currentState)
-        {
-            case WeaponState.Idle:
-                Heat -= Time.deltaTime * coolDownSpeed;
-                if (Heat < 5)
-                {
-                    Overheat = false;
-                }
-                Charge = 0;
-                break;
+            switch (currentState)
+            {
+                case WeaponState.Idle:
+                    Heat -= Time.deltaTime * coolDownSpeed;
+                    if (Heat < 5)
+                    {
+                        Overheat = false;
+                    }
+                    Charge = 0;
+                    break;
 
-            case WeaponState.PrimaryActive:
-                FirePrimary();
-                Heat += Time.deltaTime * heatUpSpeed;
-                if (Heat >= 99)
-                {
+                case WeaponState.PrimaryActive:
+                    FirePrimary();
+                    Heat += Time.deltaTime * heatUpSpeed;
+                    if (Heat >= 99)
+                    {
+                        SetState(WeaponState.Idle);
+                        Overheat = true;
+                    }
+                    Charge = 0;
+                    break;
+
+                case WeaponState.SecondaryFired:
+                    Charge = 0;
                     SetState(WeaponState.Idle);
-                    Overheat = true;
-                }
-                Charge = 0;
-                break;
+                    break;
 
-            case WeaponState.SecondaryFired:
-                Charge = 0;
-                SetState(WeaponState.Idle);
-                break;
-
-            case WeaponState.SecondaryActive:
-                Heat -= Time.deltaTime * coolDownSpeed;
-                Charge += Time.deltaTime * chargeSpeed;
-                break;
+                case WeaponState.SecondaryActive:
+                    Heat -= Time.deltaTime * coolDownSpeed;
+                    Charge += Time.deltaTime * chargeSpeed;
+                    break;
+            }
         }
-
     }
 
     void OnDisable()
