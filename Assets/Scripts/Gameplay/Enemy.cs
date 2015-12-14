@@ -92,14 +92,17 @@ public abstract class Enemy : MonoBehaviour, GameActor
 
     public void Hit(int damage)
     {
-        healthPoints -= damage;
-
-        if (healthPoints <= 0)
+        if (currentState != EnemyState.Death)
         {
-            //Dragon.Exp += 20;
-            ObjectPool.CreateXpPickup(transform.position, 20 * (int) Mathf.Max(1, StageManager.GetDifficulty() * 0.5f));
+            healthPoints -= damage;
 
-            SetState(EnemyState.Death);
+            if (healthPoints <= 0)
+            {
+                //Dragon.Exp += 20;
+                ObjectPool.CreateXpPickup(transform.position, 20 * (int)Mathf.Max(1, StageManager.GetDifficulty() * 0.5f));
+
+                SetState(EnemyState.Death);
+            }
         }
     }
 
