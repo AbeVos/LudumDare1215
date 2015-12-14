@@ -35,7 +35,7 @@ public class Turret : Enemy
                 Vector3 directionVector = Dragon.dragon.transform.position - transform.position;
                 cannon.transform.rotation = Quaternion.Slerp(cannon.transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(directionVector.y, directionVector.x)), 0.2f);
 
-                if (!firing && firingTimer >= 0.5f)
+                if (!firing && firingTimer >= 1f)
                 {
                     StartCoroutine(FiringCoroutine());
                 }
