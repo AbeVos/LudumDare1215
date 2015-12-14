@@ -106,7 +106,12 @@ public class StageManager : MonoBehaviour
 
         if (collision.gameObject.layer == 8)
         {
+            AudioManager.PlayClip("dragonWall", true);
             Dragon.dragon.Hit(50);
+        }
+        else if (collision.gameObject.layer == 9 && collision.gameObject.GetComponent<Drone>() != null)
+        {
+            collision.gameObject.GetComponent<Enemy>().Hit(10);
         }
         else if (collision.gameObject.layer == 12)
         {

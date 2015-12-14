@@ -17,6 +17,43 @@ public class AudioManager : MonoBehaviour
     private static Dictionary<string, string> Clips;
     private static AudioSource source;
 
+    private static AudioSource musicSource;
+
+    void Awake()
+    {
+        source = Camera.main.gameObject.GetComponent<AudioSource>();
+        Clips = new Dictionary<string, string>(_clips.Length);
+        for (int i = 0; i < _clips.Length; i++)
+        {
+            Clips.Add(_clips[i].name, _clips[i].clip.name);
+        }
+
+        musicSource = GetComponent<AudioSource>();
+    }
+
+    void OnEnable ()
+    {
+        State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+    }
+
+    void OnDisable ()
+    {
+        State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
+    }
+
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    {
+        if (newGlobalState == State.GlobalState.Pause)
+        {
+            musicSource.Pause();
+        }
+
+        if (prevGlobalState == State.GlobalState.Pause)
+        {
+            musicSource.UnPause();
+        }
+    }
+
     public static float GetClipLegth(string name)
     {
         if (Clips != null)
@@ -58,16 +95,6 @@ public class AudioManager : MonoBehaviour
             return clip.length;
         }
         return 0;
-    }
-
-    void Awake()
-    {
-        source = Camera.main.gameObject.GetComponent<AudioSource>();
-        Clips = new Dictionary<string, string>(_clips.Length);
-        for (int i = 0; i < _clips.Length; i++)
-        {
-            Clips.Add(_clips[i].name, _clips[i].clip.name);
-        }
     }
 
 }

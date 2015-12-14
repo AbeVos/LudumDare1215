@@ -210,6 +210,7 @@ public class Dragon : MonoBehaviour, GameActor
             Debug.Log("Draak");
             if (collision.gameObject.layer == 11)
             {
+                AudioManager.PlayClip("xp", true);
                 //  Remove XpPickup object and add experience to dragon.
                 ObjectPool.RemoveXpPickup(collision.transform);
             }

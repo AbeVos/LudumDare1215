@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         if (newGlobalState == State.GlobalState.Start)
         {
             Debug.Log("Started the game.");
-            //State.SetState(State.GlobalState.Initialize);
+            State.SetState(State.GlobalState.Initialize);
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
