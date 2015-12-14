@@ -37,28 +37,22 @@ public class UIController : MonoBehaviour
         ExpIntervals = UpgradeManger.GetExpIntervals();
         Exp.maxValue = ExpIntervals[Dragon.Rank];
 
-        Debug.LogWarning("DragonRank Start " + Dragon.Rank);
-
-
         for (int i = 0; i < 5; i++)
-        {
-            
+        {      
             if (i >= 1 && i < 5)
             {
                 transform.GetChild(i).GetChild(0).GetComponent<CanvasRenderer>().SetAlpha(0);
-                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
 
-                transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
-                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+                transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
             }
             else
             {
                 transform.GetChild(i).GetComponent<CanvasRenderer>().SetAlpha(0);
-                transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
-            }
-            
+                transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+            } 
         }
-
 
     }
     #endregion
@@ -165,8 +159,6 @@ public class UIController : MonoBehaviour
             HideUpgrades();
         }
     }
-
-
 
     IEnumerator LastChargeLerp(int speed, float startValue)
     {
