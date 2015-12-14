@@ -286,8 +286,8 @@ public class Dragon : MonoBehaviour, GameActor
         source.PlayOneShot(source.clip);
 
         ObjectPool.CreatePlayerBullet(
-            transform.position, Quaternion.identity, BulletSpeed)
-            .transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+            transform.position, Quaternion.identity, BulletSpeed);
+            //.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
 
         CameraBehaviour.ScreenShake(FireRatePrimary / 2f, Random.Range(0.3f, 0.45f), true);
         yield return new WaitForSeconds(FireRatePrimary);
