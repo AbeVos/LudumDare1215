@@ -7,9 +7,11 @@ public class UIController : MonoBehaviour
     #region Variables
     private Slider Health, Epx, Heat, Charge;
     private Image healthFill, epxFill, heatFill, chargeFill;
+    private float[] ExpIntervals;
     private float lastCharge;
     private bool lastChargeLerping = false;
     #endregion
+
     #region Setup
     void OnEnable ()
     {
@@ -27,49 +29,56 @@ public class UIController : MonoBehaviour
         epxFill = Epx.transform.GetChild(1).GetComponentInChildren<Image>();
         heatFill = Heat.transform.GetChild(1).GetComponentInChildren<Image>();
         chargeFill = Charge.transform.GetChild(1).GetComponentInChildren<Image>();
+
+        ExpIntervals = UpgradeManger.GetExpIntervals();
     }
     #endregion
     // Update is called once per frame
     void Update()
     {
-        Health.value = Dragon.Health;
-
-        var exp = UpgradeManger.GetExpIntervals();
-
-        Epx.value = Dragon.Exp;
-
-        if (Dragon.Exp >= exp[0])
+        if ( State.Current == State.GlobalState.Game )
         {
-            GameManager.LevelUp();
-            transform.GetChild(5).gameObject.SetActive(true);
+            // Health ////////////////////////////////////////////
+            Health.value = Dragon.Health;
+
+            // Exp ////////////////////////////////////////////
+            Epx.value = Dragon.Exp;
+            if (Dragon.Exp >= ExpIntervals[Dragon.Rank])
+            {
+                GameManager.LevelUp();
+                transform.GetChild(5).gameObject.SetActive(true);
+            }
+
+            // Heat ////////////////////////////////////////////
+            Heat.value = Dragon.Heat;
+            if (Dragon.Heat > 70 && !Dragon.Overheat)
+            {
+                heatFill.color = Color.Lerp(Color.white, Color.red, (Heat.value - 70f) / 20f);
+            }
+            else if (Dragon.Overheat)
+            {
+                heatFill.color = Color.magenta;
+            }
+            else
+            {
+                heatFill.color = Color.white;
+            }
+
+            // Charge ////////////////////////////////////////////
+            if (lastCharge > 0 && Dragon.Charge == 0)
+            {
+                lastChargeLerping = true;
+                StartCoroutine(LastChargeLerp(130, lastCharge));
+            }
+            else if (!lastChargeLerping)
+            {
+                Charge.value = Dragon.Charge;
+                chargeFill.color = Color.Lerp(Color.white, Color.blue, Charge.value / 100f);
+            }
+            lastCharge = Dragon.Charge; 
         }
 
-        Heat.value = Dragon.Heat;
-        if (Dragon.Heat > 70 && !Dragon.Overheat)
-        {
-            heatFill.color = Color.Lerp(Color.white, Color.red, (Heat.value - 70f) / 20f);
-        }
-        else if (Dragon.Overheat)
-        {
-            heatFill.color = Color.magenta;
-        }
-        else
-        {
-            heatFill.color = Color.white;
-        }
 
-        if (lastCharge > 0 && Dragon.Charge == 0)
-        {
-            lastChargeLerping = true;
-            StartCoroutine(LastChargeLerp(130, lastCharge));
-        }
-        else if (!lastChargeLerping)
-        {
-            Charge.value = Dragon.Charge;
-            chargeFill.color = Color.Lerp(Color.white, Color.blue, Charge.value / 100f);
-        }
-
-        lastCharge = Dragon.Charge;
     }
     
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
