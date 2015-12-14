@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class Dragon : MonoBehaviour, GameActor
 {
     private enum WeaponState
@@ -26,15 +27,15 @@ public class Dragon : MonoBehaviour, GameActor
     [Space]
     [Header("Weapon Speeds")]
     [SerializeField, Range(10, 40)]
-    private float chargeSpeed = 10;
+    private static float chargeSpeed = 10;
     [SerializeField, Range(1, 40)]
-    private float heatUpSpeed = 10;
+    private static float heatUpSpeed = 10;
     [SerializeField, Range(1, 40)]
-    private float coolDownSpeed = 10;
+    private static float coolDownSpeed = 10;
     [SerializeField, Range(0.05f, 1f)]
-    private float FireRatePrimary = 0.2f;
+    private static float FireRatePrimary = 0.2f;
     [SerializeField, Range(0.05f, 1f)]
-    private float BulletSpeed = 0.2f;
+    private static float BulletSpeed = 0.2f;
 
     private bool coroutineRunning = false;
     private bool burstRunning = false;
@@ -51,7 +52,7 @@ public class Dragon : MonoBehaviour, GameActor
     #region statics
     /// <summary>Static reference to self.</summary>
     private static Dragon self;
-    private static int _health, _exp, _primaryDamage, _secondaryDamage = 0;
+    private static int _health, _exp, _primaryDamage, _secondaryDamage, _upgradeRank = 0;
     private static float _charge, _heat = 0f;
     #endregion
 
@@ -100,6 +101,11 @@ public class Dragon : MonoBehaviour, GameActor
     {
         get { return _secondaryDamage; }
         set { if (value > 0) { _secondaryDamage = value; } }
+    }
+    public static int Rank
+    {
+        get { return _upgradeRank; }
+        set { if (value < 0) { _upgradeRank = value; } }
     }
     #endregion
 
@@ -241,6 +247,11 @@ public class Dragon : MonoBehaviour, GameActor
         yield return new WaitForSeconds(speed);
         burstRunning = false;
     }
+    #endregion
+
+    #region Upgrades
+    public static void UpgradeWeapon()
+    { }
     #endregion
 
     #region Buttons
