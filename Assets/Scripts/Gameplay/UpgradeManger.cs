@@ -37,12 +37,13 @@ public class UpgradeManger : MonoBehaviour
 
         foreach (var upgrade in upgradeList.Upgrades)
         {
+     //       Debug.LogWarning(upgrade.Rank);
             if (upgrade.Rank == rank)
             {
                 foundUpgrades[counter] = upgrade;
                 counter++;
             }
-            if (counter > 2) { break; }
+           // if (counter > 2) { break; }
         }
 
         return foundUpgrades;

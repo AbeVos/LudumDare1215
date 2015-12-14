@@ -125,10 +125,11 @@ public class Dragon : MonoBehaviour, GameActor
     {
         source = GetComponent<AudioSource>();
         Health = 100;
+        Rank = 1;
 
         PrimaryDamage = 1;
         SecondaryDamage = 5;
-
+        
         primaryBarrel = transform.Find("PrimaryBarrel");
         secondaryBarrel = transform.Find("SecondaryBarrel");
     }
@@ -270,8 +271,22 @@ public class Dragon : MonoBehaviour, GameActor
     #endregion
 
     #region Upgrades
-    public static void UpgradeWeapon()
-    { }
+    public static void UpgradeWeapon(UpgradeManger.Upgrade upgrade)
+    {
+        if (upgrade.WeaponType == 2)
+        {
+            SecondaryDamage = upgrade.SecodaryDamage;
+            Charge = upgrade.SecondaryChargeSpeed;
+        }
+        else
+        {
+            PrimaryDamage = upgrade.PrimaryDamage;
+            heatUpSpeed = upgrade.PrimaryHeatUp;
+            coolDownSpeed = upgrade.PrimaryCooldown;
+            FireRatePrimary = upgrade.PrimaryFireRate;
+        }
+        Debug.Log(">>> Did upgrade");   
+    }
     #endregion
 
     #region Buttons

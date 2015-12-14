@@ -5,7 +5,7 @@ using System.Collections;
 public class UIController : MonoBehaviour
 {
     #region Variables
-    private Slider Health, Epx, Heat, Charge;
+    private Slider Health, Exp, Heat, Charge;
     private Image healthFill, epxFill, heatFill, chargeFill;
     private float[] ExpIntervals;
     private float lastCharge;
@@ -21,19 +21,22 @@ public class UIController : MonoBehaviour
     void Start()
     {
         Health = transform.GetChild(1).GetComponent<Slider>();
-        Epx = transform.GetChild(2).GetComponent<Slider>();
+        Exp = transform.GetChild(2).GetComponent<Slider>();
         Heat = transform.GetChild(3).GetComponent<Slider>();
         Charge = transform.GetChild(4).GetComponent<Slider>();
 
         healthFill = Health.transform.GetChild(1).GetComponentInChildren<Image>();
-        epxFill = Epx.transform.GetChild(1).GetComponentInChildren<Image>();
+        epxFill = Exp.transform.GetChild(1).GetComponentInChildren<Image>();
         heatFill = Heat.transform.GetChild(1).GetComponentInChildren<Image>();
         chargeFill = Charge.transform.GetChild(1).GetComponentInChildren<Image>();
 
         ExpIntervals = UpgradeManger.GetExpIntervals();
+        Exp.maxValue = ExpIntervals[Dragon.Rank];
+
+        Debug.LogWarning("DragonRank Start " + Dragon.Rank);
     }
     #endregion
-    // Update is called once per frame
+
     void Update()
     {
         if ( State.Current == State.GlobalState.Game )
@@ -42,11 +45,10 @@ public class UIController : MonoBehaviour
             Health.value = Dragon.Health;
 
             // Exp ////////////////////////////////////////////
-            Epx.value = Dragon.Exp;
+            Exp.value = Dragon.Exp;
             if (Dragon.Exp >= ExpIntervals[Dragon.Rank])
             {
                 GameManager.LevelUp();
-                transform.GetChild(5).gameObject.SetActive(true);
             }
 
             // Heat ////////////////////////////////////////////
@@ -80,17 +82,52 @@ public class UIController : MonoBehaviour
 
 
     }
+
+    public static void PreformUpgrade(string name)
+    {
+
+    }
+
+    private void ShowUpgrades()
+    {
+       transform.GetChild(5).gameObject.SetActive(true);
+        var ups = UpgradeManger.GetUpdate(Dragon.Rank);
+
+        Dragon.Rank++;
+        Exp.maxValue = ExpIntervals[Dragon.Rank];
+        Dragon.Exp = 0;
+
+        for (int i =0 ; i <2; i++)
+        {
+            var up = ups[i];
+
+            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
+                () => Dragon.UpgradeWeapon(up));
+            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
+                () => HideUpgrades());
+
+            transform.GetChild(5).GetChild(0).GetChild(i).GetChild(1).GetComponent<Text>().text = ups[i].Name;
+            transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
+        }
+        
+    }
+
+    private void HideUpgrades()
+    {
+        transform.GetChild(5).gameObject.SetActive(false);
+        State.SetState(State.GlobalState.Game);
+    }
     
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
         if (newGlobalState == State.GlobalState.Pause)
         {
-            Debug.Log("Upgade Screen");
+            ShowUpgrades();
         }
 
         if (prevGlobalState == State.GlobalState.Pause)
         {
-            Debug.Log("Resume Game");
+            HideUpgrades();
         }
     }
 
