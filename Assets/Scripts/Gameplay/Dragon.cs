@@ -216,7 +216,7 @@ public class Dragon : MonoBehaviour, GameActor
         }
         else if (newGlobalState == State.GlobalState.Lose)
         {
-
+            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
         }
     }
 
