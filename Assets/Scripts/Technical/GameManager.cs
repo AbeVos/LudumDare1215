@@ -31,7 +31,8 @@ public class GameManager : MonoBehaviour
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
-            State.SetState(State.GlobalState.Game);
+            StartCoroutine(SetStateAfterDelay(State.GlobalState.Game, 2f));
+            //State.SetState(State.GlobalState.Game);
         }
         else if (newGlobalState == State.GlobalState.Lose)
         {
@@ -58,5 +59,14 @@ public class GameManager : MonoBehaviour
     public static void Continue ()
     {
         State.SetState(State.GlobalState.Game);
+    }
+
+    private IEnumerator SetStateAfterDelay (State.GlobalState newState, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        State.SetState(newState);
+
+        yield return null;
     }
 }
