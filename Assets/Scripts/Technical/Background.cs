@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Background : MonoBehaviour
 {
-    [SerializeField]
-    float moveSpeed = 0.2f;
+    float moveSpeed;
 
     Transform[] buildings;
 
     void Start ()
     {
+        moveSpeed = 0.4f * StageManager.GetDifficulty();
+
         buildings = new Transform[transform.childCount];
         for (int i = 0; i < transform.childCount; i++)
         {

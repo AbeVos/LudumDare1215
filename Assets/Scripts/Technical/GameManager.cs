@@ -3,7 +3,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public static float IntroTime = 5f;
+    public static float introTime = 5f;
 
     //////////////////////////
     //  Built-in Functions  //
@@ -29,11 +29,11 @@ public class GameManager : MonoBehaviour
         if (newGlobalState == State.GlobalState.Start)
         {
             Debug.Log("Started the game.");
-            State.SetState(State.GlobalState.Initialize);
+            //State.SetState(State.GlobalState.Initialize);
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
-            StartCoroutine(SetStateAfterDelay(State.GlobalState.Game, IntroTime));
+            StartCoroutine(SetStateAfterDelay(State.GlobalState.Game, introTime));
             //State.SetState(State.GlobalState.Game);
         }
         else if (newGlobalState == State.GlobalState.Lose)
@@ -51,6 +51,11 @@ public class GameManager : MonoBehaviour
         {
             State.SetState(State.GlobalState.Lose);
         }
+    }
+
+    public static void StartGame ()
+    {
+        State.SetState(State.GlobalState.Initialize);
     }
 
     public static void LevelUp ()
