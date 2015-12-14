@@ -104,7 +104,11 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("Collision " + collision.gameObject.name);
 
-        if (collision.gameObject.layer == 12)
+        if (collision.gameObject.layer == 8)
+        {
+            Dragon.dragon.Hit(50);
+        }
+        else if (collision.gameObject.layer == 12)
         {
             AudioManager.PlayClip("impactWall", true);
             ObjectPool.RemoveEnemyBullet(collision.transform);
@@ -146,7 +150,7 @@ public class StageManager : MonoBehaviour
 
     private void SpawnBuilding (bool spawnTurret)
     {
-        GameObject building = Instantiate(buildingPrefab, new Vector3(28, Random.Range(-5, -15), 0), Quaternion.identity) as GameObject;
+        GameObject building = Instantiate(buildingPrefab, new Vector3(28, Random.Range(-5, -10), 0), Quaternion.identity) as GameObject;
 
         building.transform.parent = transform;
 
