@@ -13,18 +13,18 @@ public class MainMenu : MonoBehaviour
                 StartCoroutine(StartGame());
             }
             );
-        transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(
+        transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(
             () =>
             {
                 DisableAllButtons();
-                StartCoroutine(StartGame());
+                ShowRebind(true);
             }
             );
-        transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(
+        transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(
             () =>
             {
                 DisableAllButtons();
-                StartCoroutine(StartGame());
+                ShowHowTo(true);
             }
             );
         transform.GetChild(2).GetChild(3).GetComponent<Button>().onClick.AddListener(
@@ -33,6 +33,16 @@ public class MainMenu : MonoBehaviour
                 Application.Quit();
             }
             );
+    }
+
+    public void ShowHowTo(bool state)
+    {
+        transform.GetChild(4).gameObject.SetActive(state);
+    }
+
+    public void ShowRebind(bool state)
+    {
+        transform.GetChild(3).gameObject.SetActive(state);
     }
 
     private void DisableAllButtons()
