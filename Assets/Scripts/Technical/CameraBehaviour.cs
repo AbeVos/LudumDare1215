@@ -45,7 +45,7 @@ public class CameraBehaviour : MonoBehaviour
         if (limitZ)
         {
             camera.transform.DOKill();
-            camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude, 0)).OnComplete( () => { camera.transform.position = gameTransform.position; });
+            camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude, 0)).OnComplete( () => { camera.transform.position = gameTransform.position; } );
         }
         else
         {
