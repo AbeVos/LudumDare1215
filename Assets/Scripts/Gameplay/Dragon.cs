@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using DG.Tweening;
 
 public class Dragon : MonoBehaviour, GameActor
 {
@@ -42,7 +42,6 @@ public class Dragon : MonoBehaviour, GameActor
     /// <summary>Heat is at 100%, primary can only start again at 0% heat</summary>
     private static bool primaryOverheat;
     private WeaponState currentState;
-    private Vector3 lastWorldPosition;
     private AudioSource source;
 
     private Transform primaryBarrel;
@@ -124,7 +123,6 @@ public class Dragon : MonoBehaviour, GameActor
 
     void Start ()
     {
-        lastWorldPosition = transform.position;
         source = GetComponent<AudioSource>();
         Health = 100;
         Rank = 1;
@@ -143,8 +141,7 @@ public class Dragon : MonoBehaviour, GameActor
             //  Move the dragon in screen space
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
             worldPos.z = 0;
-            transform.position = Vector3.Lerp(lastWorldPosition, worldPos, Time.deltaTime * responseSpeed);
-            lastWorldPosition = transform.position;
+            transform.position = Vector3.Lerp(transform.position, worldPos, Time.deltaTime * responseSpeed);
 
             switch (currentState)
             {
@@ -182,6 +179,24 @@ public class Dragon : MonoBehaviour, GameActor
         }
     }
 
+    void OnCollisionEnter2D (Collision2D collision)
+    {
+        if (State.Current == State.GlobalState.Game)
+        {
+            Debug.Log("Draak");
+            if (collision.gameObject.layer == 11)
+            {
+                //  Remove XpPickup object and add experience to dragon.
+                ObjectPool.RemoveXpPickup(collision.transform);
+            }
+            else if (collision.gameObject.layer == 12)
+            {
+                ObjectPool.RemoveEnemyBullet(collision.transform);
+                Hit((int) Mathf.Max(1, StageManager.GetDifficulty()));
+            }
+        }
+    }
+
     void OnDisable ()
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
@@ -191,14 +206,14 @@ public class Dragon : MonoBehaviour, GameActor
     #region Abe interface
     private void State_OnGlobalStateChanged (State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
+        if (newGlobalState == State.GlobalState.Initialize)
+        {
+            transform.DOMove(CameraBehaviour.StartPosition, 1f).OnComplete( () => { transform.position = CameraBehaviour.StartPosition; } );
+        }
+
         if (newGlobalState == State.GlobalState.Pause)
         {
             GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-        }
-
-        if (prevGlobalState == State.GlobalState.Pause)
-        {
-
         }
     }
 
