@@ -191,6 +191,11 @@ public class Dragon : MonoBehaviour, GameActor
                 //  Remove XpPickup object and add experience to dragon.
                 ObjectPool.RemoveXpPickup(collision.transform);
             }
+            else if (collision.gameObject.layer == 12)
+            {
+                ObjectPool.RemoveEnemyBullet(collision.transform);
+                Hit((int) Mathf.Max(1, StageManager.GetDifficulty()));
+            }
         }
     }
 
