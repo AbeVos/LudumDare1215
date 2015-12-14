@@ -4,7 +4,7 @@ using UnityEditor;
 
 [CustomEditor(typeof(StageManager))]
 public class StageEditor : Editor
-{
+{/*
     public override void OnInspectorGUI()
     {
         StageManager stageTarget = (StageManager) target;
@@ -17,5 +17,5 @@ public class StageEditor : Editor
         stageTarget.buildingPrefab = EditorGUILayout.ObjectField("Building Prefab", stageTarget.buildingPrefab, typeof(GameObject), false) as GameObject;
 
         stageTarget.difficultyCurve = EditorGUILayout.CurveField(stageTarget.difficultyCurve);
-    }
+    }*/
 }

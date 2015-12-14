@@ -13,11 +13,11 @@ public class UIController : MonoBehaviour
     private float[] ExpIntervals;
     private float lastCharge;
     private bool lastChargeLerping = false;
-
+    private bool isFading;
     #endregion
 
     #region Setup
-    void OnEnable ()
+    void OnEnable()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
     }
@@ -38,12 +38,37 @@ public class UIController : MonoBehaviour
         Exp.maxValue = ExpIntervals[Dragon.Rank];
 
         Debug.LogWarning("DragonRank Start " + Dragon.Rank);
+
+
+        for (int i = 0; i < 5; i++)
+        {
+            
+            if (i >= 1 && i < 5)
+            {
+                transform.GetChild(i).GetChild(0).GetComponent<CanvasRenderer>().SetAlpha(0);
+                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+
+                transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+            }
+            else
+            {
+                transform.GetChild(i).GetComponent<CanvasRenderer>().SetAlpha(0);
+                transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+            }
+            
+        }
+
+
     }
     #endregion
 
     void Update()
     {
-        if ( State.Current == State.GlobalState.Game )
+        transform.GetChild(7).GetComponent<Text>().text =  StageManager.GetDifficulty().ToString("#.00");
+        transform.GetChild(7).GetComponent<Text>().text += "\n" + StageManager.DifficultyTimer.ToString("#.00");
+
+        if (State.Current == State.GlobalState.Game)
         {
             // Health ////////////////////////////////////////////
             Health.value = Dragon.Health;
@@ -81,7 +106,7 @@ public class UIController : MonoBehaviour
                 Charge.value = Dragon.Charge;
                 chargeFill.color = Color.Lerp(Color.white, Color.blue, Charge.value / 100f);
             }
-            lastCharge = Dragon.Charge; 
+            lastCharge = Dragon.Charge;
         }
 
 
@@ -89,14 +114,14 @@ public class UIController : MonoBehaviour
 
     private void ShowUpgrades()
     {
-       transform.GetChild(5).gameObject.SetActive(true);
+        transform.GetChild(5).gameObject.SetActive(true);
         var ups = UpgradeManger.GetUpdate(Dragon.Rank);
 
         Dragon.Rank++;
         Exp.maxValue = ExpIntervals[Dragon.Rank];
         Dragon.Exp = 0;
 
-        for (int i =0 ; i <2; i++)
+        for (int i = 0; i < 2; i++)
         {
             var up = ups[i];
 
@@ -119,7 +144,7 @@ public class UIController : MonoBehaviour
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(1).GetComponent<Text>().text = ups[i].Name;
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
         }
-        
+
     }
 
     private void HideUpgrades()
@@ -127,7 +152,7 @@ public class UIController : MonoBehaviour
         transform.GetChild(5).gameObject.SetActive(false);
         State.SetState(State.GlobalState.Game);
     }
-    
+
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
         if (newGlobalState == State.GlobalState.Pause)
@@ -141,13 +166,15 @@ public class UIController : MonoBehaviour
         }
     }
 
+
+
     IEnumerator LastChargeLerp(int speed, float startValue)
     {
-        while (startValue > 0 )
+        while (startValue > 0)
         {
             startValue -= Time.deltaTime * speed;
-            chargeFill.color = Color.Lerp(Color.white, Color.blue, startValue/100f);
-            Charge.value = Mathf.Lerp(0,100, startValue/100f);
+            chargeFill.color = Color.Lerp(Color.white, Color.blue, startValue / 100f);
+            Charge.value = Mathf.Lerp(0, 100, startValue / 100f);
             yield return new WaitForEndOfFrame();
         }
 
