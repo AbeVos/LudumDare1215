@@ -71,7 +71,7 @@ public class StageManager : MonoBehaviour
 
         if (State.Current == State.GlobalState.Game)
         {
-            levelSpeed = 0.1f * GetDifficulty();
+            levelSpeed = 0.4f * GetDifficulty();
             buildingSpawnInterval = 6f - GetDifficulty();
 
             //  Move level to the left constantly.
@@ -91,7 +91,7 @@ public class StageManager : MonoBehaviour
 
         foreach (GameObject building in buildings)
         {
-            if (building.transform.position.x < -24)
+            if (building.transform.position.x < -30)
             {
                 buildings.Remove(building);
                 Destroy(building);
@@ -104,7 +104,11 @@ public class StageManager : MonoBehaviour
     {
         Debug.Log("Collision " + collision.gameObject.name);
 
-        if (collision.gameObject.layer == 12)
+        if (collision.gameObject.layer == 8)
+        {
+            Dragon.dragon.Hit(50);
+        }
+        else if (collision.gameObject.layer == 12)
         {
             AudioManager.PlayClip("impactWall", true);
             ObjectPool.RemoveEnemyBullet(collision.transform);
@@ -146,7 +150,7 @@ public class StageManager : MonoBehaviour
 
     private void SpawnBuilding (bool spawnTurret)
     {
-        GameObject building = Instantiate(buildingPrefab, new Vector3(28, Random.Range(-5, -15), 0), Quaternion.identity) as GameObject;
+        GameObject building = Instantiate(buildingPrefab, new Vector3(40, Random.Range(-5, -10), 0), Quaternion.identity) as GameObject;
 
         building.transform.parent = transform;
 
@@ -161,7 +165,7 @@ public class StageManager : MonoBehaviour
 
     private void SpawnDrone ()
     {
-        GameObject drone = Instantiate(dronePrefab, new Vector3(20, Random.Range(4f, 16f), 0), Quaternion.identity) as GameObject;
+        GameObject drone = Instantiate(dronePrefab, new Vector3(40, Random.Range(4f, 16f), 0), Quaternion.identity) as GameObject;
 
         drone.transform.parent = transform;
     }

@@ -57,8 +57,6 @@ public class ObjectPool : MonoBehaviour
 
         bulletsToRemove = new List<Bullet>();
         pickupsToRemove = new List<Pickup>();
-
-        cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
     }
 
     void OnEnable ()
@@ -150,8 +148,12 @@ public class ObjectPool : MonoBehaviour
 
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
+        if (newGlobalState == State.GlobalState.Game)
+        {
+            cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        }
         //  Remove all bullets when the game is paused, because games are hard :(
-        if (newGlobalState == State.GlobalState.Pause)
+        else if (newGlobalState == State.GlobalState.Pause)
         {
             foreach (Bullet bullet in playerBulletsInUse)
             {
