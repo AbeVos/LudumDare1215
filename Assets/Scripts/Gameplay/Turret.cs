@@ -28,17 +28,20 @@ public class Turret : Enemy
     {
         base.Update();
 
-        if (currentState == EnemyState.Attack)
+        if (State.Current == State.GlobalState.Game)
         {
-            Vector3 directionVector = Dragon.dragon.transform.position - transform.position;
-            cannon.transform.rotation = Quaternion.Slerp(cannon.transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(directionVector.y, directionVector.x)), 0.2f);
-
-            if (!firing && firingTimer >= 0.5f)
+            if (currentState == EnemyState.Attack)
             {
-                StartCoroutine(FiringCoroutine());
-            }
+                Vector3 directionVector = Dragon.dragon.transform.position - transform.position;
+                cannon.transform.rotation = Quaternion.Slerp(cannon.transform.rotation, Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(directionVector.y, directionVector.x)), 0.2f);
 
-            firingTimer += Time.deltaTime;
+                if (!firing && firingTimer >= 0.5f)
+                {
+                    StartCoroutine(FiringCoroutine());
+                }
+
+                firingTimer += Time.deltaTime;
+            }
         }
     }
 

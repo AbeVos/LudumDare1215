@@ -63,76 +63,79 @@ public class ObjectPool : MonoBehaviour
 
     void Update()
     {
-        #region Player Bullets
-        foreach (Bullet bullet in playerBulletsInUse)
+        if (State.Current == State.GlobalState.Game)
         {
-            bullet.transform.position += bullet.transform.right * bullet.speed;
-
-            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
+            #region Player Bullets
+            foreach (Bullet bullet in playerBulletsInUse)
             {
-                bulletsToRemove.Add(bullet);
-                //RemoveEnemyBullet(bullet);
-            }
-        }
+                bullet.transform.position += bullet.transform.right * bullet.speed;
 
-        if (bulletsToRemove.Count > 0)
-        {
-            foreach (Bullet bullet in bulletsToRemove)
-            {
-                RemovePlayerBullet(bullet);
+                if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
+                {
+                    bulletsToRemove.Add(bullet);
+                    //RemoveEnemyBullet(bullet);
+                }
             }
 
-            bulletsToRemove.Clear();
-        }
-        #endregion
-
-        #region Enemy Bullets
-        foreach (Bullet bullet in enemyBulletsInUse)
-        {
-            //bullet.transform.position += bullet.transform.right * bullet.speed;
-
-            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
+            if (bulletsToRemove.Count > 0)
             {
-                bulletsToRemove.Add(bullet);
-                //RemoveEnemyBullet(bullet);
+                foreach (Bullet bullet in bulletsToRemove)
+                {
+                    RemovePlayerBullet(bullet);
+                }
+
+                bulletsToRemove.Clear();
             }
-        }
+            #endregion
 
-        if (bulletsToRemove.Count > 0)
-        {
-            foreach(Bullet bullet in bulletsToRemove)
+            #region Enemy Bullets
+            foreach (Bullet bullet in enemyBulletsInUse)
             {
-                RemoveEnemyBullet(bullet);
-            }
+                //bullet.transform.position += bullet.transform.right * bullet.speed;
 
-            bulletsToRemove.Clear();
-        }
-        #endregion
-
-        #region XP Pickups
-
-        foreach (Pickup pickup in xpPickupsInUse)
-        {
-            //bullet.transform.position += bullet.transform.right * bullet.speed;
-
-            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, pickup.transform.GetComponent<Collider2D>().bounds))
-            {
-                pickupsToRemove.Add(pickup);
-                //RemoveEnemyBullet(bullet);
-            }
-        }
-
-        if (pickupsToRemove.Count > 0)
-        {
-            foreach (Pickup pickup in pickupsToRemove)
-            {
-                RemoveXpPickup(pickup);
+                if (!GeometryUtility.TestPlanesAABB(cameraPlanes, bullet.transform.GetComponent<Collider2D>().bounds))
+                {
+                    bulletsToRemove.Add(bullet);
+                    //RemoveEnemyBullet(bullet);
+                }
             }
 
-            pickupsToRemove.Clear();
-        }
+            if (bulletsToRemove.Count > 0)
+            {
+                foreach (Bullet bullet in bulletsToRemove)
+                {
+                    RemoveEnemyBullet(bullet);
+                }
 
-        #endregion
+                bulletsToRemove.Clear();
+            }
+            #endregion
+
+            #region XP Pickups
+
+            foreach (Pickup pickup in xpPickupsInUse)
+            {
+                //bullet.transform.position += bullet.transform.right * bullet.speed;
+
+                if (!GeometryUtility.TestPlanesAABB(cameraPlanes, pickup.transform.GetComponent<Collider2D>().bounds))
+                {
+                    pickupsToRemove.Add(pickup);
+                    //RemoveEnemyBullet(bullet);
+                }
+            }
+
+            if (pickupsToRemove.Count > 0)
+            {
+                foreach (Pickup pickup in pickupsToRemove)
+                {
+                    RemoveXpPickup(pickup);
+                }
+
+                pickupsToRemove.Clear();
+            }
+
+            #endregion
+        }
     }
 
     public static GameObject CreatePlayerBullet (Vector3 position, Quaternion rotation, float speed)
