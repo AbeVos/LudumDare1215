@@ -62,6 +62,6 @@ public class PlayerBomb : MonoBehaviour
 
         transform.parent = StageManager.Stage.transform;
 
-        Destroy(GetComponent<Rigidbody2D>());
+        GetComponent<Rigidbody2D>().isKinematic = true;
     }
 }
