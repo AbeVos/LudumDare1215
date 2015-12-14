@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 
 public class UpgradeManger : MonoBehaviour
@@ -29,13 +28,9 @@ public class UpgradeManger : MonoBehaviour
         public float SecondaryChargeSpeed;
     }
 
-    [SerializeField]
-    private Upgrade[] upgrades;
-
 	public static Upgrade[] GetUpdate(int rank)
     {
-        var json = Resources.Load<TextAsset>("Upgrades").text;
-        var upgradeList = JsonUtility.FromJson<UpgradeList>(json);
+        UpgradeList upgradeList = GetUpgradeList();
 
         Upgrade[] foundUpgrades = new Upgrade[2];
         int counter = 0;
@@ -55,15 +50,21 @@ public class UpgradeManger : MonoBehaviour
 
     public static float[] GetExpIntervals()
     {
-        var json = Resources.Load<TextAsset>("Upgrades").text;
-        var upgradeList = JsonUtility.FromJson<UpgradeList>(json);
+        UpgradeList upgradeList = GetUpgradeList();
 
-        float[] foundIntervals = new float[upgradeList.Upgrades.Length/2];
+        float[] foundIntervals = new float[upgradeList.Upgrades.Length / 2];
 
-        for (int i =0; i < upgradeList.Upgrades.Length; i+=2)
+        for (int i = 0; i < upgradeList.Upgrades.Length; i += 2)
         {
-            foundIntervals[i/2] = upgradeList.Upgrades[i].RequiredExp;
+            foundIntervals[i / 2] = upgradeList.Upgrades[i].RequiredExp;
         }
         return foundIntervals;
+    }
+
+    private static UpgradeList GetUpgradeList()
+    {
+        var json = Resources.Load<TextAsset>("Upgrades").text;
+        var upgradeList = JsonUtility.FromJson<UpgradeList>(json);
+        return upgradeList;
     }
 }
