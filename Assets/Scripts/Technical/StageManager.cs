@@ -20,7 +20,8 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     public float buildingSpawnInterval = 10f;
 
-    public AnimationCurve difficultyCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(300, 1) });
+
+    public AnimationCurve difficultyCurve;//= new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(300, 1) });
 
     private static StageManager self;
 
@@ -35,6 +36,10 @@ public class StageManager : MonoBehaviour
     {
         get { return self; }
     }
+    public static float DifficultyTimer
+    {
+        get { return difficultyTime; }
+        }
 
     //////////////////////////
     //  Built-in Functions  //
