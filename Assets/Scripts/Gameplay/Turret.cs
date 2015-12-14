@@ -20,6 +20,8 @@ public class Turret : Enemy
 
         cannon = transform.FindChild("Cannon");
         bulletSpawn = cannon.FindChild("BulletSpawn");
+        
+        shotsPerRound = Mathf.Max(1, (int) StageManager.GetDifficulty());
     }
 
     override protected void Update ()

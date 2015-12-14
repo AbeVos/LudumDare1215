@@ -54,4 +54,9 @@ public class GameManager : MonoBehaviour
     {
         State.SetState(State.GlobalState.Pause);
     }
+
+    public static void Continue ()
+    {
+        State.SetState(State.GlobalState.Game);
+    }
 }

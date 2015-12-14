@@ -7,20 +7,25 @@ public class StageManager : MonoBehaviour
     [Space]
     [Header("Enemy Prefabs")]
     [SerializeField]
-    private GameObject dronePrefab;
+    public GameObject dronePrefab;
     [SerializeField]
-    private GameObject turretPrefab;
+    public GameObject turretPrefab;
 
     [Space]
     [Header("Stage")]
     [SerializeField]
-    private GameObject buildingPrefab;
+    public GameObject buildingPrefab;
     [SerializeField]
-    private float levelSpeed = 0.1f;
+    public float levelSpeed = 0.1f;
     [SerializeField]
-    private float buildingSpawnInterval = 10f;
+    public float buildingSpawnInterval = 10f;
+
+    public AnimationCurve difficultyCurve = new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(300, 1) });
 
     private static StageManager self;
+
+    private static AnimationCurve staticDifficultyCurve;
+    private static float difficultyTime = 0f;
 
     private float timer = 0f;
 
@@ -43,25 +48,36 @@ public class StageManager : MonoBehaviour
 
         self = this;
 
+        staticDifficultyCurve = difficultyCurve;
+
         buildings = new List<GameObject>();
     }
 
     void Update ()
     {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            Debug.Log(GetDifficulty());
+        }
+
         if (State.Current == State.GlobalState.Game)
         {
+            levelSpeed = 0.1f * GetDifficulty();
+            buildingSpawnInterval = 5f - GetDifficulty();
+
             //  Move level to the left constantly.
             transform.position -= Vector3.right * levelSpeed;
 
             if (timer >= buildingSpawnInterval)
             {
-                SpawnBuilding((Random.Range(0f, 1f) > 0.5f) ? true : false);
+                SpawnBuilding((Random.Range(0f, 1f) < GetDifficulty() / 5f) ? true : false);
                 Invoke("SpawnDrone", buildingSpawnInterval / 2);
 
                 timer = 0;
             }
 
             timer += Time.deltaTime;
+            difficultyTime += Time.deltaTime;
         }
 
         foreach (GameObject building in buildings)
@@ -83,7 +99,7 @@ public class StageManager : MonoBehaviour
         {
             ObjectPool.RemoveEnemyBullet(collision.transform);
         }
-        else if (collision.gameObject.layer == 13)
+        else if (collision.gameObject.layer == 13 || collision.gameObject.GetComponent<PlayerBomb>() == null)
         {
             ObjectPool.RemovePlayerBullet(collision.transform);
         }
@@ -106,6 +122,12 @@ public class StageManager : MonoBehaviour
     }
 
     #endregion
+
+    /// <summary>Returns the difficulty multiplier for the current global time.</summary>
+    public static float GetDifficulty ()
+    {
+        return staticDifficultyCurve.Evaluate(difficultyTime);
+    }
 
     /////////////////////////
     //  Private Functions  //
