@@ -59,9 +59,6 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        transform.GetChild(7).GetComponent<Text>().text =  StageManager.GetDifficulty().ToString("#.00");
-        transform.GetChild(7).GetComponent<Text>().text += "\n" + StageManager.DifficultyTimer.ToString("#.00");
-
         if (State.Current == State.GlobalState.Game)
         {
             // Health ////////////////////////////////////////////

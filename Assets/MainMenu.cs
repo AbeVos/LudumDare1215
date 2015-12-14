@@ -16,14 +16,14 @@ public class MainMenu : MonoBehaviour
         transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(
             () =>
             {
-                DisableAllButtons();
+           //     DisableAllButtons();
                 ShowRebind(true);
             }
             );
         transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(
             () =>
             {
-                DisableAllButtons();
+          //      DisableAllButtons();
                 ShowHowTo(true);
             }
             );
