@@ -4,14 +4,18 @@ using DG.Tweening;
 
 public class CameraBehaviour : MonoBehaviour
 {
-    private static CameraBehaviour self;
-    
     new private static Camera camera;
+    private static Vector3 startPosition;
+
+    public static Vector3 StartPosition
+    {
+        get { return startPosition; }
+    }
 
     void Awake ()
     {
-        self = this;
         camera = GetComponentInChildren<Camera>();
+        startPosition = transform.Find("StartPosition").position;
     }
 
     void OnEnable ()

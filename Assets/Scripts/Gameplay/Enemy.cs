@@ -97,7 +97,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
         if (healthPoints <= 0)
         {
             //Dragon.Exp += 20;
-            ObjectPool.CreateXpPickup(transform.position, 20 * (int) StageManager.GetDifficulty());
+            ObjectPool.CreateXpPickup(transform.position, 20 * (int) (StageManager.GetDifficulty() * 0.5f));
 
             SetState(EnemyState.Death);
         }
