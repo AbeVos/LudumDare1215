@@ -29,7 +29,15 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var exp = UpgradeManger.GetExpIntervals();
+
         Epx.value = Dragon.Exp;
+
+        if (Dragon.Exp >= exp[0])
+        {
+            GameManager.LevelUp();
+            transform.GetChild(4).gameObject.SetActive(true);
+        }
 
         Heat.value = Dragon.Heat;
         if (Dragon.Heat > 80 && !Dragon.Overheat)

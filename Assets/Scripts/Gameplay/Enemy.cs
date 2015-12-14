@@ -61,6 +61,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
             if (collider.tag == "PrimaryBullet")
             {
                 Hit(Dragon.PrimaryDamage);
+                Dragon.Exp += 20;
             }
             else
             {
