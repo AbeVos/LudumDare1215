@@ -209,10 +209,13 @@ public class Dragon : MonoBehaviour, GameActor
         {
             transform.DOMove(CameraBehaviour.StartPosition, 1f).OnComplete( () => { transform.position = CameraBehaviour.StartPosition; } );
         }
-
-        if (newGlobalState == State.GlobalState.Pause)
+        else if (newGlobalState == State.GlobalState.Pause)
         {
             GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        }
+        else if (newGlobalState == State.GlobalState.Lose)
+        {
+
         }
     }
 
@@ -225,6 +228,8 @@ public class Dragon : MonoBehaviour, GameActor
     public void Hit (int damage)
     {
         Health -= damage;
+
+        GameManager.PlayerHit(damage);
     }
     #endregion
 
