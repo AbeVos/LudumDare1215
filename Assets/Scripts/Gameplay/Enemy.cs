@@ -61,7 +61,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
             if (collider.tag == "PrimaryBullet")
             {
                 Hit(Dragon.PrimaryDamage);
-                Dragon.Exp += 20;
+                //Dragon.Exp += 20;
             }
             else
             {
@@ -96,6 +96,7 @@ public abstract class Enemy : MonoBehaviour, GameActor
 
         if (healthPoints <= 0)
         {
+            Dragon.Exp += 20;
             SetState(EnemyState.Death);
         }
     }
@@ -118,15 +119,14 @@ public abstract class Enemy : MonoBehaviour, GameActor
         else if (newState == EnemyState.Alarmed)
         {
             //Debug.Log("Wablief");
-            transform.DOScale(1.1f, 0.1f).OnComplete(() =>
-           {
-               transform.DOScale(1f, 0.1f);
-               SetState(EnemyState.Attack);
-           });
+            transform.DOScale(1.1f, 0.1f).OnComplete( () =>
+            {
+                transform.DOScale(1f, 0.1f);
+                SetState(EnemyState.Attack);
+            } );
         }
         else if (newState == EnemyState.Death)
         {
-            
             float playLength = AudioManager.PlayClip("droneDeath", true);
 
             transform.DOScale(1.4f, playLength / 4f).OnComplete(() =>
