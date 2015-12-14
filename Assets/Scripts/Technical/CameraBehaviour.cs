@@ -34,8 +34,8 @@ public class CameraBehaviour : MonoBehaviour
         else if (newGlobalState == State.GlobalState.Initialize)
         {
             Transform introTransform = transform.Find("GameTransform");
-            camera.transform.DOMove(introTransform.position, 2f);
-            camera.transform.DORotate(introTransform.eulerAngles, 2f);
+            camera.transform.DOMove(introTransform.position, 4f);
+            camera.transform.DORotate(introTransform.eulerAngles, 4f);
         }
     }
 
