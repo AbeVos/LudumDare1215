@@ -61,6 +61,11 @@ public class ObjectPool : MonoBehaviour
         cameraPlanes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
     }
 
+    void OnEnable ()
+    {
+        State.OnGlobalStateChanged += State_OnGlobalStateChanged;
+    }
+
     void Update()
     {
         if (State.Current == State.GlobalState.Game)
@@ -135,6 +140,37 @@ public class ObjectPool : MonoBehaviour
             }
 
             #endregion
+        }
+    }
+
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    {
+        //  Remove all bullets when the game is paused, because games are hard :(
+        if (newGlobalState == State.GlobalState.Pause)
+        {
+            foreach (Bullet bullet in playerBulletsInUse)
+            {
+                bulletsToRemove.Add(bullet);
+            }
+
+            foreach (Bullet bullet in bulletsToRemove)
+            {
+                RemovePlayerBullet(bullet);
+            }
+
+            bulletsToRemove.Clear();
+
+            foreach (Bullet bullet in enemyBulletsInUse)
+            {
+                bulletsToRemove.Add(bullet);
+            }
+
+            foreach (Bullet bullet in bulletsToRemove)
+            {
+                RemoveEnemyBullet(bullet);
+            }
+
+            bulletsToRemove.Clear();
         }
     }
 
