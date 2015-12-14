@@ -45,11 +45,13 @@ public class AudioManager : MonoBehaviour
     {
         if (newGlobalState == State.GlobalState.Pause)
         {
+            PlayClip("pauseMusic", true);
             musicSource.Pause();
         }
 
         if (prevGlobalState == State.GlobalState.Pause)
         {
+            PlayClip("pauseMusic", true);
             musicSource.UnPause();
         }
     }
