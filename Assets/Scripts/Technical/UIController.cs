@@ -5,8 +5,8 @@ using System.Collections;
 public class UIController : MonoBehaviour
 {
     #region Variables
-    private Slider Epx, Heat, Charge;
-    private Image heatFill, chargeFill;
+    private Slider Health, Epx, Heat, Charge;
+    private Image healthFill, epxFill, heatFill, chargeFill;
     private float lastCharge;
     private bool lastChargeLerping = false;
     #endregion
@@ -18,10 +18,13 @@ public class UIController : MonoBehaviour
 
     void Start()
     {
-        Epx = transform.GetChild(1).GetComponent<Slider>();
-        Heat = transform.GetChild(2).GetComponent<Slider>();
-        Charge = transform.GetChild(3).GetComponent<Slider>();
+        Health = transform.GetChild(1).GetComponent<Slider>();
+        Epx = transform.GetChild(2).GetComponent<Slider>();
+        Heat = transform.GetChild(3).GetComponent<Slider>();
+        Charge = transform.GetChild(4).GetComponent<Slider>();
 
+        healthFill = Health.transform.GetChild(1).GetComponentInChildren<Image>();
+        epxFill = Epx.transform.GetChild(1).GetComponentInChildren<Image>();
         heatFill = Heat.transform.GetChild(1).GetComponentInChildren<Image>();
         chargeFill = Charge.transform.GetChild(1).GetComponentInChildren<Image>();
     }
@@ -29,6 +32,8 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Health.value = Dragon.Health;
+
         var exp = UpgradeManger.GetExpIntervals();
 
         Epx.value = Dragon.Exp;
@@ -36,13 +41,13 @@ public class UIController : MonoBehaviour
         if (Dragon.Exp >= exp[0])
         {
             GameManager.LevelUp();
-            transform.GetChild(4).gameObject.SetActive(true);
+            transform.GetChild(5).gameObject.SetActive(true);
         }
 
         Heat.value = Dragon.Heat;
-        if (Dragon.Heat > 80 && !Dragon.Overheat)
+        if (Dragon.Heat > 70 && !Dragon.Overheat)
         {
-            heatFill.color = Color.Lerp(Color.white, Color.red, (Heat.value - 80f) / 20f);
+            heatFill.color = Color.Lerp(Color.white, Color.red, (Heat.value - 70f) / 20f);
         }
         else if (Dragon.Overheat)
         {
