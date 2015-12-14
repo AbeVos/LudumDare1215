@@ -316,6 +316,7 @@ public class ObjectPool : MonoBehaviour
 
             pickup.transform.position = position;
             pickup.transform.rotation = Quaternion.identity;
+            pickup.value = value;
             pickup.transform.gameObject.SetActive(true);
 
             return pickup.transform.gameObject;
@@ -332,6 +333,8 @@ public class ObjectPool : MonoBehaviour
 
                 xpPickupsInUse.Remove(pickup);
                 xpPickupsAvailable.Add(pickup);
+
+                Dragon.Exp += pickup.value;
 
                 return;
             }

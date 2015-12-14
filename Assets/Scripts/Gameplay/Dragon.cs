@@ -181,6 +181,19 @@ public class Dragon : MonoBehaviour, GameActor
         }
     }
 
+    void OnCollisionEnter2D (Collision2D collision)
+    {
+        if (State.Current == State.GlobalState.Game)
+        {
+            Debug.Log("Draak");
+            if (collision.gameObject.layer == 11)
+            {
+                //  Remove XpPickup object and add experience to dragon.
+                ObjectPool.RemoveXpPickup(collision.transform);
+            }
+        }
+    }
+
     void OnDisable ()
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
