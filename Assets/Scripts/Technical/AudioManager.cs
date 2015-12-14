@@ -47,7 +47,8 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.Pause();
         }
-        else if (prevGlobalState == State.GlobalState.Pause)
+
+        if (prevGlobalState == State.GlobalState.Pause)
         {
             musicSource.UnPause();
         }
