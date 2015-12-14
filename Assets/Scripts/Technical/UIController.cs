@@ -5,6 +5,9 @@ using System.Collections;
 public class UIController : MonoBehaviour
 {
     #region Variables
+    [SerializeField]
+    private Sprite RapidImg, ChargeImg;
+
     private Slider Health, Exp, Heat, Charge;
     private Image healthFill, epxFill, heatFill, chargeFill;
     private float[] ExpIntervals;
@@ -83,11 +86,6 @@ public class UIController : MonoBehaviour
 
     }
 
-    public static void PreformUpgrade(string name)
-    {
-
-    }
-
     private void ShowUpgrades()
     {
        transform.GetChild(5).gameObject.SetActive(true);
@@ -101,10 +99,17 @@ public class UIController : MonoBehaviour
         {
             var up = ups[i];
 
+            if (up.WeaponType == 2)
+            {
+                transform.GetChild(5).GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = ChargeImg;
+            }
+            else
+            {
+                transform.GetChild(5).GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = RapidImg;
+            }
+
             transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
                 () => Dragon.UpgradeWeapon(up));
-            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
-                () => HideUpgrades());
 
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(1).GetComponent<Text>().text = ups[i].Name;
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
