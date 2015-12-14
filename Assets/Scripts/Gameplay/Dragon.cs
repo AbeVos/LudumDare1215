@@ -43,9 +43,12 @@ public class Dragon : MonoBehaviour, GameActor
     private static bool primaryOverheat;
     private WeaponState currentState;
     private AudioSource source;
+    private Animator anim;
 
     private Transform primaryBarrel;
     private Transform secondaryBarrel;
+    private Vector3 lastWorldPos;
+    private float lastVelocity;
     #endregion
 
     #region statics
@@ -93,7 +96,7 @@ public class Dragon : MonoBehaviour, GameActor
     }
     public static int PrimaryDamage
     {
-        get { return _primaryDamage;}
+        get { return _primaryDamage; }
         set { if (value > 0) { _primaryDamage = value; } }
     }
     public static int SecondaryDamage
@@ -121,20 +124,23 @@ public class Dragon : MonoBehaviour, GameActor
         self = this;
     }
 
-    void Start ()
+    void Start()
     {
         source = GetComponent<AudioSource>();
+        anim = GetComponentInChildren<Animator>();
         Health = 100;
         Rank = 1;
 
         PrimaryDamage = 1;
         SecondaryDamage = 5;
-        
+
         primaryBarrel = transform.Find("PrimaryBarrel");
         secondaryBarrel = transform.Find("SecondaryBarrel");
+        lastWorldPos = transform.position;
+        lastVelocity = 0;
     }
 
-    void Update ()
+    void Update()
     {
         if (State.Current == State.GlobalState.Game)
         {
@@ -142,6 +148,22 @@ public class Dragon : MonoBehaviour, GameActor
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(InputManager.MousePosition);
             worldPos.z = 0;
             transform.position = Vector3.Lerp(transform.position, worldPos, Time.deltaTime * responseSpeed);
+
+            //     Debug.LogError();
+            if ((transform.position.x - lastWorldPos.x) < 0.1f)
+            {
+                float speed = ((transform.position.x - lastWorldPos.x));
+                lastVelocity = speed;
+                anim.SetFloat("Speed", speed );
+                //  anim.SetFloat("Speed", Mathf.Lerp(lastVelocity, speed, Time.deltaTime) );
+              //  Debug.LogError(Mathf.Lerp(lastVelocity, speed, Time.deltaTime).ToString("#.0"));
+            }
+            else
+            {
+                anim.SetFloat("Speed", 1f);
+            }
+
+            
 
             switch (currentState)
             {
@@ -176,10 +198,12 @@ public class Dragon : MonoBehaviour, GameActor
                     Charge += Time.deltaTime * chargeSpeed;
                     break;
             }
+
+            lastWorldPos = transform.position;
         }
     }
 
-    void OnCollisionEnter2D (Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (State.Current == State.GlobalState.Game)
         {
@@ -192,23 +216,23 @@ public class Dragon : MonoBehaviour, GameActor
             else if (collision.gameObject.layer == 12)
             {
                 ObjectPool.RemoveEnemyBullet(collision.transform);
-                Hit((int) Mathf.Max(1, StageManager.GetDifficulty()));
+                Hit((int)Mathf.Max(1, StageManager.GetDifficulty()));
             }
         }
     }
 
-    void OnDisable ()
+    void OnDisable()
     {
         State.OnGlobalStateChanged -= State_OnGlobalStateChanged;
     }
     #endregion
 
     #region Abe interface
-    private void State_OnGlobalStateChanged (State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
+    private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
         if (newGlobalState == State.GlobalState.Initialize)
         {
-            transform.DOMove(CameraBehaviour.StartPosition, 1f).OnComplete( () => { transform.position = CameraBehaviour.StartPosition; } );
+            transform.DOMove(CameraBehaviour.StartPosition, 1f).OnComplete(() => { transform.position = CameraBehaviour.StartPosition; });
         }
         else if (newGlobalState == State.GlobalState.Pause)
         {
@@ -220,13 +244,13 @@ public class Dragon : MonoBehaviour, GameActor
         }
     }
 
-    private void SetState (WeaponState newState)
+    private void SetState(WeaponState newState)
     {
         WeaponState prevState = currentState;
         currentState = newState;
     }
 
-    public void Hit (int damage)
+    public void Hit(int damage)
     {
         Health -= damage;
 
@@ -242,7 +266,7 @@ public class Dragon : MonoBehaviour, GameActor
             StartCoroutine(primaryCoroutine());
         }
     }
-    
+
     private void FireSecondary()
     {
         Instantiate(bombPrefab, secondaryBarrel.position, Quaternion.identity);
@@ -252,13 +276,16 @@ public class Dragon : MonoBehaviour, GameActor
     IEnumerator primaryCoroutine()
     {
         coroutineRunning = true;
+        anim.SetBool("PrimaryFire", true);
         source.PlayOneShot(source.clip);
+
         ObjectPool.CreatePlayerBullet(
             transform.position, Quaternion.identity, BulletSpeed)
             .transform.GetChild(0).rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
 
         CameraBehaviour.ScreenShake(FireRatePrimary / 2f, Random.Range(0.3f, 0.45f), true);
         yield return new WaitForSeconds(FireRatePrimary);
+        anim.SetBool("PrimaryFire", false);
         coroutineRunning = false;
     }
 
@@ -285,7 +312,7 @@ public class Dragon : MonoBehaviour, GameActor
             coolDownSpeed = upgrade.PrimaryCooldown;
             FireRatePrimary = upgrade.PrimaryFireRate;
         }
-        Debug.Log("> Did upgrade");   
+        Debug.Log("> Did upgrade");
     }
     #endregion
 

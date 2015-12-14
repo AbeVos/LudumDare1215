@@ -151,6 +151,7 @@ ModelImporter:
     7400008: remmen
     7400010: kanonOpen
     7400012: kanonDicht
+    7400014: Idle
     9500000: //RootNode
     11100000: //RootNode
     13700000: draak
@@ -178,15 +179,15 @@ ModelImporter:
     - serializedVersion: 16
       name: schieten
       takeName: Take 001
-      firstFrame: 50
-      lastFrame: 64
+      firstFrame: 53
+      lastFrame: 61
       wrapMode: 2
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -342,10 +343,10 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
-      loopBlendPositionY: 0
+      loopBlendPositionY: 1
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
@@ -810,7 +811,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -1123,6 +1124,162 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: draak
+        weight: 1
+      - path: root
+        weight: 1
+      - path: root/rug0
+        weight: 1
+      - path: root/rug0/kanon
+        weight: 1
+      - path: root/rug0/kanon/joint10
+        weight: 1
+      - path: root/rug0/L_vleugelBase
+        weight: 1
+      - path: root/rug0/L_vleugelBase/L_vleugel1
+        weight: 1
+      - path: root/rug0/L_vleugelBase/L_vleugel1/L_vleugel2
+        weight: 1
+      - path: root/rug0/L_vleugelBase/L_vleugel1/L_vleugel2/L_vleugel4
+        weight: 1
+      - path: root/rug0/L_vleugelBase/L_vleugel1/L_vleugel2/L_vleugel4/L_vleugelEnd2
+        weight: 1
+      - path: root/rug0/L_vleugelBase/L_vleugel1/L_vleugel3
+        weight: 1
+      - path: root/rug0/L_vleugelBase/L_vleugel1/L_vleugel3/L_vleugelEnd1
+        weight: 1
+      - path: root/rug0/R_vleugelBase
+        weight: 1
+      - path: root/rug0/R_vleugelBase/R_vleugel1
+        weight: 1
+      - path: root/rug0/R_vleugelBase/R_vleugel1/R_vleugel2
+        weight: 1
+      - path: root/rug0/R_vleugelBase/R_vleugel1/R_vleugel2/R_vleugel4
+        weight: 1
+      - path: root/rug0/R_vleugelBase/R_vleugel1/R_vleugel2/R_vleugel4/R_vleugelEnd2
+        weight: 1
+      - path: root/rug0/R_vleugelBase/R_vleugel1/R_vleugel3
+        weight: 1
+      - path: root/rug0/R_vleugelBase/R_vleugel1/R_vleugel3/R_vleugelEnd1
+        weight: 1
+      - path: root/rug0/rug1
+        weight: 1
+      - path: root/rug0/rug1/rug2
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/L_bovenbeen
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/L_bovenbeen/L_onderbeen
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/L_bovenbeen/L_onderbeen/L_poot1
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/L_bovenbeen/L_onderbeen/L_poot1/L_poot2
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/L_bovenbeen/L_onderbeen/L_poot1/L_poot2/L_poot3
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/R_bovenbeen
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/R_bovenbeen/R_onderbeen
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/R_bovenbeen/R_onderbeen/R_poot1
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/R_bovenbeen/R_onderbeen/R_poot1/R_poot2
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/R_bovenbeen/R_onderbeen/R_poot1/R_poot2/R_poot3
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1/staart2
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1/staart2/staart3
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1/staart2/staart3/staart4
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1/staart2/staart3/staart4/staart5
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1/staart2/staart3/staart4/staart5/staart6
+        weight: 1
+      - path: root/rug0/rug1/rug2/heup/staart1/staart2/staart3/staart4/staart5/staart6/staart7
+        weight: 1
+      - path: root/rug0/shoulders
+        weight: 1
+      - path: root/rug0/shoulders/keel1
+        weight: 1
+      - path: root/rug0/shoulders/keel1/keel2
+        weight: 1
+      - path: root/rug0/shoulders/keel1/keel2/keel3
+        weight: 1
+      - path: root/rug0/shoulders/keel1/keel2/keel3/keel4
+        weight: 1
+      - path: root/rug0/shoulders/L_arm1
+        weight: 1
+      - path: root/rug0/shoulders/L_arm1/L_arm2
+        weight: 1
+      - path: root/rug0/shoulders/L_arm1/L_arm2/L_arm3
+        weight: 1
+      - path: root/rug0/shoulders/L_arm1/L_arm2/L_arm3/L_arm4
+        weight: 1
+      - path: root/rug0/shoulders/L_arm1/L_arm2/L_arm3/L_arm4/L_arm5
+        weight: 1
+      - path: root/rug0/shoulders/L_arm1/L_arm2/L_arm3/L_arm4/L_arm5/L_arm6
+        weight: 1
+      - path: root/rug0/shoulders/nek1
+        weight: 1
+      - path: root/rug0/shoulders/nek1/nek2
+        weight: 1
+      - path: root/rug0/shoulders/nek1/nek2/nek3
+        weight: 1
+      - path: root/rug0/shoulders/nek1/nek2/nek3/nek4
+        weight: 1
+      - path: root/rug0/shoulders/nek1/nek2/nek3/nek4/hoofd
+        weight: 1
+      - path: root/rug0/shoulders/nek1/nek2/nek3/nek4/hoofd/bovenkaak
+        weight: 1
+      - path: root/rug0/shoulders/nek1/nek2/nek3/nek4/hoofd/onderkaak
+        weight: 1
+      - path: root/rug0/shoulders/R_arm1
+        weight: 1
+      - path: root/rug0/shoulders/R_arm1/R_arm2
+        weight: 1
+      - path: root/rug0/shoulders/R_arm1/R_arm2/R_arm3
+        weight: 1
+      - path: root/rug0/shoulders/R_arm1/R_arm2/R_arm3/R_arm4
+        weight: 1
+      - path: root/rug0/shoulders/R_arm1/R_arm2/R_arm3/R_arm4/R_arm5
+        weight: 1
+      - path: root/rug0/shoulders/R_arm1/R_arm2/R_arm3/R_arm4/R_arm5/R_arm6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0.96
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 64
+      lastFrame: 65
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
