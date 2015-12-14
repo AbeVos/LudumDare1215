@@ -39,7 +39,7 @@ public class State : MonoBehaviour
         GlobalState prevState = globalState;
         globalState = newState;
 
-        Debug.Log("Changed Global State from " + prevState.ToString() + " to " + newState.ToString());
+      //s  Debug.Log("Changed Global State from " + prevState.ToString() + " to " + newState.ToString());
 
         if (OnGlobalStateChanged != null) OnGlobalStateChanged(prevState, newState);
     }
