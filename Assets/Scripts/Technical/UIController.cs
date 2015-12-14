@@ -13,6 +13,7 @@ public class UIController : MonoBehaviour
     private float[] ExpIntervals;
     private float lastCharge;
     private bool lastChargeLerping = false;
+
     #endregion
 
     #region Setup
@@ -110,6 +111,10 @@ public class UIController : MonoBehaviour
 
             transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
                 () => Dragon.UpgradeWeapon(up));
+
+            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
+                () => HideUpgrades());
+
 
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(1).GetComponent<Text>().text = ups[i].Name;
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
