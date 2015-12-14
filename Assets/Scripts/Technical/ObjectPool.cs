@@ -296,7 +296,7 @@ public class ObjectPool : MonoBehaviour
         //  Check whether there are no bullets available.
         if (xpPickupsAvailable.Count == 0)
         {
-            GameObject pickupObject = Instantiate(staticPlayerBulletPrefab, position, Quaternion.identity) as GameObject;
+            GameObject pickupObject = Instantiate(staticXpPickupPrefab, position, Quaternion.identity) as GameObject;
             pickupObject.transform.parent = StageManager.Stage.transform;
 
             Pickup pickup;
