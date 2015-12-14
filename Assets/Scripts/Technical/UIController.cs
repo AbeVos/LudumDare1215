@@ -46,15 +46,15 @@ public class UIController : MonoBehaviour
             if (i >= 1 && i < 5)
             {
                 transform.GetChild(i).GetChild(0).GetComponent<CanvasRenderer>().SetAlpha(0);
-                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
 
-                transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
-                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+                transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
             }
             else
             {
                 transform.GetChild(i).GetComponent<CanvasRenderer>().SetAlpha(0);
-                transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.IntroTime, false);
+                transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
             }
             
         }
