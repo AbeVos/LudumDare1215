@@ -9,19 +9,51 @@ ModelImporter:
     100002: //RootNode
     100004: engines
     100006: rotors
+    100008: drone
+    100010: engines.001
+    100012: body.001
+    100014: rotors.001
+    100016: rotors.002
+    100018: rotors.003
     400000: body
     400002: //RootNode
     400004: engines
     400006: rotors
+    400008: drone
+    400010: engines.001
+    400012: body.001
+    400014: rotors.001
+    400016: rotors.002
+    400018: rotors.003
     2300000: body
     2300002: engines
     2300004: rotors
+    2300006: drone
+    2300008: engines.001
+    2300010: body.001
+    2300012: //RootNode
+    2300014: rotors.001
+    2300016: rotors.002
+    2300018: rotors.003
     3300000: body
     3300002: engines
     3300004: rotors
+    3300006: drone
+    3300008: engines.001
+    3300010: body.001
+    3300012: //RootNode
+    3300014: rotors.001
+    3300016: rotors.002
+    3300018: rotors.003
     4300000: engines
     4300002: rotors
     4300004: body
+    4300006: engines.001
+    4300008: drone
+    4300010: body.001
+    4300012: rotors.003
+    4300014: rotors.002
+    4300016: rotors.001
   materials:
     importMaterials: 1
     materialName: 0
