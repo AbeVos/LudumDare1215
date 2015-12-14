@@ -6,6 +6,7 @@ public class CameraBehaviour : MonoBehaviour
 {
     new private static Camera camera;
     private static Vector3 startPosition;
+    private static Transform gameTransform;
 
     public static Vector3 StartPosition
     {
@@ -16,6 +17,7 @@ public class CameraBehaviour : MonoBehaviour
     {
         camera = GetComponentInChildren<Camera>();
         startPosition = transform.Find("StartPosition").position;
+        gameTransform = transform.Find("GameTransform");
     }
 
     void OnEnable ()
@@ -33,9 +35,8 @@ public class CameraBehaviour : MonoBehaviour
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
-            Transform introTransform = transform.Find("GameTransform");
-            camera.transform.DOMove(introTransform.position, 4f);
-            camera.transform.DORotate(introTransform.eulerAngles, 4f);
+            camera.transform.DOMove(gameTransform.position, 4f);
+            camera.transform.DORotate(gameTransform.eulerAngles, 4f);
         }
     }
 
@@ -43,12 +44,13 @@ public class CameraBehaviour : MonoBehaviour
     {
         if (limitZ)
         {
-            camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude, 0));
+            camera.transform.DOKill();
+            camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude, 0)).OnComplete( () => { camera.transform.position = gameTransform.position; });
         }
         else
         {
             camera.transform.DOKill();
-            camera.transform.DOShakePosition(duration, magnitude);
+            camera.transform.DOShakePosition(duration, magnitude).OnComplete(() => { camera.transform.position = gameTransform.position; } );
         }
     }
 }
