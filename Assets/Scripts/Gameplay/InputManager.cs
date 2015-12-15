@@ -34,39 +34,48 @@ public class InputManager : MonoBehaviour
     public static KeyCode SecondaryButton { get; set; }
     public static bool keysRemaped { get; set; }
 
-    #region Public functions
-
-    #endregion
-
-
-    #region Built-in functions
-
-    #endregion
-
-    #region Setup
-    void Start()
-    {
-    }
-    #endregion
-
     void Update()
     {
-        if (Input.GetMouseButtonUp(0) && OnPrimaryButtonUp != null)
+        if (keysRemaped)
         {
-            OnPrimaryButtonUp();
-        }
-        else if (Input.GetMouseButtonDown(0) && OnPrimaryButtonDown != null)
-        {
-            OnPrimaryButtonDown();
+            if (Input.GetKeyUp(PrimaryButton) && OnPrimaryButtonUp != null)
+            {
+                OnPrimaryButtonUp();
+            }
+            else if (Input.GetKeyDown(PrimaryButton) && OnPrimaryButtonDown != null)
+            {
+                OnPrimaryButtonDown();
+            }
+
+            if (Input.GetKeyUp(SecondaryButton) && OnSecondaryButtonUp != null)
+            {
+                OnSecondaryButtonUp();
+            }
+            else if (Input.GetKeyDown(SecondaryButton) && OnSecondaryButtonDown != null)
+            {
+                OnSecondaryButtonDown();
+            }
         }
 
-        if (Input.GetMouseButtonUp(1) && OnSecondaryButtonUp != null)
+        else
         {
-            OnSecondaryButtonUp();
-        }
-        else if (Input.GetMouseButtonDown(1) && OnSecondaryButtonDown != null)
-        {
-            OnSecondaryButtonDown();
+            if (Input.GetMouseButtonUp(0) && OnPrimaryButtonUp != null)
+            {
+                OnPrimaryButtonUp();
+            }
+            else if (Input.GetMouseButtonDown(0) && OnPrimaryButtonDown != null)
+            {
+                OnPrimaryButtonDown();
+            }
+
+            if (Input.GetMouseButtonUp(1) && OnSecondaryButtonUp != null)
+            {
+                OnSecondaryButtonUp();
+            }
+            else if (Input.GetMouseButtonDown(1) && OnSecondaryButtonDown != null)
+            {
+                OnSecondaryButtonDown();
+            }
         }
     }
 }
