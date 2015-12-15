@@ -49,6 +49,8 @@ public class Dragon : MonoBehaviour, GameActor
     private Transform secondaryBarrel;
     private Vector3 lastWorldPos;
     private float lastVelocity;
+
+    private bool alarm = false;
     #endregion
 
     #region statics
@@ -179,6 +181,18 @@ public class Dragon : MonoBehaviour, GameActor
                 case WeaponState.PrimaryActive:
                     FirePrimary();
                     Heat += Time.deltaTime * heatUpSpeed;
+
+                    if (!alarm && Heat >= 80)
+                    {
+                        alarm = true;
+                        AudioManager.PlayClip("prealarm", true);
+                    }
+
+                    if (alarm && Heat < 80)
+                    {
+                        alarm = false;
+                    }
+
                     if (Heat >= 99)
                     {
                         AudioManager.PlayClip("alarm", true);
