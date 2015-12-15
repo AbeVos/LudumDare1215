@@ -55,7 +55,7 @@ public class AudioManager : MonoBehaviour
 
         if (prevGlobalState == State.GlobalState.Pause)
         {
-            PlayClip("dragonShort", true);
+            PlayClip("dragonLong", true);
             musicSource.UnPause();
         }
     }
