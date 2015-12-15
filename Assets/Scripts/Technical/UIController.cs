@@ -37,25 +37,6 @@ public class UIController : MonoBehaviour
 
         ExpIntervals = UpgradeManger.GetExpIntervals();
         Exp.maxValue = ExpIntervals[Dragon.Rank];
-        
-
-        for (int i = 0; i < 5; i++)
-        {      
-            if (i >= 1 && i < 5)
-            {
-                transform.GetChild(i).GetChild(0).GetComponent<CanvasRenderer>().SetAlpha(0);
-                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
-
-                transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
-                transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
-            }
-            else
-            {
-                transform.GetChild(i).GetComponent<CanvasRenderer>().SetAlpha(0);
-                transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
-            } 
-        }
-
     }
     #endregion
 
@@ -101,8 +82,6 @@ public class UIController : MonoBehaviour
             }
             lastCharge = Dragon.Charge;
         }
-
-
     }
 
     private void ShowUpgrades()
@@ -118,6 +97,11 @@ public class UIController : MonoBehaviour
 
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
+        if (newGlobalState == State.GlobalState.Start)
+        {
+            StartCoroutine(ShowStartMenu());
+        }
+
         if (newGlobalState == State.GlobalState.Pause)
         {
             Cursor.visible = true;
@@ -133,6 +117,24 @@ public class UIController : MonoBehaviour
         if (newGlobalState == State.GlobalState.Initialize)
         {
             Cursor.visible = false;
+
+            //  Fade GUI in.
+            for (int i = 0; i < 5; i++)
+            {
+                if (i >= 1 && i < 5)
+                {
+                    transform.GetChild(i).GetChild(0).GetComponent<CanvasRenderer>().SetAlpha(0);
+                    transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+
+                    transform.GetChild(i).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+                    transform.GetChild(i).GetChild(1).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+                }
+                else
+                {
+                    transform.GetChild(i).GetComponent<CanvasRenderer>().SetAlpha(0);
+                    transform.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(1f, GameManager.introTime, false);
+                }
+            }
         }
     }
 
@@ -195,5 +197,14 @@ public class UIController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Button>().interactable = true;
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Button>().interactable = true;
+    }
+
+    IEnumerator ShowStartMenu()
+    {
+        yield return new WaitForSeconds(2f);
+        transform.Find("Milly (7)").GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        transform.Find("Milly (7)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        yield return new WaitForSeconds(0.5f);
+        transform.Find("Milly (7)").gameObject.SetActive(false);
     }
 }
