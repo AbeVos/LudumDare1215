@@ -144,6 +144,8 @@ public class UIController : MonoBehaviour
 
     public IEnumerator FadeInOverlay()
     {
+        transform.GetChild(5).gameObject.SetActive(true);
+
         transform.GetChild(5).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
         transform.GetChild(5).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
 
@@ -152,8 +154,7 @@ public class UIController : MonoBehaviour
 
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
-
-        transform.GetChild(5).gameObject.SetActive(true);
+        
         var ups = UpgradeManger.GetUpdate(Dragon.Rank);
 
         Dragon.Rank++;
