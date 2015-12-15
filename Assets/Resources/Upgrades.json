@@ -14,7 +14,7 @@
 			"SecondaryChargeSpeed": 0.0
 		},
 		{
-			"Name": "Static ChargeShot",
+			"Name": "Static ChargeShot v2",
 			"ToolTip": "faster charge",
 			"WeaponType": 2,
 			"Rank": 1,
@@ -23,9 +23,11 @@
 			"PrimaryFireRate": 0.0,
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
-			"SecodaryDamage": 5,
-			"SecondaryChargeSpeed": 22.0
+			"SecodaryDamage": 6,
+			"SecondaryChargeSpeed": 18.0
 		},
+
+		
 		{
 			"Name": "Rapid laser mrk. III",
 			"ToolTip": "higher firerate",
@@ -33,51 +35,26 @@
 			"Rank": 2,
 			"RequiredExp": 120,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.23,
+			"PrimaryFireRate": 0.20,
 			"PrimaryHeatUp": 33.0,
 			"PrimaryCooldown": 15.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Charge v2",
+			"Name": "Static ChargeShot v3",
 			"ToolTip": "higher damage",
 			"WeaponType": 2,
 			"Rank": 2,
 			"RequiredExp": 120,
-			"PrimaryDamage": 0,
-			"PrimaryFireRate": 0,
-			"PrimaryHeatUp": 0,
-			"PrimaryCooldown": 0,
-			"SecodaryDamage": 7,
-			"SecondaryChargeSpeed": 22.0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 8,
+			"SecondaryChargeSpeed": 18.0
 		},
-		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
-			"WeaponType": 1,
-			"Rank": 3,
-			"RequiredExp": 150,
-			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
-		},
-		{
-			"Name": "Power Laser Alpha",
-			"ToolTip": "higher damage",
-			"WeaponType": 3,
-			"Rank": 3,
-			"RequiredExp": 150,
-			"PrimaryDamage": 2,
-			"PrimaryFireRate": 0.23,
-			"PrimaryHeatUp": 33.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
-		},
+
+
 		{
 			"Name": "Rapid laser mrk. IV",
 			"ToolTip": "higher firerate",
@@ -85,219 +62,220 @@
 			"Rank": 4,
 			"RequiredExp": 180,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
+			"PrimaryFireRate": 0.15,
 			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryCooldown": 16.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
+			"Name": "Static ChargeShot v4",
+			"ToolTip": "higher damage",
 			"WeaponType": 2,
 			"Rank": 4,
 			"RequiredExp": 180,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 10,
+			"SecondaryChargeSpeed": 18.0
 		},
+		
+		
 		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. V",
 			"ToolTip": "higher firerate",
 			"WeaponType": 1,
 			"Rank": 5,
 			"RequiredExp": 220,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.13,
+			"PrimaryHeatUp": 19.0,
+			"PrimaryCooldown": 18.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
+			"Name": "Static ChargeShot v5",
+			"ToolTip": "faster charge",
 			"WeaponType": 2,
 			"Rank": 5,
 			"RequiredExp":220,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 10,
+			"SecondaryChargeSpeed": 15.0
 		},
+		
+		
 		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. VI",
 			"ToolTip": "higher firerate",
 			"WeaponType": 1,
 			"Rank": 6,
 			"RequiredExp": 280,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.10,
+			"PrimaryHeatUp": 17.0,
+			"PrimaryCooldown": 17.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
+			"Name": "Static ChargeShot v6",
+			"ToolTip": "higher damage",
 			"WeaponType": 2,
 			"Rank": 6,
 			"RequiredExp": 280,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 15,
+			"SecondaryChargeSpeed": 15.0
 		},
+		
+		
 		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. VII",
 			"ToolTip": "higher firerate",
 			"WeaponType": 1,
 			"Rank": 7,
 			"RequiredExp": 350,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.8,
+			"PrimaryHeatUp": 15.0,
+			"PrimaryCooldown": 19.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
+			"Name": "Static ChargeShot v7",
+			"ToolTip": "faster charge",
 			"WeaponType": 2,
 			"Rank": 7,
 			"RequiredExp": 350,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 15,
+			"SecondaryChargeSpeed": 13.0
 		},
+		
+		
 		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. VIII",
 			"ToolTip": "higher firerate",
 			"WeaponType": 1,
 			"Rank": 8,
 			"RequiredExp": 480,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.6,
+			"PrimaryHeatUp": 14.0,
+			"PrimaryCooldown": 21.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
+			"Name": "Static ChargeShot v8",
+			"ToolTip": "higher damage",
 			"WeaponType": 2,
 			"Rank": 8,
 			"RequiredExp": 480,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 18,
+			"SecondaryChargeSpeed": 13.0
 		},
+
+
 		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. IX",
 			"ToolTip": "higher firerate",
 			"WeaponType": 1,
 			"Rank": 9,
 			"RequiredExp": 600,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.5,
+			"PrimaryHeatUp": 13.0,
+			"PrimaryCooldown": 22.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
-			"WeaponType": 1,
+			"Name": "Static ChargeShot v9",
+			"ToolTip": "higher damage",
+			"WeaponType": 2,
 			"Rank": 9,
 			"RequiredExp": 600,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 22,
+			"SecondaryChargeSpeed": 13.0
 		},
+		
+
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
-			"WeaponType": 2,
-			"Rank": 10,
-			"RequiredExp": 730,
-			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
-		},
-		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. X",
 			"ToolTip": "higher firerate",
 			"WeaponType": 1,
 			"Rank": 10,
 			"RequiredExp": 730,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.4,
+			"PrimaryHeatUp": 12.0,
+			"PrimaryCooldown": 25.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
-		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
-			"WeaponType": 3,
+				{
+			"Name": "Static ChargeShot v10",
+			"ToolTip": "faster charge",
+			"WeaponType": 2,
 			"Rank": 10,
 			"RequiredExp": 730,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 22,
+			"SecondaryChargeSpeed": 10.0
 		},
+		
+		
 		{
-			"Name": "Rapid laser mrk. IV",
+			"Name": "Rapid laser mrk. XI",
 			"ToolTip": "higher firerate",
 			"WeaponType": 2,
 			"Rank": 11,
 			"RequiredExp": 850,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
+			"PrimaryFireRate": 0.4,
+			"PrimaryHeatUp": 10.0,
+			"PrimaryCooldown": 25.0,
 			"SecodaryDamage": 0,
 			"SecondaryChargeSpeed": 0
 		},
 		{
-			"Name": "Rapid laser mrk. IV",
-			"ToolTip": "higher firerate",
-			"WeaponType": 3,
+			"Name": "Static ChargeShot v11",
+			"ToolTip": "higher damage",
+			"WeaponType": 2,
 			"Rank": 11,
 			"RequiredExp": 850,
 			"PrimaryDamage": 1,
-			"PrimaryFireRate": 0.20,
-			"PrimaryHeatUp": 32.0,
-			"PrimaryCooldown": 15.0,
-			"SecodaryDamage": 0,
-			"SecondaryChargeSpeed": 0
+			"PrimaryFireRate": 0.0,
+			"PrimaryHeatUp": 0.0,
+			"PrimaryCooldown": 0.0,
+			"SecodaryDamage": 28,
+			"SecondaryChargeSpeed": 9.0
 		}
 	]
 }
