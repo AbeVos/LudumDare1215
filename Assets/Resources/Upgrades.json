@@ -24,7 +24,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 6,
-			"SecondaryChargeSpeed": 18.0
+			"SecondaryChargeSpeed": 10.0
 		},
 
 		
@@ -51,7 +51,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 8,
-			"SecondaryChargeSpeed": 18.0
+			"SecondaryChargeSpeed": 10.0
 		},
 
 
@@ -79,7 +79,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 10,
-			"SecondaryChargeSpeed": 18.0
+			"SecondaryChargeSpeed": 9.0
 		},
 		
 		
@@ -107,7 +107,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 10,
-			"SecondaryChargeSpeed": 15.0
+			"SecondaryChargeSpeed": 8.0
 		},
 		
 		
@@ -135,7 +135,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 15,
-			"SecondaryChargeSpeed": 15.0
+			"SecondaryChargeSpeed": 8.0
 		},
 		
 		
@@ -163,7 +163,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 15,
-			"SecondaryChargeSpeed": 13.0
+			"SecondaryChargeSpeed": 6.0
 		},
 		
 		
@@ -191,7 +191,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 18,
-			"SecondaryChargeSpeed": 13.0
+			"SecondaryChargeSpeed": 6.0
 		},
 
 
@@ -219,7 +219,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 22,
-			"SecondaryChargeSpeed": 13.0
+			"SecondaryChargeSpeed": 6.0
 		},
 		
 
@@ -247,7 +247,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 22,
-			"SecondaryChargeSpeed": 10.0
+			"SecondaryChargeSpeed": 4.0
 		},
 		
 		
@@ -275,7 +275,7 @@
 			"PrimaryHeatUp": 0.0,
 			"PrimaryCooldown": 0.0,
 			"SecodaryDamage": 28,
-			"SecondaryChargeSpeed": 9.0
+			"SecondaryChargeSpeed": 4.0
 		}
 	]
 }
