@@ -144,16 +144,17 @@ public class UIController : MonoBehaviour
 
     public IEnumerator FadeInOverlay()
     {
+        transform.GetChild(5).gameObject.SetActive(true);
+
         transform.GetChild(5).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
-        transform.GetChild(5).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
+        transform.GetChild(5).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 1f, false);
 
         transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
-        transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
+        transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 1f, false);
 
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
-        transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
-
-        transform.GetChild(5).gameObject.SetActive(true);
+        transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 1f, false);
+        
         var ups = UpgradeManger.GetUpdate(Dragon.Rank);
 
         Dragon.Rank++;
@@ -184,10 +185,7 @@ public class UIController : MonoBehaviour
             transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
         }
 
-
-       
-
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Button>().interactable = true;
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Button>().interactable = true;
     }

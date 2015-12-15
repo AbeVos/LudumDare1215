@@ -40,7 +40,7 @@ public class Drone : Enemy
 
         for (int i = 0; i < 4; i++)
         {
-            rotors[i].eulerAngles += Vector3.up;
+            rotors[i].eulerAngles += Vector3.up * 15;
         }
 
         prevX = transform.position.x;

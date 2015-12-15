@@ -24,6 +24,9 @@ public class ObjectPool : MonoBehaviour
     [SerializeField]
     private GameObject xpPickupPrefab;
 
+    [SerializeField]
+    private GameObject explosionPrefab;
+
     private static GameObject staticPlayerBulletPrefab;
     private static List<Bullet> playerBulletsInUse;
     private static List<Bullet> playerBulletsAvailable;
@@ -39,7 +42,11 @@ public class ObjectPool : MonoBehaviour
     private List<Bullet> bulletsToRemove;
     private List<Pickup> pickupsToRemove;
 
+    private static GameObject staticExplosionPrefab;
+
     private Plane[] cameraPlanes;
+
+    private static ObjectPool self;
 
     void Awake ()
     {
@@ -57,6 +64,10 @@ public class ObjectPool : MonoBehaviour
 
         bulletsToRemove = new List<Bullet>();
         pickupsToRemove = new List<Pickup>();
+
+        staticExplosionPrefab = explosionPrefab;
+
+        self = this;
     }
 
     void OnEnable ()
@@ -349,5 +360,18 @@ public class ObjectPool : MonoBehaviour
 
         xpPickupsInUse.Remove(pickup);
         xpPickupsAvailable.Add(pickup);
+    }
+
+    public static void Explosion (Vector3 position)
+    {
+        GameObject system = Instantiate(staticExplosionPrefab, position, Quaternion.identity) as GameObject;
+        self.StartCoroutine(ExplosionCoroutine (system.GetComponent<ParticleSystem>()));
+    }
+
+    private static IEnumerator ExplosionCoroutine (ParticleSystem particleSystem)
+    {
+        yield return new WaitForSeconds(particleSystem.duration + particleSystem.startLifetime);
+
+        Destroy(particleSystem.gameObject);
     }
 }
