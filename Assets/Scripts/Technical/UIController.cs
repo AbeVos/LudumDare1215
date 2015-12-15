@@ -120,12 +120,19 @@ public class UIController : MonoBehaviour
     {
         if (newGlobalState == State.GlobalState.Pause)
         {
+            Cursor.visible = true;
             ShowUpgrades();
         }
 
         if (prevGlobalState == State.GlobalState.Pause)
         {
+            Cursor.visible = false;
             HideUpgrades();
+        }
+
+        if (newGlobalState == State.GlobalState.Initialize)
+        {
+            Cursor.visible = false;
         }
     }
 
