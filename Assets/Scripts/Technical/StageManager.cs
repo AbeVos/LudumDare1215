@@ -87,6 +87,11 @@ public class StageManager : MonoBehaviour
 
             timer += Time.deltaTime;
             difficultyTime += Time.deltaTime;
+
+            if (difficultyTime >= 300)
+            {
+                State.SetState(State.GlobalState.Win);
+            }
         }
 
         foreach (GameObject building in buildings)

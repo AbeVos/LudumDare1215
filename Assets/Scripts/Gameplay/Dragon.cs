@@ -181,6 +181,7 @@ public class Dragon : MonoBehaviour, GameActor
                     Heat += Time.deltaTime * heatUpSpeed;
                     if (Heat >= 99)
                     {
+                        AudioManager.PlayClip("alarm", true);
                         SetState(WeaponState.Idle);
                         Overheat = true;
                     }
