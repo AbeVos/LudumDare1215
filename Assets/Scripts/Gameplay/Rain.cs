@@ -14,6 +14,6 @@ public class Rain : MonoBehaviour
 
     void Update ()
     {
-        mat.mainTextureOffset = new Vector2(Time.time * 2.5f, Time.time * 2.5f);
+        mat.mainTextureOffset = new Vector2(Time.time * 2.5f, Time.time * 4f);
     }
 }
