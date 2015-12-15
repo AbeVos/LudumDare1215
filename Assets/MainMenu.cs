@@ -18,29 +18,24 @@ public class MainMenu : MonoBehaviour
         SecondaryRebind = val;
     }
 
-    void OnEnable()
+    public void UISound()
     {
-        transform.GetChild(2).GetChild(0).GetComponent<Button>().onClick.AddListener(
-            () =>
-            {
-                DisableAllButtons();
-                StartCoroutine(StartGame());
-            });
-        transform.GetChild(2).GetChild(1).GetComponent<Button>().onClick.AddListener(
-            () =>
-            {
-                ShowRebind(true);
-            });
-        transform.GetChild(2).GetChild(2).GetComponent<Button>().onClick.AddListener(
-            () =>
-            {
-                ShowHowTo(true);
-            });
-        transform.GetChild(2).GetChild(3).GetComponent<Button>().onClick.AddListener(
-            () =>
-            {
-                Application.Quit();
-            });
+        AudioManager.PlayClip("confirmA", true);
+    }
+
+    public void UIConfirm()
+    {
+        AudioManager.PlayClip("confirmB", true);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    public void GameRoutine()
+    {
+        StartCoroutine(StartGame());
     }
 
     public void ShowHowTo(bool state)
@@ -69,7 +64,7 @@ public class MainMenu : MonoBehaviour
         ShowRebind(false);
     }
 
-    private void DisableAllButtons()
+    public void DisableAllButtons()
     {
         for (int i = 0; i < 4; i++)
         {
