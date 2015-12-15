@@ -206,9 +206,10 @@ public class UIController : MonoBehaviour
 
     IEnumerator ShowStartMenu()
     {
-        yield return new WaitForSeconds(2f);
-        transform.Find("Milly (7)").GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        yield return new WaitForSeconds(1.5f);
         transform.Find("Milly (7)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        yield return new WaitForSeconds(0.5f);
+        transform.Find("Milly (7)").GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
         yield return new WaitForSeconds(0.5f);
         transform.Find("Milly (7)").gameObject.SetActive(false);
     }
