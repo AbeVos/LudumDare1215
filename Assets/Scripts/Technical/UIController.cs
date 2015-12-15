@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
 
     private Slider Health, Exp, Heat, Charge;
     private Image healthFill, epxFill, heatFill, chargeFill;
+    private GameObject EventSystem;
     private float[] ExpIntervals;
     private float lastCharge;
     private bool lastChargeLerping = false;
@@ -36,6 +37,7 @@ public class UIController : MonoBehaviour
 
         ExpIntervals = UpgradeManger.GetExpIntervals();
         Exp.maxValue = ExpIntervals[Dragon.Rank];
+        
 
         for (int i = 0; i < 5; i++)
         {      
@@ -105,37 +107,7 @@ public class UIController : MonoBehaviour
 
     private void ShowUpgrades()
     {
-        transform.GetChild(5).gameObject.SetActive(true);
-        var ups = UpgradeManger.GetUpdate(Dragon.Rank);
-
-        Dragon.Rank++;
-        Exp.maxValue = ExpIntervals[Dragon.Rank];
-        Dragon.Exp = 0;
-
-        for (int i = 0; i < 2; i++)
-        {
-            var up = ups[i];
-
-            if (up.WeaponType == 2)
-            {
-                transform.GetChild(5).GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = ChargeImg;
-            }
-            else
-            {
-                transform.GetChild(5).GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = RapidImg;
-            }
-
-            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
-                () => Dragon.UpgradeWeapon(up));
-
-            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
-                () => HideUpgrades());
-
-
-            transform.GetChild(5).GetChild(0).GetChild(i).GetChild(1).GetComponent<Text>().text = ups[i].Name;
-            transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
-        }
-
+        StartCoroutine(FadeInOverlay());
     }
 
     private void HideUpgrades()
@@ -168,5 +140,55 @@ public class UIController : MonoBehaviour
         }
 
         lastChargeLerping = false;
+    }
+
+    public IEnumerator FadeInOverlay()
+    {
+        transform.GetChild(5).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(5).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
+
+        transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
+
+        transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 2f, false);
+
+        transform.GetChild(5).gameObject.SetActive(true);
+        var ups = UpgradeManger.GetUpdate(Dragon.Rank);
+
+        Dragon.Rank++;
+        Exp.maxValue = ExpIntervals[Dragon.Rank];
+        Dragon.Exp = 0;
+
+        for (int i = 0; i < 2; i++)
+        {
+            var up = ups[i];
+
+            if (up.WeaponType == 2)
+            {
+                transform.GetChild(5).GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = ChargeImg;
+            }
+            else
+            {
+                transform.GetChild(5).GetChild(0).GetChild(i).GetChild(0).GetComponent<Image>().sprite = RapidImg;
+            }
+
+            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
+                () => Dragon.UpgradeWeapon(up));
+
+            transform.GetChild(5).GetChild(0).GetChild(i).GetComponent<Button>().onClick.AddListener(
+                () => HideUpgrades());
+
+
+            transform.GetChild(5).GetChild(0).GetChild(i).GetChild(1).GetComponent<Text>().text = ups[i].Name;
+            transform.GetChild(5).GetChild(0).GetChild(i).GetChild(2).GetComponent<Text>().text = ups[i].ToolTip;
+        }
+
+
+       
+
+        yield return new WaitForSeconds(2f);
+        transform.GetChild(5).GetChild(0).GetChild(0).GetComponent<Button>().interactable = true;
+        transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Button>().interactable = true;
     }
 }
