@@ -141,6 +141,10 @@ public class UIController : MonoBehaviour
         {
             StartCoroutine(ShowWinScreen());
         }
+        else if (newGlobalState == State.GlobalState.Lose)
+        {
+            StartCoroutine(ShowLoseScreen());
+        }
     }
 
     IEnumerator LastChargeLerp(int speed, float startValue)
@@ -219,6 +223,14 @@ public class UIController : MonoBehaviour
         transform.Find("YouWin (9)").gameObject.SetActive(true);
         transform.Find("YouWin (9)").GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
         transform.Find("YouWin (9)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    IEnumerator ShowLoseScreen()
+    {
+        transform.Find("YouLose (10)").gameObject.SetActive(true);
+        transform.Find("YouLose (10)").GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.Find("YouLose (10)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
         yield return new WaitForSeconds(0.5f);
     }
 }
