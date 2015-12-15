@@ -132,11 +132,12 @@ public abstract class Enemy : MonoBehaviour, GameActor
         }
         else if (newState == EnemyState.Death)
         {
-            float playLength = AudioManager.PlayClip("droneDeath", true);
+            AudioManager.PlayClip("droneDeath", true);
+            ObjectPool.Explosion(transform.position);
 
-            transform.DOScale(1.4f, playLength / 4f).OnComplete(() =>
+            transform.DOScale(1.4f, 0.1f).OnComplete(() =>
              {
-                 CameraBehaviour.ScreenShake(0.3f, playLength / 1.25f, false);
+                 CameraBehaviour.ScreenShake(0.3f, 0.3f, false);
                  Destroy(gameObject);
              });
         }

@@ -247,7 +247,7 @@ public class Dragon : MonoBehaviour, GameActor
         else if (newGlobalState == State.GlobalState.Lose)
         {
             AudioManager.PlayClip("dragonShort", true);
-            GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            GetComponent<Rigidbody2D>().gravityScale = 1f;
         }
     }
 

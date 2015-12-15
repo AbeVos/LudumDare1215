@@ -43,6 +43,10 @@ public class AudioManager : MonoBehaviour
 
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
+        if (newGlobalState == State.GlobalState.Initialize)
+        {
+            musicSource.Play();
+        }
         if (newGlobalState == State.GlobalState.Pause)
         {
             PlayClip("pauseMusic", true);
