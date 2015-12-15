@@ -131,6 +131,8 @@ public class ObjectPool : MonoBehaviour
             {
                 //bullet.transform.position += bullet.transform.right * bullet.speed;
 
+                pickup.transform.position = Vector3.Lerp(pickup.transform.position, Dragon.dragon.transform.position, Time.deltaTime);
+
                 if (!GeometryUtility.TestPlanesAABB(cameraPlanes, pickup.transform.GetComponent<Collider2D>().bounds))
                 {
                     pickupsToRemove.Add(pickup);
@@ -310,7 +312,7 @@ public class ObjectPool : MonoBehaviour
         if (xpPickupsAvailable.Count == 0)
         {
             GameObject pickupObject = Instantiate(staticXpPickupPrefab, position, Quaternion.identity) as GameObject;
-            pickupObject.transform.parent = StageManager.Stage.transform;
+            //pickupObject.transform.parent = StageManager.Stage.transform;
 
             Pickup pickup;
             pickup.transform = pickupObject.transform;
