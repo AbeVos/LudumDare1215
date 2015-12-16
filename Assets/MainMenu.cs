@@ -64,6 +64,11 @@ public class MainMenu : MonoBehaviour
         ShowRebind(false);
     }
 
+    public void HideEndUIScreen(int index)
+    {
+        transform.parent.GetChild(index).gameObject.SetActive(false);
+    }
+
     public void DisableAllButtons()
     {
         for (int i = 0; i < 4; i++)

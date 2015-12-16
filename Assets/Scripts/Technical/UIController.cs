@@ -101,6 +101,7 @@ public class UIController : MonoBehaviour
     {
         if (newGlobalState == State.GlobalState.Start)
         {
+            Cursor.visible = true;
             StartCoroutine(ShowStartMenu());
         }
 
@@ -141,10 +142,12 @@ public class UIController : MonoBehaviour
 
         if (newGlobalState == State.GlobalState.Win)
         {
+            Cursor.visible = true;
             StartCoroutine(ShowWinScreen());
         }
         else if (newGlobalState == State.GlobalState.Lose)
         {
+            Cursor.visible = true;
             StartCoroutine(ShowLoseScreen());
         }
     }
@@ -223,18 +226,22 @@ public class UIController : MonoBehaviour
     IEnumerator ShowWinScreen()
     {
         transform.GetChild(8).gameObject.SetActive(true);
-        transform.GetChild(8).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(8).GetComponent<Graphic>().color = new Color(0.09f, 0.16f, 0.09f);
+        transform.GetChild(8).GetComponent<Graphic>().canvasRenderer.SetAlpha(0f);
         transform.GetChild(8).GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
         transform.GetChild(8).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
+        transform.GetChild(6).gameObject.SetActive(true);
     }
 
     IEnumerator ShowLoseScreen()
     {
         transform.GetChild(9).gameObject.SetActive(true);
-        transform.GetChild(8).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(9).GetComponent<Graphic>().color = new Color(0.16f,0.09f,0.09f);
+        transform.GetChild(9).GetComponent<Graphic>().canvasRenderer.SetAlpha(0f);
         transform.GetChild(9).GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
         transform.GetChild(9).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
+        transform.GetChild(6).gameObject.SetActive(true);
     }
 }
