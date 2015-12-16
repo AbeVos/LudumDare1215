@@ -37,6 +37,8 @@ public class UIController : MonoBehaviour
 
         ExpIntervals = UpgradeManger.GetExpIntervals();
         Exp.maxValue = ExpIntervals[Dragon.Rank];
+
+        ShowWinScreen();
     }
     #endregion
 
@@ -211,26 +213,28 @@ public class UIController : MonoBehaviour
     IEnumerator ShowStartMenu()
     {
         yield return new WaitForSeconds(1.5f);
-        transform.Find("Milly (7)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        transform.GetChild(7).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
         yield return new WaitForSeconds(0.5f);
-        transform.Find("Milly (7)").GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        transform.GetChild(7).GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
         yield return new WaitForSeconds(0.5f);
-        transform.Find("Milly (7)").gameObject.SetActive(false);
+        transform.GetChild(7).gameObject.SetActive(false);
     }
 
     IEnumerator ShowWinScreen()
     {
-        transform.Find("YouWin (9)").gameObject.SetActive(true);
-        transform.Find("YouWin (9)").GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
-        transform.Find("YouWin (9)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.GetChild(8).gameObject.SetActive(true);
+        transform.GetChild(8).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(8).GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.GetChild(8).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
         yield return new WaitForSeconds(0.5f);
     }
 
     IEnumerator ShowLoseScreen()
     {
-        transform.Find("YouLose (10)").gameObject.SetActive(true);
-        transform.Find("YouLose (10)").GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
-        transform.Find("YouLose (10)").GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.GetChild(9).gameObject.SetActive(true);
+        transform.GetChild(8).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
+        transform.GetChild(9).GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.GetChild(9).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
         yield return new WaitForSeconds(0.5f);
     }
 }
