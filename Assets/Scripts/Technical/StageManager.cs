@@ -66,6 +66,7 @@ public class StageManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+
             //difficultyTime += 10;
         }
 

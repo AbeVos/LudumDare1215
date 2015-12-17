@@ -140,6 +140,10 @@ public class Dragon : MonoBehaviour, GameActor
         secondaryBarrel = transform.Find("SecondaryBarrel");
         lastWorldPos = transform.position;
         lastVelocity = 0;
+
+        var upgrades = UpgradeManger.GetUpgrade(1);
+        UpgradeWeapon(upgrades[0]);
+        UpgradeWeapon(upgrades[1]);
     }
 
     void Update()
@@ -291,7 +295,7 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void FireSecondary()
     {
-        Instantiate(bombPrefab, secondaryBarrel.position, Quaternion.identity);
+
         StartCoroutine(secondaryCoroutine(0.05f, 2f));
     }
 
@@ -314,6 +318,7 @@ public class Dragon : MonoBehaviour, GameActor
     IEnumerator secondaryCoroutine(float speed, float time)
     {
         burstRunning = true;
+        Instantiate(bombPrefab, secondaryBarrel.position, Quaternion.identity);
         yield return new WaitForSeconds(speed);
         burstRunning = false;
     }
@@ -325,7 +330,8 @@ public class Dragon : MonoBehaviour, GameActor
         if (upgrade.WeaponType == 2)
         {
             SecondaryDamage = upgrade.SecodaryDamage;
-            Charge = upgrade.SecondaryChargeSpeed;
+            chargeSpeed = upgrade.SecondaryChargeSpeed;
+            
         }
         else
         {

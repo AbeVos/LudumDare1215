@@ -178,7 +178,7 @@ public class UIController : MonoBehaviour
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().canvasRenderer.SetAlpha(0);
         transform.GetChild(5).GetChild(0).GetChild(1).GetComponent<Graphic>().CrossFadeAlpha(0.8f, 1f, false);
         
-        var ups = UpgradeManger.GetUpdate(Dragon.Rank);
+        var ups = UpgradeManger.GetUpgrade(Dragon.Rank);
 
         Dragon.Rank++;
         Exp.maxValue = ExpIntervals[Dragon.Rank];
