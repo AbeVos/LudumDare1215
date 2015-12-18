@@ -6,16 +6,16 @@ public class MainMenu : MonoBehaviour
 {
     public static string PrimaryRebind, SecondaryRebind;
 
-    public void SetPri(Transform self)
+    public void SetPrimaryRebound(Transform self)
     {
-        string val = self.GetComponent<InputField>().text;
-        PrimaryRebind = val;
+        string value = self.GetComponent<InputField>().text;
+        PrimaryRebind = value;
     }
 
-    public void SetSec(Transform self)
+    public void SetSecondaryRebound(Transform self)
     {
-        string val = self.GetComponent<InputField>().text;
-        SecondaryRebind = val;
+        string value = self.GetComponent<InputField>().text;
+        SecondaryRebind = value;
     }
 
     public void UISound()
