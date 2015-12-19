@@ -340,7 +340,7 @@ public class Dragon : MonoBehaviour, GameActor
             coolDownSpeed = upgrade.PrimaryCooldown;
             FireRatePrimary = upgrade.PrimaryFireRate;
         }
-        Debug.Log("> Did upgrade");
+ //       Debug.Log("> Did upgrade");
     }
     #endregion
 
