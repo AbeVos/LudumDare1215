@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     #region Public functions
     public void ToggleOverlay(int index)
     {
+        if (HasError) { return; }
         if (transform.GetChild(index).gameObject.activeInHierarchy)
         {
             transform.GetChild(index).gameObject.SetActive(false);
@@ -14,6 +15,20 @@ public class MainMenu : MonoBehaviour
         else
         {
             transform.GetChild(index).gameObject.SetActive(true);
+        }
+
+    }
+
+    public void ToggleMenu(int index)
+    {
+        if (HasError) { return; }
+        if (transform.GetChild(0).GetChild(index).gameObject.activeInHierarchy)
+        {
+            transform.GetChild(0).GetChild(index).gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.GetChild(0).GetChild(index).gameObject.SetActive(true);
         }
 
     }
@@ -29,7 +44,11 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(StartGameRoutine());
+        if (!HasError)
+        {
+            StartCoroutine(StartGameRoutine());
+        }
+
     }
 
     public void QuitGame()
@@ -46,10 +65,17 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.PlayClip("confirmB", true);
     }
+
+    public void SetHasError(bool enabled)
+    {
+        HasError = enabled;
+    }
     #endregion
 
     #region Key rebind
     public static string PrimaryRebind, SecondaryRebind;
+    public static bool HasError = false;
+
     public void SetPrimaryRebound(Transform self)
     {
         string value = self.GetComponent<InputField>().text;
@@ -62,27 +88,57 @@ public class MainMenu : MonoBehaviour
         SecondaryRebind = value;
     }
 
-    public void ConfirmRebind(int rebindScIndex)
+    public void ConfirmRebind(GameObject ErrorPopup)
     {
         if (PrimaryRebind != null && SecondaryRebind != null)
         {
             InputManager.keysRemaped = true;
-            PrimaryRebind = "" + PrimaryRebind[0];
-            SecondaryRebind = "" + SecondaryRebind[0];
-            PrimaryRebind = PrimaryRebind.ToUpper();
-            SecondaryRebind = SecondaryRebind.ToUpper();
+            HasError = false;
+
+            try
+            {
+                PrimaryRebind = "" + PrimaryRebind[0];
+                SecondaryRebind = "" + SecondaryRebind[0];
+                PrimaryRebind = PrimaryRebind.ToUpper();
+                SecondaryRebind = SecondaryRebind.ToUpper();
+            }
+            catch (System.IndexOutOfRangeException)
+            {
+                HasError = true;
+                TogglePopUp(ErrorPopup);
+            }
+            catch (System.ArgumentException)
+            {
+                HasError = true;
+                TogglePopUp(ErrorPopup);
+            }
 
             InputManager.PrimaryButton = (KeyCode)System.Enum.Parse(typeof(KeyCode), PrimaryRebind);
             InputManager.SecondaryButton = (KeyCode)System.Enum.Parse(typeof(KeyCode), SecondaryRebind);
         }
-
-        ToggleOverlay(rebindScIndex);
+        else
+        {
+            HasError = true;
+            TogglePopUp(ErrorPopup);
+        }
     }
     #endregion
 
+    public void TogglePopUp(GameObject popUp)
+    {
+        if (popUp.activeInHierarchy)
+        {
+            popUp.SetActive(false);
+        }
+        else
+        {
+            popUp.SetActive(true);
+        }
+    }
+
     private IEnumerator StartGameRoutine()
     {
-        transform.GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
+        transform.GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
         yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
         GameManager.StartGame();
