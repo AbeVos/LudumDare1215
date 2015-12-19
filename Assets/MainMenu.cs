@@ -4,8 +4,52 @@ using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
-    public static string PrimaryRebind, SecondaryRebind;
+    #region Public functions
+    public void ToggleOverlay(int index)
+    {
+        if (transform.GetChild(index).gameObject.activeInHierarchy)
+        {
+            transform.GetChild(index).gameObject.SetActive(false);
+        }
+        else
+        {
+            transform.GetChild(index).gameObject.SetActive(true);
+        }
 
+    }
+
+    public void FadeOutButtonsAllInContainer(Transform container)
+    {
+        for (int i = 0; i < container.childCount; i++)
+        {
+            container.GetChild(i).GetComponent<Graphic>().canvasRenderer.SetAlpha(1f);
+            container.GetChild(i).GetComponent<Graphic>().CrossFadeAlpha(0, 0.5f, false);
+        }
+    }
+
+    public void StartGame()
+    {
+        StartCoroutine(StartGameRoutine());
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void PlayUISound()
+    {
+        AudioManager.PlayClip("confirmA", true);
+    }
+
+    public void PlayUIConfirm()
+    {
+        AudioManager.PlayClip("confirmB", true);
+    }
+    #endregion
+
+    #region Key rebind
+    public static string PrimaryRebind, SecondaryRebind;
     public void SetPrimaryRebound(Transform self)
     {
         string value = self.GetComponent<InputField>().text;
@@ -18,37 +62,7 @@ public class MainMenu : MonoBehaviour
         SecondaryRebind = value;
     }
 
-    public void UISound()
-    {
-        AudioManager.PlayClip("confirmA", true);
-    }
-
-    public void UIConfirm()
-    {
-        AudioManager.PlayClip("confirmB", true);
-    }
-
-    public void Quit()
-    {
-        Application.Quit();
-    }
-
-    public void GameRoutine()
-    {
-        StartCoroutine(StartGame());
-    }
-
-    public void ShowHowTo(bool state)
-    {
-        transform.GetChild(4).gameObject.SetActive(state);
-    }
-
-    public void ShowRebind(bool state)
-    {
-        transform.GetChild(3).gameObject.SetActive(state);
-    }
-
-    public void ConfirmRebind()
+    public void ConfirmRebind(int rebindScIndex)
     {
         if (PrimaryRebind != null && SecondaryRebind != null)
         {
@@ -61,29 +75,17 @@ public class MainMenu : MonoBehaviour
             InputManager.PrimaryButton = (KeyCode)System.Enum.Parse(typeof(KeyCode), PrimaryRebind);
             InputManager.SecondaryButton = (KeyCode)System.Enum.Parse(typeof(KeyCode), SecondaryRebind);
         }
-        ShowRebind(false);
-    }
 
-    public void HideEndUIScreen(int index)
-    {
-        transform.parent.GetChild(index).gameObject.SetActive(false);
+        ToggleOverlay(rebindScIndex);
     }
+    #endregion
 
-    public void DisableAllButtons()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            //     transform.GetChild(2).GetChild(i).GetComponent<Image>().canvasRenderer.SetAlpha(1f);
-            transform.GetChild(2).GetChild(i).GetComponent<Image>().CrossFadeAlpha(0, 0.5f, false);
-        }
-    }
-
-    IEnumerator StartGame()
+    private IEnumerator StartGameRoutine()
     {
         transform.GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
         yield return new WaitForSeconds(0.5f);
         gameObject.SetActive(false);
         GameManager.StartGame();
     }
-
 }
+
