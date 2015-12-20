@@ -70,6 +70,19 @@ public class MainMenu : MonoBehaviour
     {
         HasError = enabled;
     }
+
+    public void SetVsync()
+    {
+        if (QualitySettings.vSyncCount == 0)
+        {
+            Debug.Log("vsync is on");
+            QualitySettings.vSyncCount = 1;
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 0;
+        }
+    }
     #endregion
 
     #region build-in function
@@ -97,6 +110,13 @@ public class MainMenu : MonoBehaviour
 
     public void ConfirmRebind(GameObject ErrorPopup)
     {
+        // asume the rebind is not used
+        if (PrimaryRebind == null && SecondaryRebind == null)
+        {
+            return;
+        }
+
+        // asume the rebind is used and check is valid
         if (PrimaryRebind != null && SecondaryRebind != null)
         {
             InputManager.keysRemaped = true;
@@ -118,6 +138,13 @@ public class MainMenu : MonoBehaviour
             {
                 HasError = true;
                 TogglePopUp(ErrorPopup);
+            }
+
+            if (PrimaryRebind == SecondaryRebind)
+            {
+                HasError = true;
+                TogglePopUp(ErrorPopup);
+                return;
             }
 
             InputManager.PrimaryButton = (KeyCode)System.Enum.Parse(typeof(KeyCode), PrimaryRebind);
