@@ -3,11 +3,6 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour
 {
-    #region Variables
-
-    //private Vector3 mousePosition, lastWorldPosition;
-    #endregion
-
     #region Delegates
     public delegate void PrimaryButtonDown();
     public delegate void PrimaryButtonUp();
@@ -20,6 +15,7 @@ public class InputManager : MonoBehaviour
     public static event SecondaryButtonDown OnSecondaryButtonUp;
     #endregion
 
+    #region Statics
     public static Vector3 MousePosition
     {
         get
@@ -29,10 +25,10 @@ public class InputManager : MonoBehaviour
             return mousePosition;
         }
     }
-
     public static KeyCode PrimaryButton { get; set; }
     public static KeyCode SecondaryButton { get; set; }
     public static bool keysRemaped { get; set; }
+    #endregion
 
     void Update()
     {
