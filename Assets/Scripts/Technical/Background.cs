@@ -27,7 +27,7 @@ public class Background : MonoBehaviour
         {
             for (int i = 0; i < buildings.Length; i++)
             {
-                buildings[i].position += moveSpeed * Vector3.left;
+                buildings[i].position += moveSpeed * Time.deltaTime * Vector3.left;
 
                 if (buildings[i].position.x <= -200f)
                 {
@@ -35,7 +35,7 @@ public class Background : MonoBehaviour
                 }
             }
 
-            floor.mainTextureOffset += 0.004f * moveSpeed * Vector2.right;
+            floor.mainTextureOffset += 0.004f * moveSpeed * Time.deltaTime * Vector2.right;
         }
     }
 }

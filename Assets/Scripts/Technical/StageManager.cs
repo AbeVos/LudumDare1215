@@ -16,7 +16,7 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     public GameObject buildingPrefab;
     [SerializeField]
-    public float levelSpeed = 0.1f;
+    public float speedMultiplier = 0.1f;
     [SerializeField]
     public float buildingSpawnInterval = 6f;
 
@@ -26,7 +26,7 @@ public class StageManager : MonoBehaviour
     private static StageManager self;
 
     private static AnimationCurve staticDifficultyCurve;
-    private static float difficultyTime = 0;
+    private static float _difficultyTime = 0;
 
     private float timer = 0f;
 
@@ -36,9 +36,14 @@ public class StageManager : MonoBehaviour
     {
         get { return self; }
     }
+
+    /// <summary>
+    ///  Get the game difficulty Delta Time adjusted
+    /// </summary>
     public static float DifficultyTimer
     {
-        get { return difficultyTime; }
+        get { return _difficultyTime; }
+        set { _difficultyTime = value * Time.deltaTime; }
     }
 
     //////////////////////////
@@ -72,11 +77,11 @@ public class StageManager : MonoBehaviour
 
         if (State.Current == State.GlobalState.Game)
         {
-            levelSpeed = 0.4f * GetDifficulty();
+            speedMultiplier = 0.4f * GetDifficulty();
             buildingSpawnInterval = 6f - GetDifficulty();
 
             //  Move level to the left constantly.
-            transform.position -= Vector3.right * levelSpeed;
+            transform.position -= Vector3.right * speedMultiplier * Time.deltaTime;
 
            if (timer >= buildingSpawnInterval)
             {
@@ -87,9 +92,9 @@ public class StageManager : MonoBehaviour
             }
 
             timer += Time.deltaTime;
-            difficultyTime += Time.deltaTime;
+            DifficultyTimer++;
 
-            if (difficultyTime >= 300)
+            if (_difficultyTime >= 300)
             {
                 State.SetState(State.GlobalState.Win);
             }
@@ -152,7 +157,7 @@ public class StageManager : MonoBehaviour
     /// <summary>Returns the difficulty multiplier for the current global time.</summary>
     public static float GetDifficulty ()
     {
-        return staticDifficultyCurve.Evaluate(difficultyTime);
+        return staticDifficultyCurve.Evaluate(_difficultyTime);
     }
 
     /////////////////////////
