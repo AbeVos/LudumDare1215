@@ -72,6 +72,13 @@ public class MainMenu : MonoBehaviour
     }
     #endregion
 
+    #region build-in function
+    void OnEnable()
+    {
+        UIController.mainMenu = this;
+    }
+    #endregion
+
     #region Key rebind
     public static string PrimaryRebind, SecondaryRebind;
     public static bool HasError = false;
@@ -139,9 +146,32 @@ public class MainMenu : MonoBehaviour
     private IEnumerator StartGameRoutine()
     {
         transform.GetChild(0).GetComponent<Graphic>().CrossFadeAlpha(0f, 0.5f, false);
-        yield return new WaitForSeconds(0.5f);
-        gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.35f);
+        ToggleOverlay(0);
+        //gameObject.SetActive(false);
         GameManager.StartGame();
+    }
+
+    public IEnumerator ShowWinOverlay()
+    {
+        transform.GetChild(2).gameObject.SetActive(true);
+        transform.GetChild(2).GetComponent<Graphic>().color = new Color(0.09f, 0.16f, 0.09f);
+        transform.GetChild(2).GetComponent<Graphic>().canvasRenderer.SetAlpha(0f);
+        transform.GetChild(2).GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.GetChild(2).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        yield return new WaitForSeconds(1f);
+        transform.GetChild(2).gameObject.SetActive(true);
+    }
+
+    public IEnumerator ShowLoseOverlay()
+    {
+        transform.GetChild(3).gameObject.SetActive(true);
+        transform.GetChild(3).GetComponent<Graphic>().color = new Color(0.16f, 0.09f, 0.09f);
+        transform.GetChild(3).GetComponent<Graphic>().canvasRenderer.SetAlpha(0f);
+        transform.GetChild(3).GetComponent<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        transform.GetChild(3).GetChild(0).GetComponentInChildren<Graphic>().CrossFadeAlpha(1f, 1f, false);
+        yield return new WaitForSeconds(1f);
+        transform.GetChild(3).gameObject.SetActive(true);
     }
 }
 
