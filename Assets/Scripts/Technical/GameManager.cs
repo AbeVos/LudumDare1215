@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField]
+    private float _introTime;
     public static float introTime = 5f;
 
     //////////////////////////
@@ -11,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     void Awake ()
     {
+        introTime = _introTime; 
+
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
     }
 
@@ -33,19 +38,20 @@ public class GameManager : MonoBehaviour
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
+            //   StartCoroutine(SetStateAfterDelay(State.GlobalState.Game, introTime));
             StartCoroutine(SetStateAfterDelay(State.GlobalState.Game, introTime));
-            //State.SetState(State.GlobalState.Game);
+
         }
         else if (newGlobalState == State.GlobalState.Lose)
         {
-            Debug.Log("Game Lost!");
+            Debug.LogWarning("Game Lost!");
         }
     }
 
     public static void PlayerHit (int damage)
     {
-        Debug.Log("Auw hoor!");
         CameraBehaviour.ScreenShake(1f, 1f, false);
+        AudioManager.PlayClip("dragonShort",true);
 
         if (Dragon.Health <= 0)
         {
@@ -71,9 +77,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator SetStateAfterDelay (State.GlobalState newState, float delay)
     {
         yield return new WaitForSeconds(delay);
-
         State.SetState(newState);
-
-        yield return null;
     }
 }

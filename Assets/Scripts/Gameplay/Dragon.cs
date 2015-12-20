@@ -140,6 +140,10 @@ public class Dragon : MonoBehaviour, GameActor
         secondaryBarrel = transform.Find("SecondaryBarrel");
         lastWorldPos = transform.position;
         lastVelocity = 0;
+
+        var upgrades = UpgradeManger.GetUpgrade(1);
+        UpgradeWeapon(upgrades[0]);
+        UpgradeWeapon(upgrades[1]);
     }
 
     void Update()
@@ -291,7 +295,6 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void FireSecondary()
     {
-        Instantiate(bombPrefab, secondaryBarrel.position, Quaternion.identity);
         StartCoroutine(secondaryCoroutine(0.05f, 2f));
     }
 
@@ -305,7 +308,7 @@ public class Dragon : MonoBehaviour, GameActor
             transform.position, Quaternion.identity, BulletSpeed);
             //.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
 
-        CameraBehaviour.ScreenShake(FireRatePrimary / 2f, Random.Range(0.3f, 0.45f), true);
+        CameraBehaviour.WeaponShake(FireRatePrimary / 2f, Random.Range(0.5f, 0.7f));
         yield return new WaitForSeconds(FireRatePrimary);
         anim.SetBool("PrimaryFire", false);
         coroutineRunning = false;
@@ -314,6 +317,7 @@ public class Dragon : MonoBehaviour, GameActor
     IEnumerator secondaryCoroutine(float speed, float time)
     {
         burstRunning = true;
+        Instantiate(bombPrefab, secondaryBarrel.position, Quaternion.identity);
         yield return new WaitForSeconds(speed);
         burstRunning = false;
     }
@@ -325,7 +329,8 @@ public class Dragon : MonoBehaviour, GameActor
         if (upgrade.WeaponType == 2)
         {
             SecondaryDamage = upgrade.SecodaryDamage;
-            Charge = upgrade.SecondaryChargeSpeed;
+            chargeSpeed = upgrade.SecondaryChargeSpeed;
+            
         }
         else
         {
@@ -334,7 +339,7 @@ public class Dragon : MonoBehaviour, GameActor
             coolDownSpeed = upgrade.PrimaryCooldown;
             FireRatePrimary = upgrade.PrimaryFireRate;
         }
-        Debug.Log("> Did upgrade");
+ //       Debug.Log("> Did upgrade");
     }
     #endregion
 

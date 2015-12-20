@@ -4,7 +4,7 @@ using DG.Tweening;
 
 public class PlayerBomb : MonoBehaviour
 {
-    private float targetSize = 40f;
+    private float targetSize = 50f;
 
     private bool exploding = false;
     private float explodingTime = 0f;
@@ -35,7 +35,7 @@ public class PlayerBomb : MonoBehaviour
                     Destroy(gameObject);
                 }
 
-                explodingTime += 0.45f;
+                explodingTime += Time.deltaTime* 12f;
             }
 
             if (!GeometryUtility.TestPlanesAABB(cameraPlanes, GetComponent<Collider2D>().bounds))

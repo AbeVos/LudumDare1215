@@ -13,14 +13,14 @@ public class CameraBehaviour : MonoBehaviour
         get { return startPosition; }
     }
 
-    void Awake ()
+    void Awake()
     {
         camera = GetComponentInChildren<Camera>();
         startPosition = transform.Find("StartPosition").position;
         gameTransform = transform.Find("GameTransform");
     }
 
-    void OnEnable ()
+    void OnEnable()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
     }
@@ -35,8 +35,8 @@ public class CameraBehaviour : MonoBehaviour
         }
         else if (newGlobalState == State.GlobalState.Initialize)
         {
-            camera.transform.DOMove(gameTransform.position, 4f);
-            camera.transform.DORotate(gameTransform.eulerAngles, 4f);
+            camera.transform.DOMove(gameTransform.position, GameManager.introTime);
+            camera.transform.DORotate(gameTransform.eulerAngles, GameManager.introTime);
         }
     }
 
@@ -45,12 +45,18 @@ public class CameraBehaviour : MonoBehaviour
         if (limitZ)
         {
             camera.transform.DOKill();
-            camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude, 0)).OnComplete( () => { camera.transform.position = gameTransform.position; } );
+            camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude, 0)).OnComplete(() => { camera.transform.position = gameTransform.position; });
         }
         else
         {
             camera.transform.DOKill();
-            camera.transform.DOShakePosition(duration, magnitude).OnComplete(() => { camera.transform.position = gameTransform.position; } );
+            camera.transform.DOShakePosition(duration, magnitude).OnComplete(() => { camera.transform.position = gameTransform.position; });
         }
+    }
+
+    public static void WeaponShake(float duration, float magnitude)
+    {
+        camera.transform.DOKill();
+        camera.transform.DOShakePosition(duration, new Vector3(magnitude * 2f, magnitude, 0)).OnComplete(() => { camera.transform.position = gameTransform.position; });
     }
 }

@@ -28,7 +28,7 @@ public class UpgradeManger : MonoBehaviour
         public float SecondaryChargeSpeed;
     }
 
-	public static Upgrade[] GetUpdate(int rank)
+	public static Upgrade[] GetUpgrade(int rank)
     {
         UpgradeList upgradeList = GetUpgradeList();
 

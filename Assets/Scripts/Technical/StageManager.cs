@@ -18,7 +18,7 @@ public class StageManager : MonoBehaviour
     [SerializeField]
     public float levelSpeed = 0.1f;
     [SerializeField]
-    public float buildingSpawnInterval = 10f;
+    public float buildingSpawnInterval = 6f;
 
 
     public AnimationCurve difficultyCurve;//= new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(300, 1) });
@@ -66,6 +66,7 @@ public class StageManager : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+
             //difficultyTime += 10;
         }
 
@@ -77,7 +78,7 @@ public class StageManager : MonoBehaviour
             //  Move level to the left constantly.
             transform.position -= Vector3.right * levelSpeed;
 
-            if (timer >= buildingSpawnInterval)
+           if (timer >= buildingSpawnInterval)
             {
                 SpawnBuilding((Random.Range(0f, 1f) < GetDifficulty() / 5f) ? true : false);
                 Invoke("SpawnDrone", buildingSpawnInterval / 2);

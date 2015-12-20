@@ -89,7 +89,7 @@ public class AudioManager : MonoBehaviour
             if (ShortSound)
             {
                 clip.LoadAudioData();
-                Debug.Log("Playing :" + "Audio/" + Clips[name]);
+               //Debug.Log("Playing :" + "Audio/" + Clips[name]);
                 source.PlayOneShot(clip);
             }
             else
