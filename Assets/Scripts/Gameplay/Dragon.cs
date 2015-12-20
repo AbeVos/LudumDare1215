@@ -295,7 +295,6 @@ public class Dragon : MonoBehaviour, GameActor
 
     private void FireSecondary()
     {
-
         StartCoroutine(secondaryCoroutine(0.05f, 2f));
     }
 
@@ -309,7 +308,7 @@ public class Dragon : MonoBehaviour, GameActor
             transform.position, Quaternion.identity, BulletSpeed);
             //.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
 
-        CameraBehaviour.ScreenShake(FireRatePrimary / 2f, Random.Range(0.3f, 0.45f), true);
+        CameraBehaviour.WeaponShake(FireRatePrimary / 2f, Random.Range(0.5f, 0.7f));
         yield return new WaitForSeconds(FireRatePrimary);
         anim.SetBool("PrimaryFire", false);
         coroutineRunning = false;
