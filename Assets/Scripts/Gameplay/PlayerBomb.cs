@@ -4,7 +4,8 @@ using DG.Tweening;
 
 public class PlayerBomb : MonoBehaviour
 {
-    private float targetSize = 50f;
+    private readonly float ExplotionSpeed = 40f;
+    private readonly float targetSize = 60f;
 
     private bool exploding = false;
     private float explodingTime = 0f;
@@ -27,15 +28,15 @@ public class PlayerBomb : MonoBehaviour
         {
             if (exploding)
             {
-                transform.localScale = (explodingTime + 1) * Vector3.one;
+                transform.localScale = Vector3.one * (explodingTime + 1);
+                CameraBehaviour.ScreenShake(1.5f, 2f, true);
 
                 if (explodingTime >= targetSize)
                 {
-                    //transform.DOScale(0, 0.5f).OnComplete(() => { Destroy(gameObject); });
                     Destroy(gameObject);
                 }
 
-                explodingTime += Time.deltaTime* 12f;
+                explodingTime += Time.deltaTime* ExplotionSpeed;
             }
 
             if (!GeometryUtility.TestPlanesAABB(cameraPlanes, GetComponent<Collider2D>().bounds))
@@ -59,9 +60,8 @@ public class PlayerBomb : MonoBehaviour
     private void Explode ()
     {
         exploding = true;
-
+        AudioManager.PlayClip("ChargeExplotion", true);
         transform.parent = StageManager.Stage.transform;
-
         GetComponent<Rigidbody2D>().isKinematic = true;
     }
 }

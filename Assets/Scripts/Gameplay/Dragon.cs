@@ -35,7 +35,7 @@ public class Dragon : MonoBehaviour, GameActor
     [SerializeField, Range(0.05f, 1f)]
     private static float FireRatePrimary = 0.2f;
     [SerializeField, Range(0.05f, 1f)]
-    private static float BulletSpeed = 0.2f;
+    private static float BulletSpeed = 0.25f;
 
     private bool coroutineRunning = false;
     private bool burstRunning = false;
