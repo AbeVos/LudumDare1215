@@ -55,11 +55,8 @@ public class StageManager : MonoBehaviour
     void Awake ()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
-
         self = this;
-
         staticDifficultyCurve = difficultyCurve;
-
         buildings = new List<GameObject>();
     }
 
