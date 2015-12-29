@@ -29,7 +29,7 @@ public class PlayerBomb : MonoBehaviour
             if (exploding)
             {
                 transform.localScale = Vector3.one * (explodingTime + 1);
-                CameraBehaviour.ScreenShake(1.5f, 2f, true);
+                CameraBehaviour.ScreenShake(0.5f, 1.5f, true);
 
                 if (explodingTime >= targetSize)
                 {
