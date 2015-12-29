@@ -13,85 +13,77 @@ public class StageManager : MonoBehaviour
 
     [Space]
     [Header("Stage")]
-    [SerializeField]
     public GameObject buildingPrefab;
-    [SerializeField]
     public float speedMultiplier = 0.1f;
-    [SerializeField]
     public float buildingSpawnInterval = 6f;
-
 
     public AnimationCurve difficultyCurve;//= new AnimationCurve(new Keyframe[] { new Keyframe(0, 0), new Keyframe(300, 1) });
 
-    private static StageManager self;
 
+    private static StageManager self;
     private static AnimationCurve staticDifficultyCurve;
     private static float _difficultyTime = 0;
 
     private float timer = 0f;
+    private static float levelSpeed = 1f;
+    private float buildingTimer = 0f;
 
     private List<GameObject> buildings;
 
+    #region Properties
     public static StageManager Stage
     {
         get { return self; }
     }
 
-    /// <summary>
-    ///  Get the game difficulty Delta Time adjusted
-    /// </summary>
     public static float DifficultyTimer
     {
         get { return _difficultyTime; }
-        set { _difficultyTime = value * Time.deltaTime; }
+        private set { _difficultyTime = value; }
     }
 
+    public static float Speed
+    {
+        get { return levelSpeed; }
+    }
+    #endregion
     //////////////////////////
     //  Built-in Functions  //
     //////////////////////////
 
     #region Built-in Functions
 
-    void Awake ()
+    void Awake()
     {
         State.OnGlobalStateChanged += State_OnGlobalStateChanged;
         self = this;
         staticDifficultyCurve = difficultyCurve;
         buildings = new List<GameObject>();
+        levelSpeed = speedMultiplier * GetDifficulty();
+        StartCoroutine(DifficultyClock(0));
     }
 
-    void Update ()
+    void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            Debug.Log(GetDifficulty());
-        }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-
-            //difficultyTime += 10;
-        }
-
         if (State.Current == State.GlobalState.Game)
         {
-            speedMultiplier = 0.4f * GetDifficulty();
-            buildingSpawnInterval = 6f - GetDifficulty();
+            levelSpeed = speedMultiplier * GetDifficulty();
+            buildingTimer = buildingSpawnInterval * GetDifficulty();
 
             //  Move level to the left constantly.
-            transform.position -= Vector3.right * speedMultiplier * Time.deltaTime;
+            transform.position += Vector3.left * levelSpeed;
 
-           if (timer >= buildingSpawnInterval)
+            if (timer >= buildingTimer)
             {
-                SpawnBuilding((Random.Range(0f, 1f) < GetDifficulty() / 5f) ? true : false);
-                Invoke("SpawnDrone", buildingSpawnInterval / 2);
-
+                SpawnBuilding((Random.Range(0f, 1f) < GetDifficulty() / 10f) ? true : false);
                 timer = 0;
             }
 
-            timer += Time.deltaTime;
-            DifficultyTimer++;
+         //   Invoke("SpawnDrone", buildingTimer / 2);
 
-            if (_difficultyTime >= 300)
+            timer += Time.deltaTime;
+
+            if (DifficultyTimer >= 300)
             {
                 State.SetState(State.GlobalState.Win);
             }
@@ -99,7 +91,7 @@ public class StageManager : MonoBehaviour
 
         foreach (GameObject building in buildings)
         {
-            if (building.transform.position.x < -30)
+            if (building.transform.position.x < -40)
             {
                 buildings.Remove(building);
                 Destroy(building);
@@ -108,7 +100,7 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D (Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Collision " + collision.gameObject.name);
 
@@ -132,7 +124,6 @@ public class StageManager : MonoBehaviour
             ObjectPool.RemovePlayerBullet(collision.transform);
         }
     }
-
     #endregion
 
     //////////////////////////
@@ -140,7 +131,7 @@ public class StageManager : MonoBehaviour
     //////////////////////////
 
     #region Delegate Functions
-        
+
     private void State_OnGlobalStateChanged(State.GlobalState prevGlobalState, State.GlobalState newGlobalState)
     {
         if (newGlobalState == State.GlobalState.Game)
@@ -152,7 +143,7 @@ public class StageManager : MonoBehaviour
     #endregion
 
     /// <summary>Returns the difficulty multiplier for the current global time.</summary>
-    public static float GetDifficulty ()
+    public static float GetDifficulty()
     {
         return staticDifficultyCurve.Evaluate(_difficultyTime);
     }
@@ -161,7 +152,7 @@ public class StageManager : MonoBehaviour
     //  Private Functions  //
     /////////////////////////
 
-    private void SpawnBuilding (bool spawnTurret)
+    private void SpawnBuilding(bool spawnTurret)
     {
         GameObject building = Instantiate(buildingPrefab, new Vector3(40, Random.Range(-5, -10), 0), Quaternion.identity) as GameObject;
 
@@ -176,10 +167,22 @@ public class StageManager : MonoBehaviour
         buildings.Add(building);
     }
 
-    private void SpawnDrone ()
+    private void SpawnDrone()
     {
         GameObject drone = Instantiate(dronePrefab, new Vector3(40, Random.Range(4f, 16f), 0), Quaternion.identity) as GameObject;
 
         drone.transform.parent = transform;
+    }
+
+    IEnumerator DifficultyClock(float time)
+    {
+        time++;
+        DifficultyTimer = time;
+        yield return new WaitForSeconds(1f);
+
+        //   if (State.Current == State.GlobalState.Game)
+        {
+            StartCoroutine(DifficultyClock(time));
+        }
     }
 }

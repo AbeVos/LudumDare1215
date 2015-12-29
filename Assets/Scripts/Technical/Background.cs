@@ -10,7 +10,6 @@ public class Background : MonoBehaviour
 
     void Start ()
     {
-        moveSpeed = 0.4f * StageManager.GetDifficulty();
 
         buildings = new Transform[transform.childCount - 1];
         for (int i = 0; i < transform.childCount - 1; i++)
@@ -27,7 +26,7 @@ public class Background : MonoBehaviour
         {
             for (int i = 0; i < buildings.Length; i++)
             {
-                buildings[i].position += moveSpeed * Time.deltaTime * Vector3.left;
+                buildings[i].position += Vector3.left * StageManager.Speed;
 
                 if (buildings[i].position.x <= -200f)
                 {
@@ -35,7 +34,7 @@ public class Background : MonoBehaviour
                 }
             }
 
-            floor.mainTextureOffset += 0.004f * moveSpeed * Time.deltaTime * Vector2.right;
+            floor.mainTextureOffset += 0.004f * StageManager.Speed * Vector2.right;
         }
     }
 }
