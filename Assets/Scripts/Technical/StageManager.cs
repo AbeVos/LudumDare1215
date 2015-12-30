@@ -68,7 +68,7 @@ public class StageManager : MonoBehaviour
         if (State.Current == State.GlobalState.Game)
         {
             levelSpeed = speedMultiplier * GetDifficulty();
-            buildingTimer = buildingSpawnInterval * GetDifficulty();
+            buildingTimer = buildingSpawnInterval * (1/GetDifficulty());
 
             //  Move level to the left constantly.
             transform.position += Vector3.left * levelSpeed;

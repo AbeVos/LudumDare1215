@@ -61,12 +61,10 @@ public abstract class Enemy : MonoBehaviour, GameActor
             if (collider.tag == "PrimaryBullet")
             {
                 Hit(Dragon.PrimaryDamage);
-                //Dragon.Exp += 20;
             }
             else
             {
                 Hit(Dragon.SecondaryDamage);
-                //Debug.Log(name + " has " + healthPoints + " healthpoints left.");
             }
             
             ObjectPool.RemovePlayerBullet(collider.transform);

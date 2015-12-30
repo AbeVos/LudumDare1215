@@ -307,7 +307,7 @@ public class Dragon : MonoBehaviour, GameActor
             transform.position, Quaternion.identity, BulletSpeed);
             //.transform.GetChild(0).rotation = Quaternion.Euler(0, 0, 0);
 
-        CameraBehaviour.WeaponShake(FireRatePrimary / 2f, Random.Range(0.5f, 0.7f));
+        CameraBehaviour.WeaponShake(FireRatePrimary / 2.8f, Random.Range(0.8f, 1.2f));
         yield return new WaitForSeconds(FireRatePrimary);
         anim.SetBool("PrimaryFire", false);
         coroutineRunning = false;

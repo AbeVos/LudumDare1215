@@ -15,7 +15,7 @@ public class Drone : Enemy
     {
         base.Start();
 
-        body = transform.FindChild("body");
+        body = transform.GetChild(0);
         rotors = new Transform[4];
         for (int i = 0; i < 4; i++)
         {
@@ -40,7 +40,7 @@ public class Drone : Enemy
 
         for (int i = 0; i < 4; i++)
         {
-            rotors[i].eulerAngles += Vector3.up * 15;
+            rotors[i].eulerAngles += Vector3.up * 600 *Time.deltaTime;
         }
 
         prevX = transform.position.x;

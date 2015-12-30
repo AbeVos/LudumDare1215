@@ -4,6 +4,7 @@ using DG.Tweening;
 
 public class CameraBehaviour : MonoBehaviour
 {
+    public GameObject Stage;
     new private static Camera camera;
     private static Vector3 startPosition;
     private static Transform gameTransform;
@@ -57,6 +58,6 @@ public class CameraBehaviour : MonoBehaviour
     public static void WeaponShake(float duration, float magnitude)
     {
         camera.transform.DOKill();
-        camera.transform.DOShakePosition(duration, new Vector3(magnitude * 2f, magnitude, 0)).OnComplete(() => { camera.transform.position = gameTransform.position; });
+        camera.transform.DOShakePosition(duration, new Vector3(magnitude, magnitude*1.5f, 0)).OnComplete(() => { camera.transform.position = gameTransform.position; });
     }
 }
