@@ -39,10 +39,10 @@ public class PlayerBomb : MonoBehaviour
                 explodingTime += Time.deltaTime* ExplotionSpeed;
             }
 
-            if (!GeometryUtility.TestPlanesAABB(cameraPlanes, GetComponent<Collider2D>().bounds))
-            {
-                Explode();
-            }
+            /* if (!GeometryUtility.TestPlanesAABB(cameraPlanes, GetComponent<Collider2D>().bounds))
+             {
+                  Destroy(gameObject);
+             }*/
         }
     }
 

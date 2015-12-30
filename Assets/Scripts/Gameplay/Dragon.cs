@@ -226,7 +226,6 @@ public class Dragon : MonoBehaviour, GameActor
     {
         if (State.Current == State.GlobalState.Game)
         {
-            Debug.Log("Draak");
             if (collision.gameObject.layer == 11)
             {
                 AudioManager.PlayClip("xp", true);
